@@ -1,10 +1,8 @@
 <template>
   <div >
-    <!-- <router-link to="/">noth</router-link>/ -->
-    
-    <router-link to="/home">Home</router-link>/
+    <!-- <router-link to="/home">Home</router-link>/
     <router-link to="/profil">Profil</router-link>/
-    <router-link to="/dashboard">dashboard</router-link>
+    <router-link to="/dashboard">dashboard</router-link> -->
   </div>
   <router-view />
 </template>
@@ -15,8 +13,13 @@ export default {
 }
 </script>
 
+
 <style>
-*{
-  background-color: beigef;
+#app{
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-align: center;
+  color: #2c3e50;
 }
 </style>
