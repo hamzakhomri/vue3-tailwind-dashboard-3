@@ -1,12 +1,7 @@
 <template id="">
-<div class="bg-gray-700">
-  <div class="home">
-    Root 1
+  <div class="bg-gray-200">
+    <h1>Home</h1>
   </div>
-  <div class="home">
-    Root 2
-  </div>
-</div>
 </template>
 
 <style>

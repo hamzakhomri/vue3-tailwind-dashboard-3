@@ -1,6 +1,6 @@
 <template id="">
   <div class="about">
-    This is Dasboard
+    <h1>Profil</h1>
   </div>
 </template>
 
