@@ -139,11 +139,13 @@
             <!-- ===================  END HEADER SIDEBAR    ========================== -->
             
             
-            <div class="h-[calc(100vh-50px)] bg-gray-50">
-                MAIN
-            </div>
+            <div class="h-[calc(100vh-50px)] bg-gray-50 p-[20px]">
+                <div class="border border-gray-300 rounded-md p-[20px] h-full">
+                    <router-view to="/"></router-view>
+                </div>
 
-        </div>
+            </div>
+        </div>  
 
     </div>    
 </template>
