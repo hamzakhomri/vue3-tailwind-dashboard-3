@@ -2,6 +2,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"/>
     <div class="w-screen h-screen flex">
         <!-- ===================   SIDE BAR    ========================== -->
+      
           <div class="w-[400px] h-full bg-gray-200 text-white" v-show="showSide">
             
               <div class="h-[50px] bg-gray-900 flex justify-start items-center">
@@ -14,7 +15,7 @@
                   <div class="flex flex-col justify-between h-full px-[20px] space-y-[10px]">
                       <div class="flex flex-col justify-between space-y-[10px]">
                         
-                                  <router-link to="/">
+                                  <router-link to="/home">
                                       <div class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
                                           <i class="bi bi-house-door-fill"></i>
                                           <span class="text-[15px] ml-4 text-gray-200 font-bold">Home</span>
@@ -29,14 +30,14 @@
                                       </div>
                                   </router-link>
                   
-                                  <router-link to="/profil">
+                                  <router-link to="/home">
                                       <div class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
                                           <svg class="w-6 h-6 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
                                           <span class="text-[15px] ml-4 text-gray-200 font-bold">Messages</span>
                                       </div>
                                   </router-link>
 
-                                  <router-link to="/">
+                                  <router-link to="/profil">
                                       <div class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
                                           <svg class="w-6 h-6 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z"></path></svg>
                                           <span class="text-[15px] ml-4 text-gray-200 font-bold">Download</span>
