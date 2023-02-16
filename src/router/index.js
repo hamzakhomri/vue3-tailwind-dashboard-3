@@ -6,7 +6,7 @@ import Dashboard from '@/views/master/Dashboard.vue';
 
 //=============================Open on Click===========================
 const profil    = { path: '/profil', name: 'Profil', component: Profil}
-const home      = { path: '/home', name: 'Home', component: Home}
+const home      = { path: '/', name: 'Home', component: Home}
 
 //===========================Open on Default=========================
 const dashboard = {
