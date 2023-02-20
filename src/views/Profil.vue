@@ -1,5 +1,5 @@
 <template id="">
-  <div class="about">
+  <div class="bg-yellow-800">
     <h1>Profil</h1>
   </div>
 </template>
@@ -8,7 +8,5 @@
 </script>
 
 <style>
-.about{
-  background-color: aqua;
-}
+
 </style>
