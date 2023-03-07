@@ -2,97 +2,91 @@
 
 
 https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
-<template>
-  <div>
-  <!-- <h3 class="text-2xl font-bold text-left py-2">{{header_table.toLocaleUpperCase()}}</h3> -->
-  <h3 class="text-2xl font-bold text-left py-2">{{header_table || 'somthing happen on script'}}</h3>
-
-        <!-- component -->
-        <div class="bg-blue-100  rounded-lg px-8 pt-6 pb-8 flex flex-col my-3">
-          <div class="-mx-3 md:flex mb-6  justify-between space-x-4">
-            
-            <div class="w-full">
-              <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 text-left">Product Name</span></div>
-                <input  v-model="ProductName"   class="appearance-none block w-full bg-gray-100 text-grey-darker border border-grey-lighter rounded-lg py-3 px-4 " id="grid-first-name" type="text" placeholder="Product Name">
-                <p class="text-red text-xs italic text-red-600">Please fill out this field.</p>
-            </div>
-
-            <div class="w-full">
-              <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 text-left">Color Product</span></div>
-              <select  v-model="ProductColor" class="w-full bg-gray-100 border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded-lg " id="grid-state" >
-                <option>Sliver</option>
-                <option>White</option>
-                <option>Black</option>
-              </select>
-              
-            </div>
-          </div>
-
-
-          <div class="-mx-3 md:flex mb-6   space-x-4">
-            <div class="w-full">
-              <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 text-left">Category</span></div>
-              <select v-model="CategoryProduct" class="w-full bg-gray-100 border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded-lg " id="grid-state">
-                <option>Laptop</option>
-                <option>Desktop</option>
-                <option>Accessories	</option>
-              </select>
-            </div>
-
-            <div class="w-full">
-              <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 text-left">Price</span></div>
-                <input v-model="PriceProduct" class="appearance-none block w-full bg-gray-100 text-grey-darker border border-grey-lighter rounded-lg  py-3 px-4" id="grid-zip" type="number" >
-
-            </div>
-          </div>
-
-
-
-          <div class="-mx-3 md:flex mb-6  justify-between space-x-4" >
-            <div class="border p-2">
-                <div class="flex justify-start">
-                  <label class="mb-3 block text-base font-medium text-[#07074D] "> available  </label>
-                </div>
-                <div class="flex items-center space-x-6">
-                  <div class="flex items-center">
-                    <input v-model="AvailableProduct" value="yes" type="radio" name="radio1" id="radioButton1" class="h-5 w-5" />
-                    <label for="radioButton1" class="pl-3 text-base font-medium text-[#07074D]" > Yes </label>
-                  </div>
-                  <div class="flex items-center">
-                    <input v-model="AvailableProduct" type="radio" name="radio1" id="radioButton2" class="h-5 w-5" />
-                    <label for="radioButton2" value="non" class="pl-3 text-base font-medium text-[#07074D]" > No </label>
-                  </div>
-                </div>
-            </div>
-          </div>
-
-          <div class="md:flex  justify-between space-x-4">
-            <div class="flex w-full ">
-                <button class="group rounded-2xl  h-12  w-full bg-green-500 font-bold text-lg text-white relative overflow-hidden" type="submit" >Submit
-                
-                <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl">
-                </div>
-                </button>
-          
+    <template>
+      <div>
+        <!-- <h3 class="text-2xl font-bold text-left py-2">{{header_table.toLocaleUpperCase()}}</h3> -->
+        <h3 class="text-2xl font-bold text-left py-2">{{header_table || 'somthing happen on script'}}</h3>
+        
+        
+        
+        
+        
+        
+        
+        <div class="">
+          <input v-model="newProduct" type="text" placeholder="Product Name" name="" id="" class="border bg-gray-100 mb-2 p-1 w-[100%]">  
+            <div class="flex justify-between">
+              <div class="flex justify-start border-2 p-1 border-gray-200 bg-gray-100">
+                <label class="pr-10"> <input type="radio" name="" id="" v-model="newProductPriority" value="low"> Low </label>
+                <label>  <input type="radio" name="" id="" v-model="newProductPriority" value="High"> High </label>
               </div>
-              <div class="flex w-full ">
-                <button class="group rounded-2xl  h-12  w-full bg-red-500 font-bold text-lg text-white relative overflow-hidden" type="submit" >Cancel
-                
-                <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl">
-                </div>
-                </button>
+              <select name="" id="" class=" border-collapse w-[50%] bg-gray-100 border-2 border-gray-200">
+                <option value="Silver">Silver</option>
+                <option value="White">White</option>
+                <option value="Black">Black</option>
+              </select>
+            </div>            
+          <!-- <div class="text-left">
+            <p>Radio :{{ newProductPriority }}</p>
+          </div> -->
           
-              </div>
-          </div>
-         <div>
-          <p>{{ ProductName }} 
-           {{ProductColor  }}
-            {{ CategoryProduct }}
-            {{ PriceProduct }}
-          {{ AvailableProduct }}</p>
-         </div>
 
         </div>
+
+
+
+
+
+
+        <!-- component -->
+<div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
+  <div class="-mx-3 md:flex mb-6">
+    <div class="md:w-1/2 px-3 mb-6 md:mb-0">
+
+      <input class="appearance-none block w-full bg-gray-100 text-grey-darker border border-red rounded py-3 px-4 mb-3 " id="grid-first-name" type="text" placeholder="Product Name">
+      <p class="text-red text-xs italic">Please fill out this field.</p>
+    </div>
+    <div class="relative">
+        <select class="block appearance-none w-full bg-gray-100 border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded" id="grid-state">
+          <option>New Mexico</option>
+          <option>Missouri</option>
+          <option>Texas</option>
+        </select>
+        
+      </div>
+
+  </div>
+  <div class="-mx-3 md:flex mb-6">
+    <div class="md:w-full px-3">
+      <input class="appearance-none block w-full bg-gray-100 text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3" id="grid-password" type="password" placeholder="******************">
+      <p class="text-grey-dark text-xs italic">Make it as long and as crazy as you'd like</p>
+    </div>
+  </div>
+  <div class="-mx-3 md:flex mb-2">
+    <div class="md:w-1/2 px-3 mb-6 md:mb-0">
+      <input class="appearance-none block w-full bg-gray-100 text-grey-darker border border-grey-lighter rounded py-3 px-4" id="grid-city" type="text" placeholder="Albuquerque">
+    </div>
+    <div class="md:w-1/2 px-3">
+
+
+    </div>
+    <div class="md:w-1/2 px-3">
+
+      <input class="appearance-none block w-full bg-gray-100 text-grey-darker border border-grey-lighter rounded py-3 px-4" id="grid-zip" type="text" placeholder="90210">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
 
         
         <div class="overflow-x-auto relative  sm:rounded-lg">
@@ -168,12 +162,11 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
     export default {
       data () {
         return {
-          header_table:'Pducts',
-          ProductName :' ',
-          ProductColor:'',
-          CategoryProduct:'',
-          PriceProduct:'',
-          AvailableProduct:'',
+
+          header_table: 'Data Product :',
+          newProduct :'',
+          newProductPriority :'low',
+
           Products: [
             {
               id:1 ,

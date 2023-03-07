@@ -1,6 +1,6 @@
 <template>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"/>
-    <div class="w-screen h-screen flex">
+    <div class="w-screen h-screen flex ">
         <!-- ===================   SIDE BAR    ========================== -->
       
           <div class="w-[400px] h-full bg-gray-200 text-white" v-show="showSide">
@@ -13,7 +13,7 @@
 
               <div class="h-[calc(100vh-50px)] bg-gray-800 py-[25px]">
                   <div class="flex flex-col justify-between h-full px-[20px] space-y-[10px]">
-                      <div class="flex flex-col justify-between space-y-[10px]">
+                      <div class=" flex flex-col justify-between space-y-[10px]">
                         
                                   <router-link to="/home">
                                       <div class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
@@ -123,7 +123,7 @@
               </div>
               
               <div class="h-[calc(100vh-50px)] bg-gray-50 p-[20px]">
-                  <div class="border border-gray-300 rounded-md p-[20px] h-full">
+                  <div class="border border-gray-300 rounded-md p-[20px] h-full overflow-auto">
                       <router-view to="/"></router-view>
                   </div>
 
