@@ -7,13 +7,24 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
   <!-- <h3 class="text-2xl font-bold text-left py-2">{{header_table.toLocaleUpperCase()}}</h3> -->
   <h3 class="text-2xl font-bold text-left py-2">{{header_table || 'somthing happen on script'}}</h3>
 
-        <!-- component -->
-        <div class="bg-blue-100  rounded-lg px-8 pt-6 pb-8 flex flex-col my-3">
+     
+
+
+
+
+
+<div class="w- full mx-auto grid  grid-cols-12 gap-4 p-1 mb-5">
+
+  <div class="col-span-12 rounded-lg border border-gray-500 bg-gray-200 sm:col-span-9 mb-auto">
+
+
+   <!-- component -->
+   <div class="bg-blue-50  rounded-lg px-8 pt-6 pb-8 flex flex-col ">
           <div class="-mx-3 md:flex mb-6  justify-between space-x-4">
             
             <div class="w-full">
               <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 text-left">Product Name</span></div>
-                <input  v-model="ProductName"   class="appearance-none block w-full bg-gray-100 text-grey-darker border border-grey-lighter rounded-lg py-3 px-4 " id="grid-first-name" type="text" placeholder="Product Name">
+                <input  v-model="ProductName"   class="border-2 border-gray-300 appearance-none block w-full bg-white text-grey-darker  border-grey-lighter rounded-lg py-3 px-4 " id="grid-first-name" type="text" placeholder="Product Name">
                 <p class="text-red text-xs italic text-red-600">Please fill out this field.</p>
             </div>
 
@@ -55,19 +66,54 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
                 </div>
                 <div class="flex items-center space-x-6">
                   <div class="flex items-center">
-                    <input v-model="AvailableProduct" value="yes" type="radio" name="radio1" id="radioButton1" class="h-5 w-5" />
+                    <input v-model="AvailableProduct" value="Yes" type="radio" name="radio1" id="radioButton1" class="h-5 w-5" />
                     <label for="radioButton1" class="pl-3 text-base font-medium text-[#07074D]" > Yes </label>
                   </div>
                   <div class="flex items-center">
                     <input v-model="AvailableProduct" type="radio" name="radio1" id="radioButton2" class="h-5 w-5" />
-                    <label for="radioButton2" value="non" class="pl-3 text-base font-medium text-[#07074D]" > No </label>
+                    <label for="radioButton2" value="No" class="pl-3 text-base font-medium text-[#07074D]" > No </label>
                   </div>
                 </div>
             </div>
           </div>
+        </div>
+        
 
-          <div class="md:flex  justify-between space-x-4">
-            <div class="flex w-full ">
+
+  </div>
+
+  <div class="col-span-2 rounded-lg border border-gray-400 bg-gray-100 p-2 sm:col-span-3">
+  
+    <div class="bg-white col-start-6 col-end-5 p-1 rounded-xl my-4 mr-auto shadow-md " >
+      <div class=" font-light mb-1 text-left ml-2 p-1"> Product name: 
+        <a class="font-semibold"> {{ ProductName }}</a>  
+      </div>
+    </div>
+
+    <div class="bg-white col-start-6 col-end-5 p-1 rounded-xl my-4 mr-auto shadow-md " >
+          <div class=" font-light mb-1 text-left ml-2 p-1"> Product Color : 
+        <a class="font-semibold">{{ProductColor}}</a>  
+      </div>
+    </div>
+
+    <div class="bg-white col-start-6 col-end-5 p-1 rounded-xl my-4 mr-auto shadow-md " >
+          <div class=" font-light mb-1 text-left ml-2 p-1">   Category product  :
+        <a class="font-semibold">{{ CategoryProduct }}</a>  
+      </div>
+    </div>
+
+    <div class="bg-white col-start-6 col-end-5 p-1 rounded-xl my-4 mr-auto shadow-md " >
+          <div class=" font-light mb-1 text-left ml-2 p-1">   Price product  :
+        <a class="font-semibold">{{ PriceProduct }}</a>  
+      </div>
+    </div>
+    <div class="bg-white col-start-6 col-end-5 p-1 rounded-xl my-4 mr-auto shadow-md " >
+          <div class=" font-light mb-1 text-left ml-2 p-1">   Available :
+        <a class="font-semibold">{{ AvailableProduct }}</a>  
+      </div>
+    </div>
+<div class=" space-y-1">
+  <div class="flex w-full ">
                 <button class="group rounded-2xl  h-12  w-full bg-green-500 font-bold text-lg text-white relative overflow-hidden" type="submit" >Submit
                 
                 <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl">
@@ -83,16 +129,10 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
                 </button>
           
               </div>
+</div>
           </div>
-         <div>
-          <p>{{ ProductName }} 
-           {{ProductColor  }}
-            {{ CategoryProduct }}
-            {{ PriceProduct }}
-          {{ AvailableProduct }}</p>
-         </div>
-
-        </div>
+  
+</div>
 
         
         <div class="overflow-x-auto relative  sm:rounded-lg">
@@ -168,8 +208,8 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
     export default {
       data () {
         return {
-          header_table:'Pducts',
-          ProductName :' ',
+          header_table:'Products',
+          ProductName :'',
           ProductColor:'',
           CategoryProduct:'',
           PriceProduct:'',
