@@ -1,4 +1,4 @@
 <template>
     
-    ggg
+    g
 </template>
