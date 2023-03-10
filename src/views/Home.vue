@@ -17,20 +17,26 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
 
       <div class="add--item-form">
 
-            <input  @keyup.enter="Items.push({id:Items.length+1 , label: newItem})"
-            v-model="newItem" type="text" name="" id="" placeholder="Add Item">
 
-            <button
-               @click="Items.push({id:Items.length+1 , label: newItem})"
-               class="btn btn-primary bg-blue-500">
+
+            <input  
+            v-model="newId" type="text" name="" id="" placeholder="Add id">
+
+            <input 
+            v-model="newItem" type="text" name="" id="" placeholder="Add Item" >
+
+            <button type="submit" class="btn btn-primary bg-blue-500"
+               @click="Items.push({id:newId , label: newItem})" >
               Save Item
             </button>
+   
+  
+            
 
             <ul>
-              <li v-for="item in Items" > {{item.id}} {{ item.label }}</li>
+              <li v-for="item in Items" >{{ item.length }} {{item.id}} {{ item.label }}</li>
             </ul>
       </div>
-
 
 
 
@@ -80,9 +86,9 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
             <div class="w-full">
               <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 text-left">Color Product</span></div>
               <select  v-model="ProductColor" class="w-full bg-white border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded-lg " id="grid-state" >
-                <option>Sliver</option>
-                <option>White</option>
-                <option>Black</option>
+                <option value="Sliver">Sliver</option>
+                <option value="White">White</option>
+                <option value="Black">Black</option>
               </select>
               
             </div>
@@ -93,9 +99,9 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
             <div class="w-full">
               <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 text-left">Category</span></div>
               <select v-model="CategoryProduct" class="w-full bg-white border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded-lg " id="grid-state">
-                <option>Laptop</option>
-                <option>Desktop</option>
-                <option>Accessories	</option>
+                <option value="Laptop">Laptop</option>
+                <option value="Desktop">Desktop</option>
+                <option value="Accessories">Accessories	</option>
               </select>
             </div>
 
@@ -126,7 +132,8 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
             </div>
           </div>
         </div>
-        
+  
+            
 
 
   </div>
@@ -135,7 +142,7 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
   
     <div class="bg-white col-start-6 col-end-5 p-1 rounded-xl my-4 mr-auto shadow-md " >
       <div class=" font-light mb-1 text-left ml-2 p-1"> Product name: 
-        <a class="font-semibold"> {{ ProductName }}</a>  
+        <a class="font-semibold" > {{ ProductName }}</a>  
       </div>
     </div>
 
@@ -163,7 +170,9 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
     </div>
 <div class=" space-y-1">
   <div class="flex w-full ">
-                <button class="group rounded-2xl  h-12  w-full bg-green-500 font-bold text-lg text-white relative overflow-hidden" type="submit" >Submit
+                <button class="group rounded-2xl  h-12  w-full bg-green-500 font-bold text-lg text-white relative overflow-hidden" type="submit" 
+                @click="Products.push({id:Products.length+1, name:ProductName , color: ProductColor,category:CategoryProduct, price:PriceProduct })" 
+                >Submit
                 
                 <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl">
                 </div>
