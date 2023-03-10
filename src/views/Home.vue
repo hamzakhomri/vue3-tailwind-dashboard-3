@@ -1,5 +1,3 @@
-
-
 https://vueschool.io/lessons/conditional-rendering-in-vue-3
 https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
 <template>
