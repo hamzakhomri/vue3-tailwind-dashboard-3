@@ -19,6 +19,10 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
 
             <input  @keyup.enter="Items.push({id:Items.length+1 , label: newItem})"
             v-model="newItem" type="text" name="" id="" placeholder="Add Item">
+            <label >
+                <input v-model="newItem" type="checkbox">
+                High Prioprity
+            </label>
 
             <button
                @click="Items.push({id:Items.length+1 , label: newItem})"
@@ -278,7 +282,22 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
               color :"Sliver", 
               category:'Laptop',              
               price:'2999'
-            },            
+            },
+            {
+              id:2 ,
+              name :"Microsoft Surface Pro	",
+              color :"White",
+              category:'Laptop PC	',
+              price:'1999'
+            },
+            {
+              id:3 ,
+              name :"Magic Mouse 2	",
+              color :"Black",
+              category:'Accessories',
+              price:'99'
+            },
+            
           ]
           
         }
