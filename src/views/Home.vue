@@ -1,6 +1,6 @@
 
 
-
+https://vueschool.io/lessons/conditional-rendering-in-vue-3
 https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
 <template>
   <div>
@@ -171,7 +171,7 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
 <div class=" space-y-1">
   <div class="flex w-full ">
                 <button class="group rounded-2xl  h-12  w-full bg-green-500 font-bold text-lg text-white relative overflow-hidden" type="submit" 
-                @click="Products.push({id:Products.length+1, name:ProductName , color: ProductColor,category:CategoryProduct, price:PriceProduct })" 
+                v-on:click="AddProducts" 
                 >Submit
                 
                 <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl">
@@ -264,6 +264,7 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
 
     <script>
     export default {
+
       data () {
         return {
           header_table:'Products',
@@ -294,8 +295,16 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
       },
       
       
-      created () {
-      },
+      methods: {
+    AddProducts(){
+          this.Products.push({id:this.Products.length+1, name:this.ProductName , color: this.ProductColor,category:this.CategoryProduct, price:this.PriceProduct })
+                    this.ProductName ="";
+                    this.ProductColor="";
+                    this.CategoryProduct="";
+                    this.PriceProduct="";
+
+    }
+  },
 
     }
     </script>
