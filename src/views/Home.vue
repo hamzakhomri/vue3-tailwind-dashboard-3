@@ -7,13 +7,16 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
 
 
 
+<div>
+  <buton v-if="editing" @click="doEdit(false)" class="bg-green-500">AddItem</buton>
+  <buton v-else @click="doEdit(true)"  class="bg-red-500">cancel</buton>
+</div>
 
 
 
 
 
-
-      <div class="add--item-form">
+      <div v-if="editing" class="add--item-form">
 
             <input 
             v-model="newItem" type="text" name="" id="" placeholder="Add Item" >
@@ -29,6 +32,7 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
             <ul>
               <li v-for="item in Items" >{{item.id}} {{ item.label }}</li>
             </ul>
+            <p v-if="Items.length===1"> Nice Jobe</p>
       </div>
 
 
@@ -261,6 +265,7 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
       data () {
         return {
           header_table:'Products',
+          editing:false,
           ProductName :'',
           ProductColor:'',
           CategoryProduct:'',
@@ -298,12 +303,14 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
 
     },
     AddItems(){
-      if(this.newItem===""){;
-        alert("chemp vide")
-      }
-      else{
       this.Items.push({id:this.Items.length+1 , label: this.newItem})
-      this.newItem=""      }  }
+      this.newItem=""      
+    }  ,
+
+    doEdit(editing){
+this.editing=editing
+this.newItem=""
+    },
   },
 
     }
