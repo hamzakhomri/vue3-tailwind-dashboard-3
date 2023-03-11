@@ -15,24 +15,19 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
 
       <div class="add--item-form">
 
-
-
-            <input  
-            v-model="newId" type="text" name="" id="" placeholder="Add id">
-
             <input 
             v-model="newItem" type="text" name="" id="" placeholder="Add Item" >
 
             <button type="submit" class="btn btn-primary bg-blue-500"
-               @click="Items.push({id:newId , label: newItem})" >
-              Save Item
+               @click="AddItems" >
+              Save Item with methos
             </button>
    
   
             
 
             <ul>
-              <li v-for="item in Items" >{{ item.length }} {{item.id}} {{ item.label }}</li>
+              <li v-for="item in Items" >{{item.id}} {{ item.label }}</li>
             </ul>
       </div>
 
@@ -301,7 +296,14 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
                     this.CategoryProduct="";
                     this.PriceProduct="";
 
-    }
+    },
+    AddItems(){
+      if(this.newItem===""){;
+        alert("chemp vide")
+      }
+      else{
+      this.Items.push({id:this.Items.length+1 , label: this.newItem})
+      this.newItem=""      }  }
   },
 
     }
