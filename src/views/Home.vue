@@ -1,22 +1,16 @@
+H7E77 57CCZ 86218 EL17P
 https://vueschool.io/lessons/conditional-rendering-in-vue-3
 https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
 <template>
   <div>
   <!-- <h3 class="text-2xl font-bold text-left py-2">{{header_table.toLocaleUpperCase()}}</h3> -->
   <h3 class="text-2xl font-bold text-left py-2">{{header_table || 'somthing happen on script'}}</h3>
-
-
-
+<!-- 
 <div>
-  <buton v-if="editing" @click="doEdit(false)" class="bg-green-500">AddItem</buton>
-  <buton v-else @click="doEdit(true)"  class="bg-red-500">cancel</buton>
+  <buton v-if="EditItems" @click="doEditItems(false)" class="bg-green-500">AddItem</buton>
+  <buton v-else @click="doEditItems(true)"  class="bg-red-500">cancel</buton>
 </div>
-
-
-
-
-
-      <div v-if="editing" class="add--item-form">
+      <div v-if="EditItems" class="add--item-form">
 
             <input 
             v-model="newItem" type="text" name="" id="" placeholder="Add Item" >
@@ -33,56 +27,41 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
               <li v-for="item in Items" >{{item.id}} {{ item.label }}</li>
             </ul>
             <p v-if="Items.length===1"> Nice Jobe</p>
-      </div>
+      </div> 
+    -->
+ 
 
 
 
+<div class="flex justify-start ml-7 mb-5">
+  <p class="text-green-600 text-lg cursor-pointer" v-if="!EditProducts" @click="doProducts(true)" >+ Add Prducts</p>
+</div>
+<form action="">²
+<div v-if="EditProducts" class="w- full mx-auto grid  grid-cols-12 gap-4 p-1 mb-5 bg-blue-50">
+  
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="w- full mx-auto grid  grid-cols-12 gap-4 p-1 mb-5">
-
-  <div class="col-span-12 rounded-lg border border-gray-500 bg-gray-200 sm:col-span-9 mb-auto">
-
+  <div class="col-span-12 rounded-lg border border-gray-500  sm:col-span-9 mb-auto">
+    <div class="flex justify-end">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-red-900 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" 
+      @click="doProducts(false)">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    </div>
+    
 
    <!-- component -->
-   <div class="bg-blue-50  rounded-lg px-8 pt-6 pb-8 flex flex-col ">
+   <div class="  rounded-lg px-8 pt-6 pb-8 flex flex-col ">
           <div class="-mx-3 md:flex mb-6  justify-between space-x-4">
             
             <div class="w-full">
               <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 text-left">Product Name</span></div>
-                <input  v-model="ProductName"   class="border-2 border-gray-300 appearance-none block w-full bg-white text-grey-darker  border-grey-lighter rounded-lg py-3 px-4 " id="grid-first-name" type="text" placeholder="Product Name">
+                <input required  v-model="ProductName"   class="border-2 border-gray-300 appearance-none block w-full bg-white text-grey-darker  border-grey-lighter rounded-lg py-3 px-4 " id="grid-first-name" type="text" placeholder="Product Name">
                 <p class="text-red text-xs italic text-red-600">Please fill out this field.</p>
             </div>
 
             <div class="w-full">
               <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 text-left">Color Product</span></div>
-              <select  v-model="ProductColor" class="w-full bg-white border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded-lg " id="grid-state" >
+              <select required v-model="ProductColor" class="w-full bg-white border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded-lg " id="grid-state" >
                 <option value="Sliver">Sliver</option>
                 <option value="White">White</option>
                 <option value="Black">Black</option>
@@ -95,7 +74,7 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
           <div class="-mx-3 md:flex mb-6 space-x-4">
             <div class="w-full">
               <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 text-left">Category</span></div>
-              <select v-model="CategoryProduct" class="w-full bg-white border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded-lg " id="grid-state">
+              <select required v-model="CategoryProduct" class="w-full bg-white border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded-lg " id="grid-state">
                 <option value="Laptop">Laptop</option>
                 <option value="Desktop">Desktop</option>
                 <option value="Accessories">Accessories	</option>
@@ -104,7 +83,7 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
 
             <div class="w-full">
               <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 text-left">Price</span></div>
-                <input v-model="PriceProduct" class="appearance-none block w-full bg-white text-grey-darker border border-grey-lighter rounded-lg  py-3 px-4" id="grid-zip" type="number" >
+                <input required v-model="PriceProduct" class="appearance-none block w-full bg-white text-grey-darker border border-grey-lighter rounded-lg  py-3 px-4" id="grid-zip" type="number" >
 
             </div>
           </div>
@@ -118,11 +97,11 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
                 </div>
                 <div class="flex items-center space-x-6">
                   <div class="flex items-center">
-                    <input v-model="AvailableProduct" value="Yes" type="radio" name="radio1" id="radioButton1" class="h-5 w-5" />
+                    <input required v-model="AvailableProduct" value="Yes" type="radio" name="radio1" id="radioButton1" class="h-5 w-5" />
                     <label for="radioButton1" class="pl-3 text-base font-medium text-[#07074D]" > Yes </label>
                   </div>
                   <div class="flex items-center">
-                    <input v-model="AvailableProduct" type="radio" name="radio1" id="radioButton2" class="h-5 w-5" />
+                    <input required v-model="AvailableProduct" type="radio" name="radio1" id="radioButton2" class="h-5 w-5" />
                     <label for="radioButton2" value="No" class="pl-3 text-base font-medium text-[#07074D]" > No </label>
                   </div>
                 </div>
@@ -168,7 +147,7 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
 <div class=" space-y-1">
   <div class="flex w-full ">
                 <button class="group rounded-2xl  h-12  w-full bg-green-500 font-bold text-lg text-white relative overflow-hidden" type="submit" 
-                v-on:click="AddProducts" 
+                @click="AddProducts" 
                 >Submit
                 
                 <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl">
@@ -187,7 +166,8 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
 </div>
           </div>
   
-</div>
+        </div>
+        </form>
 
         
         <div class="overflow-x-auto relative  sm:rounded-lg">
@@ -265,7 +245,8 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
       data () {
         return {
           header_table:'Products',
-          editing:false,
+          EditItems:false,
+          EditProducts:false,
           ProductName :'',
           ProductColor:'',
           CategoryProduct:'',
@@ -306,11 +287,16 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
       this.Items.push({id:this.Items.length+1 , label: this.newItem})
       this.newItem=""      
     }  ,
-
-    doEdit(editing){
-this.editing=editing
-this.newItem=""
+    doEditItems(EditItems){
+      this.EditItems=EditItems
+      this.newItem=""
     },
+    doProducts(EditProducts){
+      console.log('EditP')
+      this.EditProducts=EditProducts
+      this.ProductName =""; this.ProductColor=""; this.CategoryProduct=""; this.PriceProduct="";
+
+    }
   },
 
     }
