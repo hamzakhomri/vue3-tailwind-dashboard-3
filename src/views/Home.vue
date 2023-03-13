@@ -61,7 +61,7 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
             <div class="w-full">
               <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 text-left">Product Name</span></div>
                 <input required  v-model="ProductName"   class="border-2 border-gray-300 appearance-none block w-full bg-white text-grey-darker  border-grey-lighter rounded-lg py-3 px-4 " id="grid-first-name" type="text" placeholder="Product Name">
-                <p class="text-red text-xs italic text-red-600">Please fill out this field.</p>
+                <p v-bind:hidden="ProductName.length>0" class="text-red text-xs italic text-red-600">Please fill out this field.</p>
             </div>
 
             <div class="w-full">
@@ -71,6 +71,7 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
                 <option value="White">White</option>
                 <option value="Black">Black</option>
               </select>
+              <p v-bind:hidden="ProductColor.length>0" class="text-red text-xs italic text-red-600">Please fill out this field.</p>
               
             </div>
           </div>
@@ -84,12 +85,13 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
                 <option value="Desktop">Desktop</option>
                 <option value="Accessories">Accessories	</option>
               </select>
+              <p v-bind:hidden="CategoryProduct.length>0" class="text-red text-xs italic text-red-600">Please fill out this field.</p>
             </div>
 
             <div class="w-full">
               <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 text-left">Price</span></div>
                 <input required v-model="PriceProduct" class="appearance-none block w-full bg-white text-grey-darker border border-grey-lighter rounded-lg  py-3 px-4" id="grid-zip" type="number" >
-
+                <p v-bind:hidden="PriceProduct.length!=0 " class="text-red text-xs italic text-red-600">Please fill out this field.</p>
             </div>
           </div>
 
@@ -109,6 +111,7 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
                     <input required v-model="AvailableProduct"  value="No" type="radio" name="radio" id="radioButton2" class="h-5 w-5" />
                     <label for="radioButton2" value="No" class="pl-3 text-base font-medium text-[#07074D]" > No </label>
                   </div>
+                  <p v-bind:hidden="AvailableProduct.length>0" class="text-red text-xs italic text-red-600">Please fill out this field.</p>
                 </div>
             </div>
           </div>
@@ -153,7 +156,7 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
   <div class="flex w-full ">
                 <button class="btn btn-primary group rounded-2xl  h-12  w-full bg-green-500 font-bold text-lg text-white relative overflow-hidden" type="submit" 
                 @click="AddProducts"
-                v-bind:hidden="ProductName.length===0 || ProductColor.length===0 || CategoryProduct.length===0  || PriceProduct.length===0 || AvailableProduct.length===0"
+                v-bind:disable="ProductName.length===0 || ProductColor.length===0 || CategoryProduct.length===0  || PriceProduct.length===0 || AvailableProduct.length===0"
                 >Submit
                 
                 <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl">
@@ -256,7 +259,7 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
       data () {
         return {
           header_table:'Products',
-          EditItems:true,
+          EditItems:false,
           EditProducts:true,
           newItem:"",
           ProductName :'',
