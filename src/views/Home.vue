@@ -1,8 +1,9 @@
+https://vueschool.io/lessons/html-attribute-binding-in-vue-3
 H7E77 57CCZ 86218 EL17P
 https://vueschool.io/lessons/conditional-rendering-in-vue-3
 https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
 <template>
-  <div>
+  <div class="">
   <!-- <h3 class="text-2xl font-bold text-left py-2">{{header_table.toLocaleUpperCase()}}</h3> -->
   <h3 class="text-2xl font-bold text-left py-2">{{header_table || 'somthing happen on script'}}</h3>
 <!-- 
@@ -33,25 +34,27 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
 
 
 
-<div class="flex justify-start ml-7 mb-5">
-  <p class="text-green-600 text-lg cursor-pointer" v-if="!EditProducts" @click="doProducts(true)" >+ Add Prducts</p>
+<div class="flex justify-start ml-7 mb-5 ">
+  <p class="text-green-600 text-lg cursor-pointer" v-if="!EditProducts" @click="doProducts(true)" >+Add Prducts</p>
 </div>
-<form action="">²
-<div v-if="EditProducts" class="w- full mx-auto grid  grid-cols-12 gap-4 p-1 mb-5 bg-blue-50">
-  
 
-  <div class="col-span-12 rounded-lg border border-gray-500  sm:col-span-9 mb-auto">
-    <div class="flex justify-end">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-red-900 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" 
+<form v-if="EditProducts" action="" class="bg-blue-100 rounded-lg border border-gray-500 mb-5">
+  <div class="flex justify-end">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-red-900 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" 
       @click="doProducts(false)">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
     </div>
+<div  class="w- full mx-auto grid rounded-lg grid-cols-12 gap-4 p-1 mb-5 ">
+  
+
+  <div class="col-span-12 rounded-lg border border-gray-500  sm:col-span-9 mb-auto">
+
     
 
    <!-- component -->
    <div class="  rounded-lg px-8 pt-6 pb-8 flex flex-col ">
-          <div class="-mx-3 md:flex mb-6  justify-between space-x-4">
+          <div class="-mx-3 md:flex mb-6  justify-between space-x-4 ">
             
             <div class="w-full">
               <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 text-left">Product Name</span></div>
@@ -171,12 +174,16 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
 
         
         <div class="overflow-x-auto relative  sm:rounded-lg">
+          
+          <p v-if="Products.length ===0" class="text-2xl font-bold text-green-600 mb-5">Nothink to Add</p>
+          <p v-else class="text-left text-xl font-bold text-black n-600 mb-5">You Have {{ Products.length }} Products</p>
+
           <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th scope="col" class="py-3 px-6">
                   Id
-                </th>
+                </th> 
                 <th scope="col" class="py-3 px-6">
                   Product name
                 </th>
@@ -236,6 +243,7 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
           
 
         </div>
+
       </div>
     </template>
 
@@ -246,7 +254,7 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
         return {
           header_table:'Products',
           EditItems:false,
-          EditProducts:false,
+          EditProducts:true,
           ProductName :'',
           ProductColor:'',
           CategoryProduct:'',
@@ -267,7 +275,8 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
               color :"Sliver", 
               category:'Laptop',              
               price:'2999'
-            },            
+            }, 
+         
           ]
           
         }
