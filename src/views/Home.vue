@@ -6,31 +6,33 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
   <div class="">
   <!-- <h3 class="text-2xl font-bold text-left py-2">{{header_table.toLocaleUpperCase()}}</h3> -->
   <h3 class="text-2xl font-bold text-left py-2">{{header_table || 'somthing happen on script'}}</h3>
-<!-- 
+
 <div>
   <buton v-if="EditItems" @click="doEditItems(false)" class="bg-green-500">AddItem</buton>
   <buton v-else @click="doEditItems(true)"  class="bg-red-500">cancel</buton>
 </div>
+
       <div v-if="EditItems" class="add--item-form">
+        <div class="bg-orange-500 p-10">
+          <input v-model="newItem" type="text" name="" id="" placeholder="Add Item">
+          
+          <button type="submit" class="btn btn-primary border bg-blue-500 cursor-pointer"
+          v-bind:disabled="ProductName.length===0"
+            @click="AddItems"> Save Item with methos 
+          </button> 
 
-            <input 
-            v-model="newItem" type="text" name="" id="" placeholder="Add Item" >
+          <a>  item : {{newItem}}  </a>
+        </div>
+          <ul>
+            <li v-for="item in Items" >{{item.id}} {{ item.label }}</li>
+          </ul>
 
-            <button type="submit" class="btn btn-primary bg-blue-500"
-               @click="AddItems" >
-              Save Item with methos
-            </button>
+          <p v-if="Items.length===1"> Nice Jobe</p>
+          <p v-else>You have :{{ Items.length }} Items</p>
+
+      </div> 
    
   
-            
-
-            <ul>
-              <li v-for="item in Items" >{{item.id}} {{ item.label }}</li>
-            </ul>
-            <p v-if="Items.length===1"> Nice Jobe</p>
-      </div> 
-    -->
- 
 
 
 
@@ -100,11 +102,11 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
                 </div>
                 <div class="flex items-center space-x-6">
                   <div class="flex items-center">
-                    <input required v-model="AvailableProduct" value="Yes" type="radio" name="radio1" id="radioButton1" class="h-5 w-5" />
+                    <input required v-model="AvailableProduct" value="Yes" type="radio" name="radio" id="radioButton1" class="h-5 w-5" />
                     <label for="radioButton1" class="pl-3 text-base font-medium text-[#07074D]" > Yes </label>
                   </div>
                   <div class="flex items-center">
-                    <input required v-model="AvailableProduct" type="radio" name="radio1" id="radioButton2" class="h-5 w-5" />
+                    <input required v-model="AvailableProduct"  value="No" type="radio" name="radio" id="radioButton2" class="h-5 w-5" />
                     <label for="radioButton2" value="No" class="pl-3 text-base font-medium text-[#07074D]" > No </label>
                   </div>
                 </div>
@@ -149,8 +151,9 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
     </div>
 <div class=" space-y-1">
   <div class="flex w-full ">
-                <button class="group rounded-2xl  h-12  w-full bg-green-500 font-bold text-lg text-white relative overflow-hidden" type="submit" 
-                @click="AddProducts" 
+                <button class="btn btn-primary group rounded-2xl  h-12  w-full bg-green-500 font-bold text-lg text-white relative overflow-hidden" type="submit" 
+                @click="AddProducts"
+                v-bind:hidden="ProductName.length===0 || ProductColor.length===0 || CategoryProduct.length===0  || PriceProduct.length===0 || AvailableProduct.length===0"
                 >Submit
                 
                 <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl">
@@ -159,7 +162,7 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
           
               </div>
               <div class="flex w-full ">
-                <button class="group rounded-2xl  h-12  w-full bg-red-500 font-bold text-lg text-white relative overflow-hidden" type="submit" >Cancel
+                <button class="group rounded-2xl  h-12  w-full bg-red-500 font-bold text-lg text-white relative overflow-hidden" type="" >Cancel
                 
                 <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl">
                 </div>
@@ -253,8 +256,9 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
       data () {
         return {
           header_table:'Products',
-          EditItems:false,
+          EditItems:true,
           EditProducts:true,
+          newItem:"",
           ProductName :'',
           ProductColor:'',
           CategoryProduct:'',
