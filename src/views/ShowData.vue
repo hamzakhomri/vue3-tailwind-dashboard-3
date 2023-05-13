@@ -7,14 +7,6 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
   <!-- <h3 class="text-2xl font-bold text-left py-2">{{header_table.toLocaleUpperCase()}}</h3> -->
   <h3 class="text-2xl font-bold text-left py-2">{{header_table || 'somthing happen on script'}}</h3>
 
-
-
-
-
-
-
-
-
       <div class="add--item-form">
 
             <input  @keyup.enter="Items.push({id:Items.length+1 , label: newItem})"

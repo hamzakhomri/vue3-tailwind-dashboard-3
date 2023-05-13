@@ -16,6 +16,7 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
 
       <div v-if="EditItems" class="add--item-form">
         <div class="bg-orange-500 p-10">
+          <p >You have :{{ Items.length }} Items</p>
           <input v-model="newItem" type="text" name="" id="" placeholder="Add Item">
           
           <button type="submit" class="btn btn-primary border bg-blue-500 cursor-pointer"
@@ -25,12 +26,28 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
 
           <a>  item : {{newItem}}  </a>
         </div>
+
           <ul>
-            <li v-for="item in Items" >{{item.id}} {{ item.label }}</li>
+
+            <li v-for="item in Items" :key="item.id"
+            :class="{ strikeout :item.purchased, priority:item.highPriority}"
+            class="static-class"
+            
+            > {{ item.label }}
+            </li>
+<br>
+            <li v-for="item in Items" :key="item.id"
+            :class=" [
+                { strikeout :item.purchased}, 
+                  {priority:item.highPriority},
+                  'static-calss'
+              ]"
+            > +{{ item.label }}
+            </li>
+
           </ul>
 
           <p v-if="Items.length===1"> Nice Jobe</p>
-          <p v-else>You have :{{ Items.length }} Items</p>
 
       </div> 
    
@@ -97,8 +114,6 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
             </div>
           </div>
 
-
-
           <div class="-mx-3 md:flex mb-6  justify-between space-x-4" >
             <div class="border p-2">
                 <div class="flex justify-start">
@@ -117,6 +132,7 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
                 </div>
             </div>
           </div>
+
         </div>
   
             
@@ -261,8 +277,8 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
       data () {
         return {
           header_table:'Products',
-          EditItems:false,
-          EditProducts:true,
+          EditItems:true,
+          EditProducts:false,
           newItem:"",
           ProductName :'',
           ProductColor:'',
@@ -272,12 +288,28 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
           
 
           Items:[
-            { id:1, label:"Hellow World !!" },
+            { id:1, label:"Iphone 14 pro max", purchased: true, highPriority:false},
+            { id:2, label:"Xiaomi redmi not10s", purchased:true , highPriority:false},
+            { id:3, label:"Galaxy note 22 ultra", purchased:false , highPriority:true},
 
           ],
 
 
           Products: [
+            {
+              id:1 ,
+              name :"Apple MacBook Pro 17",
+              color :"Sliver", 
+              category:'Laptop',              
+              price:'2999'
+            }, 
+            {
+              id:1 ,
+              name :"Apple MacBook Pro 17",
+              color :"Sliver", 
+              category:'Laptop',              
+              price:'2999'
+            }, 
             {
               id:1 ,
               name :"Apple MacBook Pro 17",
