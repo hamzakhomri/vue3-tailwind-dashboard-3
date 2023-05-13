@@ -13,7 +13,7 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
   <buton v-if="EditItems" @click="doEditItems(false)" class="bg-green-500">AddItem</buton>
   <buton v-else @click="doEditItems(true)"  class="bg-red-500">cancel</buton>
 </div>
-
+<!-- 
       <div v-if="EditItems" class="add--item-form">
         <div class="bg-orange-500 p-10">
           <p >You have :{{ Items.length }} Items</p>
@@ -49,7 +49,7 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
 
           <p v-if="Items.length===1"> Nice Jobe</p>
 
-      </div> 
+      </div>  -->
    
   
 
@@ -209,11 +209,11 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
                   Id
                 </th> 
                 <th scope="col" class="py-3 px-6">
-                  Product name
+                  nameProductCategory
                 </th>
                 <th scope="col" class="py-3 px-6">
                   <div class="flex items-center">
-                    Color
+                    createdProductCategory
                     <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="ml-1 w-3 h-3" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
                         <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"></path>
                       </svg></a>
@@ -221,19 +221,14 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
                 </th>
                 <th scope="col" class="py-3 px-6">
                   <div class="flex items-center">
-                    Category
+                    modifiedProductCategory
                     <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="ml-1 w-3 h-3" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
                         <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"></path>
                       </svg></a>
                   </div>
                 </th>
                 <th scope="col" class="py-3 px-6">
-                  <div class="flex items-center">
-                    Price
-                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="ml-1 w-3 h-3" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
-                        <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"></path>
-                      </svg></a>
-                  </div>
+
                 </th>
                 <th scope="col" class="py-3 px-6">
                   <span class="sr-only">Edit</span>
@@ -241,22 +236,20 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(product) in Products" :key="product.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <tr v-for="(category) in categorys" :key="category.idProductCategory" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {{ product.id || '' }} 
+                  {{ category.idProductCategory || '' }} 
                 </th>
                 <td class="py-4 px-6">
-                  {{ product.name }}
+                  {{ category.nameProductCategory }}
                 </td>
                 <td class="py-4 px-6">
-                  {{ product.color }}
+                  {{ category.createdProductCategory }}
                 </td>
                 <td class="py-4 px-6">
-                  {{product.category}}
+                  {{category.modifiedProductCategory}}
                 </td>
-                <td class="py-4 px-6">
-                  {{ product.price }} DH
-                </td>
+
                 <td class="py-4 px-6 text-right">
                   <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                 </td>
@@ -270,12 +263,15 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
 
       </div>
     </template>
-
     <script>
+    import CategoryService from '../services/Category'
     export default {
-
+      name:'categorys',
       data () {
+     categorys = []
         return {
+         
+
           header_table:'Products',
           EditItems:true,
           EditProducts:false,
@@ -303,20 +299,7 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
               category:'Laptop',              
               price:'2999'
             }, 
-            {
-              id:1 ,
-              name :"Apple MacBook Pro 17",
-              color :"Sliver", 
-              category:'Laptop',              
-              price:'2999'
-            }, 
-            {
-              id:1 ,
-              name :"Apple MacBook Pro 17",
-              color :"Sliver", 
-              category:'Laptop',              
-              price:'2999'
-            }, 
+
          
           ]
           
@@ -325,6 +308,11 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
       
       
       methods: {
+    getCayegorys(){
+      CategoryService.getCategories().then((response)=>{
+        this.categorys = response.data;
+      })
+    },
     AddProducts(){
           this.Products.push({id:this.Products.length+1, name:this.ProductName , color: this.ProductColor,category:this.CategoryProduct, price:this.PriceProduct })
                     this.ProductName ="";
@@ -349,7 +337,10 @@ https://vueschool.io/lessons/user-inputs-vue-devtools-in-vue-3
     }
   },
 
-    }
+  created(){
+    this.getCayegorys()
+  }
+}
     </script>
 
     <style>
