@@ -18,8 +18,13 @@
             
             <div class="w-full">
               <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 text-left">Category Name</span></div>
-                <input required  v-model="CategoryName"   class="border-2 border-gray-300 appearance-none block w-full bg-white text-grey-darker  border-grey-lighter rounded-lg py-3 px-4 " id="grid-first-name" type="text" placeholder="Category Name">
-                <p v-bind:hidden="CategoryName.length>0" class="text-red text-xs italic text-red-600">Please fill out this field.</p>
+              <input required v-model="CategoryName"
+              :class="['border-2', 'appearance-none', 'block', 'w-full', 'bg-white', 'text-grey-darker','rounded-lg', 'py-3', 'px-4',
+              { 'border-red-500': CategoryName.length >= 0 },
+              { 'border-green-500': CategoryName.length >= 1 }]"
+              type="text"
+              placeholder="Category Name">
+                <p v-bind:hidden="CategoryName.length>=1" class="text-red text-xs italic text-red-600">Please fill out this field.</p>
             </div>
           </div>
       </div>
@@ -28,7 +33,7 @@
 
       <div class="bg-white col-start-6 col-end-5 p-1 rounded-xl my-4 mr-auto shadow-md " >
         <div class=" font-light mb-1 text-left ml-2 p-1"> Product name: 
-          <a class="font-semibold" > {{ CategoryName }}</a>  
+          <a class="font-semibold" > {{CategoryName}}</a>  
         </div>
       </div>
     <div class=" space-y-1">
@@ -36,8 +41,7 @@
       
                   <button class="btn btn-primary group rounded-2xl  h-12  w-full bg-green-500 font-bold text-lg text-white relative overflow-hidden" type="submit" 
                   @click="AddProducts"
-                  v-bind:disable="CategoryName.length===0 || ProductColor.length===0 || CategoryProduct.length===0  || PriceProduct.length===0 || AvailableProduct.length===0"
-                  >Submit
+                  v-bind:disabled="CategoryName.length == 0 ">Submit
                   
                   <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl">
                   </div>
@@ -45,7 +49,8 @@
             
                 </div>
                 <div class="flex w-full ">
-                  <button class="group rounded-2xl  h-12  w-full bg-red-500 font-bold text-lg text-white relative overflow-hidden" type="" >Cancel
+                  <button class="group rounded-2xl  h-12  w-full bg-red-500 font-bold text-lg text-white relative overflow-hidden" 
+                  @click="Canceled" >Cancel
                   
                   <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl">
                   </div>
@@ -77,17 +82,21 @@
       <th scope="col" class="py-3 px-6">
         <div class="flex items-center">
          ID
-          <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="ml-1 w-3 h-3" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
+          <a href="#">
+            <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 w-3 h-3" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
               <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"></path>
-            </svg></a>
+            </svg>
+          </a>
         </div>
       </th>
       <th scope="col" class="py-3 px-6">
         <div class="flex items-center">
          Category
-          <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="ml-1 w-3 h-3" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
+          <a href="#">
+            <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 w-3 h-3" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
               <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"></path>
-            </svg></a>
+            </svg>
+          </a>
         </div>
       </th>
       <th scope="col" class="py-3 px-6">
@@ -110,7 +119,7 @@
       <th scope="col" class="py-3 px-6">
         <span class="sr-only">Edit</span>
       </th>
-      <th scope="col" class="py-3 px-6">
+      <th scope="col" class="py-3 px-6">²
         <span class="sr-only">Edit</span>
       </th>
     </tr>
@@ -210,6 +219,9 @@ export default {
     AddProducts() {
       this.Products.push({ id: this.Products.length + 1, name: this.CategoryName });
       this.ProductName = "";
+    },
+    Canceled(){
+      window.location.reload();
     },
     AddItems() {
       this.Items.push({ id: this.Items.length + 1, label: this.newItem });
