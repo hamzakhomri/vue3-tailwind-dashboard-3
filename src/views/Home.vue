@@ -131,7 +131,8 @@
       </td>
 
       <td class="py-4 px-6 text-right">
-        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+        <button  @click="deleteProductCategory(category.idProductCategory)">Delete</button>
+        <!-- <a @click="deleteProductCategory(category.idProductCategory)" href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> -->
       </td>
       <td class="py-4 px-6 text-right">
         <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
@@ -174,6 +175,21 @@ export default {
       });
   },
   methods: {
+
+    // Delete CATEGORY TO SPRINGBOOT
+  deleteProductCategory(idProductCategory) {
+    axios.delete(`http://localhost:8080/productcategory/${idProductCategory}`)
+      .then(response => {
+        // Handle success, e.g., show a success message or update the list of product categories
+        window.location.reload();
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  },
+    // End Delete CATEGORY TO SPRINGBOOT
+
+
     // POST CATEGORY TO SPRINGBOOT
     submitCategories() {
       const data = {
@@ -190,6 +206,7 @@ export default {
           console.error(error);
         });
     },
+      //END  POST CATEGORY TO SPRINGBOOT
     AddProducts() {
       this.Products.push({ id: this.Products.length + 1, name: this.CategoryName });
       this.ProductName = "";
