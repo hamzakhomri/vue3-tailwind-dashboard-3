@@ -57,8 +57,21 @@
 
   </div>
 </form>
-
+  <!-- ===================   SEARCH BAR    ========================== -->
+          <div class="flex items-center w-full mb-4">
+            <label for="voice-search" class="sr-only">Search</label>
+            <div class="relative w-full ">
+              <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
+                <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                </svg>
+              </div>
+              <input type="text" id="searchCategory" v-model="searchCategory" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[100%] pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search..." required>
+            </div>
+          </div>
+<!-- ===================   END SEARCH BAR    ========================== -->
 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+  
   <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
     <tr>
       <th scope="col" class="py-3 px-6">
@@ -122,30 +135,28 @@
   </tbody>
 </table>
 </template>
-
 <script>
 import axios from 'axios';
 
 export default {
   data() {
     return {
-      header_table:'Products',
-          EditItems:true,
-          EditProducts:true,
-          newItem:"",
-          CategoryName :'',
-          ProductColor:'',
-          CategoryProduct:'',
-          PriceProduct:'',
-          AvailableProduct:'',
-
+      header_table: 'Products',
+      EditItems: true,
+      EditProducts: true,
+      newItem: '',
+      CategoryName: '',
+      searchCategory: '',
       ProductCategory: []
     };
   },
-
-
-
-
+  computed: {
+    ProductCategory() {
+      return this.ProductCategory.filter(category =>
+        category.nameProductCategory.includes(this.searchCategory)
+      );
+    }
+  },
   mounted() {
     // GET ALL CATEGORIES FROM SPRINGBOOT
     axios.get('http://localhost:8080/productcategory')
@@ -156,51 +167,40 @@ export default {
         console.error(error);
       });
   },
-// END GET CATEGORIES FROM SPRINGBOOT
   methods: {
-
-  // POST CATEGORIE ON SPRINGBOOT
-
-
-
-
-  submitCategories() {
-    const data={
-      nameProductCategory: this.CategoryName
-    };
-        axios.post('http://localhost:8080/productcategory', data)
+    // POST CATEGORY TO SPRINGBOOT
+    submitCategories() {
+      const data = {
+        nameProductCategory: this.CategoryName
+      };
+      axios.post('http://localhost:8080/productcategory', data)
         .then(response => {
           console.log(response.data);
           // Handle the response as needed
-          this.CategoryName=""
-          window.location.reload()
+          this.CategoryName = "";
+          window.location.reload();
         })
         .catch(error => {
           console.error(error);
         });
-      },
-    // END POST CATEGORIE ON SPRINGBOOT
-
-
-    AddProducts(){
-          this.Products.push({id:this.Products.length+1, name:this.CategoryName })
-                    this.ProductName ="";
-
     },
-    AddItems(){
-      this.Items.push({id:this.Items.length+1 , label: this.newItem})
-      this.newItem=""      
-    }  ,
-    doEditItems(EditItems){
-      this.EditItems=EditItems
-      this.newItem=""
+    AddProducts() {
+      this.Products.push({ id: this.Products.length + 1, name: this.CategoryName });
+      this.ProductName = "";
     },
-    doProducts(EditProducts){
-      console.log('EditP')
-      this.EditProducts=EditProducts
-      this.ProductName =""; 
+    AddItems() {
+      this.Items.push({ id: this.Items.length + 1, label: this.newItem });
+      this.newItem = "";
+    },
+    doEditItems(EditItems) {
+      this.EditItems = EditItems;
+      this.newItem = "";
+    },
+    doProducts(EditProducts) {
+      console.log('EditP');
+      this.EditProducts = EditProducts;
+      this.ProductName = "";
     }
-  },
-
+  }
 };
 </script>
