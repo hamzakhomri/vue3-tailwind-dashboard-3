@@ -3,47 +3,54 @@
   <p class="text-green-600 text-lg cursor-pointer" v-if="!EditProducts" @click="doProducts(true)" >+Add Categegories</p>
 </div>
 
-<form v-if="EditProducts" @submit.prevent="submitCategories" action="" class="bg-blue-100 rounded-lg border border-gray-500 mb-5">
+<form v-if="EditProducts" @submit.prevent="submitCategories" action="" class="bg-blue-100 dark:bg-gray-800 rounded-lg border border-gray-500 mb-5">
   <div class="flex justify-end">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-red-900 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" 
-      @click="doProducts(false)">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" @click="doProducts(false)">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
   </div>
-  <div  class="w- full mx-auto grid rounded-lg grid-cols-12 gap-4 p-1 mb-5 ">
-    <div class="col-span-12 rounded-lg border border-gray-500  sm:col-span-9 mb-auto">
+  <div class="w-full mx-auto grid rounded-lg grid-cols-12 gap-4 p-1 mb-5">
+    <div class="col-span-12 rounded-lg border border-gray-500 dark:border-gray-700 sm:col-span-9 mb-auto">
       <!-- component -->
-      <div class="  rounded-lg px-8 pt-6 pb-8 flex flex-col ">
-          <div class="-mx-3 md:flex mb-6  justify-between space-x-4 ">
-            
-            <div class="w-full">
-              <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 text-left">Category Name</span></div>
-              <input required v-model="CategoryName"
-              :class="['border-2', 'appearance-none', 'block', 'w-full', 'bg-white', 'text-grey-darker','rounded-lg', 'py-3', 'px-4',
+      <div class="rounded-lg px-8 pt-6 pb-8 flex flex-col">
+        <div class="-mx-3 md:flex mb-6 justify-between space-x-4">
+          <div class="w-full">
+            <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Category Name</span></div>
+            <input required v-model="CategoryName" :class="[
+              'border-2',
+              'appearance-none',
+              'block',
+              'w-full',
+              'bg-white',
+              'dark:bg-gray-900',
+              'text-gray-800',
+              'dark:text-gray-100',
+              'rounded-lg',
+              'py-3',
+              'px-4',
               { 'border-red-500': CategoryName.length >= 0 },
-              { 'border-green-500': CategoryName.length >= 1 }]"
-              type="text"
-              placeholder="Category Name">
-                <p v-bind:hidden="CategoryName.length>=1" class="text-red text-xs italic text-red-600">Please fill out this field.</p>
-            </div>
+              { 'border-green-500': CategoryName.length >= 1 }
+            ]" type="text" placeholder="Category Name">
+            <p v-bind:hidden="CategoryName.length >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
           </div>
-      </div>
-    </div>
-    <div class="col-span-2 rounded-lg border border-gray-400 bg-gray-100 p-2 sm:col-span-3">
-
-      <div class="bg-white col-start-6 col-end-5 p-1 rounded-xl my-4 mr-auto shadow-md " >
-        <div class=" font-light mb-1 text-left ml-2 p-1"> Product name: 
-          <a class="font-semibold" > {{CategoryName}}</a>  
         </div>
       </div>
-    <div class=" space-y-1">
-    <div class="flex w-full ">
-      
-                  <button class="btn btn-primary group rounded-2xl  h-12  w-full bg-green-500 font-bold text-lg text-white relative overflow-hidden" type="submit" 
-                  @click="AddProducts"
-                  v-bind:disabled="CategoryName.length == 0 ">Submit
+    </div>
+    <div class="col-span-2 rounded-lg border border-gray-400 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 p-2 sm:col-span-3">
+      <div class="bg-white dark:bg-gray-900 col-start-6 col-end-5 p-1 rounded-xl my-4 mr-auto shadow-md">
+        <div class="font-light mb-1 text-left ml-2 p-1">Product name:
+          <a class="font-semibold text-gray-800 dark:text-gray-100">{{CategoryName}}</a>
+        </div>
+      </div>
+      <div class="space-y-1">
+        <div class="flex w-full">
+          <button class="btn btn-primary group rounded-2xl h-12 w-full bg-green-500 dark:bg-green-600 font-bold text-lg text-white relative overflow-hidden" type="submit" @click="AddProducts" v-bind:disabled="CategoryName.length == 0">Submit
+         
+<div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl">
                   
-                  <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl">
+
+
+
                   </div>
                   </button>
             
@@ -63,17 +70,34 @@
   </div>
 </form>
   <!-- ===================   SEARCH BAR    ========================== -->
-          <div class="flex items-center w-full mb-4">
-            <label for="voice-search" class="sr-only">Search</label>
-            <div class="relative w-full ">
-              <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
-                <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
-                </svg>
-              </div>
-              <input type="text" id="searchCategory" v-model="searchCategory" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[100%] pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search..." required>
-            </div>
-          </div>
+
+  <div class="flex space-x-3">
+    <div class="flex items-center w-full mb-4">
+    <label for="voice-search" class="sr-only">Search</label>
+    <div class="relative w-full ">
+      <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
+        <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+        </svg>
+      </div>
+      <input type="number" id="searchCategory" v-model="searchCategoryID" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[100%] pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="ID ..." required>
+    </div>
+  </div>
+
+  <div class="flex items-center w-full mb-4">
+    <label for="voice-search" class="sr-only">Search</label>
+    <div class="relative w-full ">
+      <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
+        <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+        </svg>
+      </div>
+      <input type="text" id="searchCategory" v-model="searchCategoryName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[100%] pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Name ..." required>
+    </div>
+  </div>
+
+  </div>
+
 <!-- ===================   END SEARCH BAR    ========================== -->
 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
   
@@ -144,7 +168,7 @@
         <!-- <a @click="deleteProductCategory(category.idProductCategory)" href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> -->
       </td>
       <td class="py-4 px-6 text-right">
-        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
+        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
       </td>
     </tr>
 
@@ -162,7 +186,8 @@ export default {
       EditProducts: true,
       newItem: '',
       CategoryName: '',
-      searchCategory: '',
+      searchCategoryName: '',
+      searchCategoryID:"",
       ProductCategory: [],
       sortById: 'asc',
       sortByName: 'asc',
@@ -171,11 +196,15 @@ export default {
     };
   },
   computed: {
+
     ProductCategory() {
-      return this.ProductCategory.filter(category =>
-        category.nameProductCategory.includes(this.searchCategory)
-      );
-    }
+  return this.ProductCategory.filter(category =>
+    category.nameProductCategory.includes(this.searchCategoryName) ||
+    category.idProductCategory.toInteger().includes(this.searchCategoryId)
+  );
+},
+
+
   },
   mounted() {
     // GET ALL CATEGORIES FROM SPRINGBOOT
