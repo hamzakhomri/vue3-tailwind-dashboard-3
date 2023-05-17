@@ -2,7 +2,7 @@
 
 <template>
   
-  <div >
+  <div>
     <!-- <router-link to="/home">Home</router-link>/
     <router-link to="/profil">Profil</router-link>/
     <router-link to="/dashboard">dashboard</router-link> -->
