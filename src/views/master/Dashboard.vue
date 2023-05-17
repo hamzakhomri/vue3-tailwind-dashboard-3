@@ -156,7 +156,7 @@
 
 <script>
 
-    export default{
+export default{
   data () {
     return {
         showDropDown:false,
@@ -165,16 +165,15 @@
   },
 
   methods: {
-    //hide show sidebar
-    toggleSideBar(){
-this.showSide =! this.showSide
-    },
-    //toggle user
-    toggleDrop(){
-        this.showDropDown=!this.showDropDown
+      //hide show sidebar
+      toggleSideBar(){
+        this.showSide =! this.showSide
+      },
+      //toggle user
+      toggleDrop(){
+          this.showDropDown=!this.showDropDown
 
-    }
-
+      }
     }
 }
 

@@ -3,8 +3,8 @@
   <p class="text-green-600 text-lg cursor-pointer" v-if="!EditProducts" @click="doProducts(true)" >+Add Categegories</p>
 </div>
 
-<form v-if="EditProducts" @submit.prevent="submitCategories" action="" class="bg-blue-100 dark:bg-gray-800 rounded-lg border border-gray-500 mb-5">
-  <div class="flex justify-end">
+<form v-if="EditProducts" @submit.prevent="submitCategories" action="" class="bg-gray-200 dark:bg-gray-800 rounded-lg border border-gray-500 mb-5">
+  <div class="flex justify-end ">
     <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" @click="doProducts(false)">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
@@ -28,8 +28,8 @@
               'rounded-lg',
               'py-3',
               'px-4',
-              { 'border-red-500': CategoryName.length >= 0 },
-              { 'border-green-500': CategoryName.length >= 1 }
+              { 'border-red-500': CategoryName.length <= 0 },
+              { 'border-green-500': CategoryName.length <= 1 }
             ]" type="text" placeholder="Category Name">
             <p v-bind:hidden="CategoryName.length >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
           </div>
@@ -38,7 +38,7 @@
     </div>
     <div class="col-span-2 rounded-lg border border-gray-400 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 p-2 sm:col-span-3">
       <div class="bg-white dark:bg-gray-900 col-start-6 col-end-5 p-1 rounded-xl my-4 mr-auto shadow-md">
-        <div class="font-light mb-1 text-left ml-2 p-1">Product name:
+        <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Product name:
           <a class="font-semibold text-gray-800 dark:text-gray-100">{{CategoryName}}</a>
         </div>
       </div>
@@ -55,15 +55,14 @@
                   </button>
             
                 </div>
-                <div class="flex w-full ">
-                  <button class="group rounded-2xl  h-12  w-full bg-red-500 font-bold text-lg text-white relative overflow-hidden" 
-                  @click="Canceled" >Cancel
-                  
-                  <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl">
-                  </div>
-                  </button>
-            
-                </div>
+                <div class="flex w-full">
+  <button class="group rounded-2xl h-12 w-full bg-red-500 dark:bg-red-700 font-bold text-lg text-white dark:text-gray-200 relative overflow-hidden" @click="Canceled">
+    Cancel
+    <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 dark:group-hover:bg-gray-800/30 rounded-2xl">
+    </div>
+  </button>
+</div>
+
     </div>
     </div>
 
@@ -100,13 +99,12 @@
 
 <!-- ===================   END SEARCH BAR    ========================== -->
 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-  
   <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
     <tr>
-      <th scope="col" class="py-3 px-6">
-        <div class="flex items-center" >
+      <th scope="col" class=" py-3 px-6">
+        <div @click="sortByIdCategory"  class="cursor-pointer flex items-center">
           ID
-          <a @click="sortByIdCategory">
+          <a >
             <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 w-3 h-3" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
               <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"></path>
             </svg>
@@ -114,9 +112,9 @@
         </div>
       </th>
       <th scope="col" class="py-3 px-6">
-        <div class="flex items-center">
-         Category
-          <a @click="sortByNameCategory">
+        <div @click="sortByNameCategory" class="cursor-pointer flex items-center">
+          Category
+          <a >
             <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 w-3 h-3" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
               <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"></path>
             </svg>
@@ -124,27 +122,27 @@
         </div>
       </th>
       <th scope="col" class="py-3 px-6">
-        <div class="flex items-center">
+        <div @click="sortByDateCreation" class="cursor-pointer flex items-center">
+
           Date Creation
-          <a @click="sortByDateCreation" ><svg xmlns="http://www.w3.org/2000/svg" class="ml-1 w-3 h-3" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
+          <a  ><svg xmlns="http://www.w3.org/2000/svg" class="ml-1 w-3 h-3" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
               <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"></path>
             </svg></a>
         </div>
       </th>
       <th scope="col" class="py-3 px-6">
-        <div class="flex items-center">
+        <div @click="sortbymodifiedProductCategory" class="cursor-pointer flex items-center">
           Date Modificatin
-          <a @click="sortbymodifiedProductCategory"><svg xmlns="http://www.w3.org/2000/svg" class="ml-1 w-3 h-3" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
+          <a ><svg xmlns="http://www.w3.org/2000/svg" class="ml-1 w-3 h-3" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
               <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"></path>
             </svg></a>
         </div>
       </th>
 
-      <th scope="col" class="py-3 px-6">
-        <span class="sr-only">Edit</span>
+      <th scope="col" class="py-3 px-6">Delete
+      
       </th>
-      <th scope="col" class="py-3 px-6">²
-        <span class="sr-only">Edit</span>
+      <th scope="col" class="py-3 px-6">Edit
       </th>
     </tr>
   </thead>
