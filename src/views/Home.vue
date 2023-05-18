@@ -36,46 +36,39 @@
         </div>
       </div>
     </div>
+   
     <div class="col-span-2 rounded-lg border border-gray-400 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 p-2 sm:col-span-3">
       <div class="bg-white dark:bg-gray-900 col-start-6 col-end-5 p-1 rounded-xl my-4 mr-auto shadow-md">
         <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Product name:
           <a class="font-semibold text-gray-800 dark:text-gray-100">{{CategoryName}}</a>
         </div>
       </div>
+      
       <div class="space-y-1">
-        <div class="flex w-full">
-          <button class="btn btn-primary group rounded-2xl h-12 w-full bg-green-500 dark:bg-green-600 font-bold text-lg text-white relative overflow-hidden" type="submit" @click="AddProducts" v-bind:disabled="CategoryName.length == 0">Submit
-         
-<div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl">
-                  
-
-
-
-                  </div>
-                  </button>
-            
-                </div>
-                <div class="flex w-full">
-  <button class="group rounded-2xl h-12 w-full bg-red-500 dark:bg-red-700 font-bold text-lg text-white dark:text-gray-200 relative overflow-hidden" @click="Canceled">
-    Cancel
-    <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 dark:group-hover:bg-gray-800/30 rounded-2xl">
+          <div class="flex w-full">
+            <button class="btn btn-primary group rounded-2xl h-12 w-full bg-green-500 dark:bg-green-600 font-bold text-lg text-white relative overflow-hidden" type="submit" @click="AddProducts" v-bind:disabled="CategoryName.length == 0">Submit
+            <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl"></div>
+            </button>
+          </div>
+        
+          <div class="flex w-full">
+          <button class="group rounded-2xl h-12 w-full bg-red-500 dark:bg-red-700 font-bold text-lg text-white dark:text-gray-200 relative overflow-hidden" @click="Canceled">
+            Cancel
+            <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 dark:group-hover:bg-gray-800/30 rounded-2xl">
+            </div>
+          </button>
+          </div>
+        </div>
     </div>
-  </button>
-</div>
-
-    </div>
-    </div>
-
   </div>
 </form>
 <div class="flex">
-    <h2 class="text-gray-500 p-2">Categories : {{ ProductCategory.length+1 }}</h2>
+    <h2 class="text-gray-500 p-2">Categories : {{ ProductCategory.length }}</h2>
 </div>
   <!-- ===================   SEARCH BAR    ========================== -->
 
   <div class="flex space-x-3">
     <div class="flex items-center w-full mb-4">
-    <label for="voice-search" class="sr-only">Search</label>
     <div class="relative w-full ">
       <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
         <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -87,7 +80,6 @@
   </div>
 
   <div class="flex items-center w-full mb-4">
-    <label for="voice-search" class="sr-only">Search</label>
     <div class="relative w-full ">
       <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
         <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -98,8 +90,31 @@
     </div>
   </div>
 
+  <div class="flex items-center w-full mb-4">
+    <div class="relative w-full ">
+      <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
+        <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+        </svg>
+      </div>
+      <input type="date" id="searchCategory" v-model="searchDateCreation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[100%] pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+    </div>
   </div>
 
+  <div class="flex items-center w-full mb-4">
+    <div class="relative w-full ">
+      <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
+        <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+        </svg>
+        
+      </div>
+      <input type="date" id="searchCategory" v-model="searchDateModification" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[100%] pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+    </div>
+  </div>
+
+  </div>
+  <button @click="handleSearch">Search</button>
     <!-- ===================   END SEARCH BAR    ========================== -->
 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
   <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -166,7 +181,6 @@
 
       <td class="py-4 px-6 text-right">
         <button  @click="deleteProductCategory(category.idProductCategory)">Delete</button>
-        <!-- <a @click="deleteProductCategory(category.idProductCategory)" href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> -->
       </td>
       <td class="py-4 px-6 text-right">
         <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
@@ -184,28 +198,75 @@ export default {
   data() {
     return {
       header_table: 'Products',
-      EditItems: true,
-      EditProducts: true,
-      newItem: '',
+      EditProducts: false,
       CategoryName: '',
-      searchCategoryName: '',
-      searchCategoryID:"",
+
       ProductCategory: [],
+
       sortById: 'asc',
       sortByName: 'asc',
       sortBycreatedProductCategory:'asc',
       sortbymodifiedProductCategory:'asc',
 
+      searchCategoryName: '',
+      searchCategoryID:'',
+      searchDateModification:'',
+      searchDateCreation: '',
     };
   },
   computed: {
 
     ProductCategory() {
-  return this.ProductCategory.filter(category =>
-    category.nameProductCategory.includes(this.searchCategoryName) ||
-    category.idProductCategory.toInteger().includes(this.searchCategoryId)
-  );
+      if (this.searchCategoryID !== '') {
+        return this.ProductCategory; // Return all categories when searchCategoryID is empty
+      } else {
+        return this.ProductCategory.filter(category => 
+        category.nameProductCategory.includes(this.searchCategoryName) ||
+        category.idProductCategory === this.searchCategoryID
+        );
+      }
 },
+
+ProductCategory() {
+  if (this.searchCategoryID !== '') {
+    return this.ProductCategory.filter(category =>
+      category.idProductCategory === this.searchCategoryID
+    );
+  }
+  
+  if (this.searchCategoryName !== '') {
+    return this.ProductCategory.filter(category =>
+      category.nameProductCategory.includes(this.searchCategoryName)
+    );
+  }
+  
+  if (this.searchDateCreation!=='') {
+  const dateParts = this.searchDateCreation.split('-');
+  const searchDates = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+
+  return this.ProductCategory.filter(category => 
+     category.createdProductCategory === searchDates
+  );
+}
+if (this.searchDateModification!=='') {
+  const dateParts = this.searchDateModification.split('-');
+  const searchDates = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+
+  return this.ProductCategory.filter(category => 
+     category.modifiedProductCategory === searchDates
+  );
+}
+  
+  else{
+      return this.ProductCategory;}
+},
+
+
+
+
+
+
+
 
 
   },
@@ -220,6 +281,21 @@ export default {
       });
   },
   methods: {
+    handleSearch() {
+      if (this.searchDateCreation) {
+        const dateParts = this.searchDateCreation.split('-');
+        const searchDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+
+        // Perform your search/filter logic here
+        // ...
+
+        // Show alert with formatted date
+        window.alert(`Search triggered for date: ${searchDate}`);
+      } else {
+        // Empty search date, show error alert
+        window.alert('Please select a search date!');
+      }
+    },
 //=========== OREDER TABLE==================================
     sortbymodifiedProductCategory(){
       this.sortByDate = this.sortByDate === 'asc' ? 'desc' : 'asc';
@@ -311,14 +387,8 @@ export default {
     Canceled(){
       window.location.reload();
     },
-    AddItems() {
-      this.Items.push({ id: this.Items.length + 1, label: this.newItem });
-      this.newItem = "";
-    },
-    doEditItems(EditItems) {
-      this.EditItems = EditItems;
-      this.newItem = "";
-    },
+  
+
     doProducts(EditProducts) {
       console.log('EditP');
       this.EditProducts = EditProducts;
