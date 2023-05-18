@@ -114,8 +114,17 @@
   </div>
 
   </div>
-  <button @click="handleSearch">Search</button>
     <!-- ===================   END SEARCH BAR    ========================== -->
+    <div v-if="showConfirmDialog" class="modal text-gray-500 p-2">
+    <div class="flex justify-center space-x-3">
+      <h3 class="text-red-500">Vous voulez vraiment Supprimer se categories {{ categoryIdToDelete }} :</h3>
+      <div class="modal-buttons space-x-3">
+        <button @click="deleteProductCategory(categoryIdToDelete)">Oui</button>
+        <button @click="cancelDelete">Non</button>
+      </div>
+    </div>
+</div>
+
 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
   <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
     <tr>
@@ -180,7 +189,7 @@
       </td>
 
       <td class="py-4 px-6 text-right">
-        <button  @click="deleteProductCategory(category.idProductCategory)">Delete</button>
+        <button @click="confirmDelete(category.idProductCategory)">Delete</button>
       </td>
       <td class="py-4 px-6 text-right">
         <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
@@ -189,6 +198,7 @@
 
   </tbody>
 </table>
+
 
 </template>
 <script>
@@ -201,6 +211,10 @@ export default {
       EditProducts: false,
       CategoryName: '',
 
+      showConfirmDialog: false,
+      categoryIdToDelete: null,
+      
+
       ProductCategory: [],
 
       sortById: 'asc',
@@ -212,63 +226,54 @@ export default {
       searchCategoryID:'',
       searchDateModification:'',
       searchDateCreation: '',
+
     };
   },
   computed: {
+            ProductCategory() {
+              if (this.searchCategoryID !== '') {
+                return this.ProductCategory; // Return all categories when searchCategoryID is empty
+              } else {
+                return this.ProductCategory.filter(category => 
+                category.nameProductCategory.includes(this.searchCategoryName) ||
+                category.idProductCategory === this.searchCategoryID
+                );
+              }
+        },
+        //========= Search
+        ProductCategory() {
+            if (this.searchCategoryID !== '') {
+              return this.ProductCategory.filter(category =>
+                category.idProductCategory === this.searchCategoryID
+              );
+            }
+            
+            if (this.searchCategoryName !== '') {
+              return this.ProductCategory.filter(category =>
+                category.nameProductCategory.includes(this.searchCategoryName)
+              );
+            }
+            
+            if (this.searchDateCreation!=='') {
+            const dateParts = this.searchDateCreation.split('-');
+            const searchDates = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
 
-    ProductCategory() {
-      if (this.searchCategoryID !== '') {
-        return this.ProductCategory; // Return all categories when searchCategoryID is empty
-      } else {
-        return this.ProductCategory.filter(category => 
-        category.nameProductCategory.includes(this.searchCategoryName) ||
-        category.idProductCategory === this.searchCategoryID
-        );
-      }
-},
+            return this.ProductCategory.filter(category => 
+              category.createdProductCategory === searchDates
+            );
+          }
+          if (this.searchDateModification!=='') {
+            const dateParts = this.searchDateModification.split('-');
+            const searchDates = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
 
-ProductCategory() {
-  if (this.searchCategoryID !== '') {
-    return this.ProductCategory.filter(category =>
-      category.idProductCategory === this.searchCategoryID
-    );
-  }
-  
-  if (this.searchCategoryName !== '') {
-    return this.ProductCategory.filter(category =>
-      category.nameProductCategory.includes(this.searchCategoryName)
-    );
-  }
-  
-  if (this.searchDateCreation!=='') {
-  const dateParts = this.searchDateCreation.split('-');
-  const searchDates = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
-
-  return this.ProductCategory.filter(category => 
-     category.createdProductCategory === searchDates
-  );
-}
-if (this.searchDateModification!=='') {
-  const dateParts = this.searchDateModification.split('-');
-  const searchDates = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
-
-  return this.ProductCategory.filter(category => 
-     category.modifiedProductCategory === searchDates
-  );
-}
-  
-  else{
-      return this.ProductCategory;}
-},
-
-
-
-
-
-
-
-
-
+            return this.ProductCategory.filter(category => 
+              category.modifiedProductCategory === searchDates
+            );
+          }
+            
+            else{
+                return this.ProductCategory;}},
+        //========= End Search
   },
   mounted() {
     // GET ALL CATEGORIES FROM SPRINGBOOT
@@ -276,26 +281,33 @@ if (this.searchDateModification!=='') {
       .then(response => {
         this.ProductCategory = response.data;
       })
-      .catch(error => {
-        console.error(error);
-      });
+      .catch(error => { console.error(error); });
   },
   methods: {
-    handleSearch() {
-      if (this.searchDateCreation) {
-        const dateParts = this.searchDateCreation.split('-');
-        const searchDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
 
-        // Perform your search/filter logic here
-        // ...
 
-        // Show alert with formatted date
-        window.alert(`Search triggered for date: ${searchDate}`);
-      } else {
-        // Empty search date, show error alert
-        window.alert('Please select a search date!');
-      }
+    confirmDelete(categoryId) {
+      this.categoryIdToDelete = categoryId;
+      this.showConfirmDialog = true;
     },
+    deleteProductCategory() {
+      // Perform the deletion logic here
+      console.log("Deleting category with ID:", this.categoryIdToDelete);
+      this.showConfirmDialog = false;
+    },
+    cancelDelete() {
+      this.showConfirmDialog = false;
+    },
+
+
+
+
+
+
+
+
+
+    
 //=========== OREDER TABLE==================================
     sortbymodifiedProductCategory(){
       this.sortByDate = this.sortByDate === 'asc' ? 'desc' : 'asc';
