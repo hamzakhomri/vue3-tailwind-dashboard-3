@@ -68,6 +68,9 @@
 
   </div>
 </form>
+<div class="flex">
+    <h2 class="text-gray-500 p-2">Categories : {{ ProductCategory.length+1 }}</h2>
+</div>
   <!-- ===================   SEARCH BAR    ========================== -->
 
   <div class="flex space-x-3">
@@ -97,7 +100,7 @@
 
   </div>
 
-<!-- ===================   END SEARCH BAR    ========================== -->
+    <!-- ===================   END SEARCH BAR    ========================== -->
 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
   <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
     <tr>
@@ -172,6 +175,7 @@
 
   </tbody>
 </table>
+
 </template>
 <script>
 import axios from 'axios';
@@ -191,6 +195,7 @@ export default {
       sortByName: 'asc',
       sortBycreatedProductCategory:'asc',
       sortbymodifiedProductCategory:'asc',
+
     };
   },
   computed: {
@@ -282,8 +287,6 @@ export default {
       });
   },
     // End Delete CATEGORY TO SPRINGBOOT
-
-
     // POST CATEGORY TO SPRINGBOOT
     submitCategories() {
       const data = {
