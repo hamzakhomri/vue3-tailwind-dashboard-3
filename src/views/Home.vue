@@ -85,13 +85,13 @@
     <div class="relative w-full flex justify-center space-x-2">
       <input disabled required v-model="CategoryName" :class="['cursor-not-allowed','appearance-none','block','bg-white','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4']" 
             type="text" placeholder="ID"> 
-        <input placeholder="Category name" type="search" id="search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+        <input placeholder="Category name" type="search" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
         
 
-        <button class="bg-[#1e3a8a] hover:bg-blue-'300' rounded text-white font-bold px-4 rounded-l">
+        <button class="bg-[#1e3a8a] hover:bg-blue-800 rounded text-white font-bold px-4 rounded-l">
     Modifier
   </button>
-  <button @click="cancelUpdate" class="bg-red-400 hover:bg-red-300 rounded font-bold px-4 rounded-r text-white">
+  <button @click="cancelUpdate" class="bg-[#b91c1c] hover:bg-red-600 rounded font-bold px-4 rounded-r text-white">
     Annuler
   </button>
     </div>
