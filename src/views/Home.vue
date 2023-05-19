@@ -83,7 +83,7 @@
 
             <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
     <div class="relative w-full flex justify-center space-x-2">
-      <input disabled required v-model="CategoryName" :class="['cursor-not-allowed','appearance-none','block','bg-white','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4']" 
+      <input disabled required :class="['cursor-not-allowed','appearance-none','block','bg-white','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4']" 
             type="text" placeholder="ID"> 
         <input placeholder="Category name" type="search" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
         
@@ -425,19 +425,22 @@ export default {
         });
       },
   //=========== END OREDER TABLE==================================
-    // Delete CATEGORY TO SPRINGBOOT
+  
+  updateProductCategory(idProductCategory){
+    axios.delete
+  },
+
+
   deleteProductCategory(idProductCategory) {
     axios.delete(`http://localhost:8080/productcategory/${idProductCategory}`)
       .then(response => {
-        // Handle success, e.g., show a success message or update the list of product categories
         window.location.reload();
       })
       .catch(error => {
         console.error(error);
       });
   },
-    // End Delete CATEGORY TO SPRINGBOOT
-    // POST CATEGORY TO SPRINGBOOT
+
     submitCategories() {
       const data = {
         nameProductCategory: this.CategoryName
@@ -453,7 +456,7 @@ export default {
           console.error(error);
         });
     },
-      //END  POST CATEGORY TO SPRINGBOOT
+
     AddProducts() {
       this.Products.push({ id: this.Products.length + 1, name: this.CategoryName });
       this.ProductName = "";
