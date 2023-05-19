@@ -62,6 +62,48 @@
     </div>
   </div>
 </form>
+
+<div class="border-2 p-3 border-solid border-gray-500 rounded-xl">
+
+
+
+          <!-- ===================   DIALOGUE UPDATE BAR    ========================== -->
+          <div v-if="DialogueUpdate" class=" modal text-gray-500 p-2 border-2 border-solid border-gray-300 rounded">
+          <label class="flex justify-start">Modifier</label>
+
+      <div class="flex justify-center space-x-3 mb-3 mr-2">
+        <!-- <input required v-model="CategoryName" :class="['border-2','appearance-none','block','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',{ 'border-red-500': CategoryName.length <= 0 }]" 
+            type="text" placeholder="Category Name">  -->
+            
+
+
+
+
+
+
+            <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+    <div class="relative w-full flex justify-center space-x-2">
+      <input disabled required v-model="CategoryName" :class="['cursor-not-allowed','appearance-none','block','bg-white','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4']" 
+            type="text" placeholder="ID"> 
+        <input placeholder="Category name" type="search" id="search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+        
+
+        <button class="bg-[#1e3a8a] hover:bg-blue-'300' rounded text-white font-bold px-4 rounded-l">
+    Modifier
+  </button>
+  <button @click="cancelUpdate" class="bg-red-400 hover:bg-red-300 rounded font-bold px-4 rounded-r text-white">
+    Annuler
+  </button>
+    </div>
+
+
+
+
+      </div>
+
+
+    </div>
+    <!-- ===================   END UPDATE DELETE BAR    ========================== -->
 <div class="flex">
     <h2 class="text-gray-500 p-2">Categories : {{ ProductCategory.length }}</h2>
 </div>
@@ -115,15 +157,20 @@
 
   </div>
     <!-- ===================   END SEARCH BAR    ========================== -->
-    <div v-if="showConfirmDialog" class="modal text-gray-500 p-2">
-    <div class="flex justify-center space-x-3">
-      <h3 class="text-red-500">Vous voulez vraiment Supprimer se categories {{ categoryIdToDelete }} :</h3>
-      <div class="modal-buttons space-x-3">
-        <button @click="deleteProductCategory(categoryIdToDelete)">Oui</button>
-        <button @click="cancelDelete">Non</button>
+    <!-- ===================   DIALOGUE DELETE BAR    ========================== -->
+    <div v-if="DialogueDelete" class="modal text-gray-500 p-2">
+      <div class="flex justify-center space-x-3">
+        <h3 class="text-red-500">Vous voulez vraiment Supprimer se categories {{ categoryIdToDelete }} :</h3>
+        <div class="modal-buttons space-x-3">
+          <button @click="deleteProductCategory(categoryIdToDelete)">Oui</button>
+          <button @click="cancelDelete">Non</button>
+        </div>
       </div>
     </div>
-</div>
+    <!-- ===================   END DIALOGUE DELETE BAR    ========================== -->
+
+
+
 
 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
   <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -152,7 +199,7 @@
         <div @click="sortByDateCreation" class="cursor-pointer flex items-center">
 
           Date Creation
-          <a  ><svg xmlns="http://www.w3.org/2000/svg" class="ml-1 w-3 h-3" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
+          <a ><svg xmlns="http://www.w3.org/2000/svg" class="ml-1 w-3 h-3" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
               <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"></path>
             </svg></a>
         </div>
@@ -192,13 +239,13 @@
         <button @click="confirmDelete(category.idProductCategory)">Delete</button>
       </td>
       <td class="py-4 px-6 text-right">
-        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+        <button @click="confirmUpdate(category.idProductCategory)">Modifier</button>
       </td>
     </tr>
 
   </tbody>
 </table>
-
+</div>
 
 </template>
 <script>
@@ -211,8 +258,12 @@ export default {
       EditProducts: false,
       CategoryName: '',
 
-      showConfirmDialog: false,
+      DialogueDelete: false,
       categoryIdToDelete: null,
+
+      DialogueUpdate:true,
+      categoryIdToUpdate: null,
+      categoryNameToUpdate:'',
       
 
       ProductCategory: [],
@@ -288,17 +339,28 @@ export default {
 
     confirmDelete(categoryId) {
       this.categoryIdToDelete = categoryId;
-      this.showConfirmDialog = true;
+      this.DialogueDelete = true;
     },
     deleteProductCategory() {
       // Perform the deletion logic here
       console.log("Deleting category with ID:", this.categoryIdToDelete);
-      this.showConfirmDialog = false;
+      this.DialogueDelete = false;
     },
     cancelDelete() {
-      this.showConfirmDialog = false;
+      this.DialogueDelete = false;
     },
 
+
+    confirmUpdate(categoryId){
+    this.categoryIdToUpdate=categoryId;
+    this.DialogueUpdate=true;
+  },
+  cancelUpdate(){
+    categoryNameToUpdate:'',
+    this.DialogueUpdate=false;
+  },
+
+ 
 
 
 
