@@ -83,12 +83,12 @@
 
             <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
     <div class="relative w-full flex justify-center space-x-2">
-      <input disabled required :class="['cursor-not-allowed','appearance-none','block','bg-white','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4']" 
+      <input disabled v-model="categoryIdToUpdate" required :class="['cursor-not-allowed','appearance-none','block','bg-white','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4']" 
             type="text" placeholder="ID"> 
-        <input placeholder="Category name" type="search" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+        <input v-model="categoryNameToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
         
 
-        <button class="bg-[#1e3a8a] hover:bg-blue-800 rounded text-white font-bold px-4 rounded-l">
+        <button @click="updateProductCategory(categoryIdToUpdate,categoryNameToUpdate)" class="bg-[#1e3a8a] hover:bg-blue-800 rounded text-white font-bold px-4 rounded-l">
     Modifier
   </button>
   <button @click="cancelUpdate" class="bg-[#b91c1c] hover:bg-red-600 rounded font-bold px-4 rounded-r text-white">
@@ -239,7 +239,7 @@
         <button @click="confirmDelete(category.idProductCategory)">Delete</button>
       </td>
       <td class="py-4 px-6 text-right">
-        <button @click="confirmUpdate(category.idProductCategory)">Modifier</button>
+        <button @click="confirmUpdate(category.idProductCategory,category.nameProductCategory)">Modifier</button>
       </td>
     </tr>
 
@@ -263,7 +263,7 @@ export default {
 
       DialogueUpdate:true,
       categoryIdToUpdate: null,
-      categoryNameToUpdate:'',
+      categoryNameToUpdate:null,
       
 
       ProductCategory: [],
@@ -337,6 +337,43 @@ export default {
   methods: {
 
 
+    confirmUpdate(categoryId,categoryname){
+      this.categoryNameToUpdate=categoryname;
+    this.categoryIdToUpdate=categoryId;
+    this.DialogueUpdate=true;
+    },
+    updateCategory(){
+        this.DialogueUpdate=false;
+    },
+    cancelUpdate(){
+      this.categoryNameToUpdate='',
+      this.DialogueUpdate=false;
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     confirmDelete(categoryId) {
       this.categoryIdToDelete = categoryId;
       this.DialogueDelete = true;
@@ -351,16 +388,7 @@ export default {
     },
 
 
-    confirmUpdate(categoryId){
-    this.categoryIdToUpdate=categoryId;
-    this.DialogueUpdate=true;
-  },
-  cancelUpdate(){
-    categoryNameToUpdate:'',
-    this.DialogueUpdate=false;
-  },
 
- 
 
 
 
@@ -426,8 +454,14 @@ export default {
       },
   //=========== END OREDER TABLE==================================
   
-  updateProductCategory(idProductCategory){
-    axios.delete
+  updateProductCategory(idProductCategory,categoryNameToUpdate){
+    axios.put(`http://localhost:8080/productcategory/${idProductCategory}`,{nameProductCategory:categoryNameToUpdate})
+    .then(response => {
+        window.location.reload();
+      })
+      .catch(error => {
+        console.error(error);
+      });
   },
 
 
