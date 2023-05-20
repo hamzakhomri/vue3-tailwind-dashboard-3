@@ -76,7 +76,7 @@
   <!-- ===================   SEARCH BAR    ========================== -->
 
   <div class="flex space-x-3">
-    
+
     <div class="flex items-center w-full mb-4">
       <div class="relative w-full ">
         <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
@@ -202,7 +202,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr v-for="category in ProductCategory" :key="category.idProductCategory" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 w-96">
+    <tr v-for="category in ProductCategory" :key="category.idProductCategory" class="bg-gray-200 hover:bg-gray-300 border-b dark:bg-gray-800 dark:hover:bg-gray-600   dark:border-gray-700 w-96">
       <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
         {{ category.idProductCategory }}
       </th>
