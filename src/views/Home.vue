@@ -154,7 +154,7 @@
     </transition>
     <!-- ===================   END DIALOGUE DELETE BAR    ========================== -->
 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-  <thead class="text-xs border border-indigo-600  text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+  <thead class="text-xs dark:border-none  border border-indigo-600  text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
     <tr>
       <th scope="col" class=" py-3 px-6">
         <div @click="sortByIdCategory"  class="cursor-pointer flex items-center">
