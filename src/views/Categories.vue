@@ -386,6 +386,7 @@ export default {
       axios.put(`http://localhost:8080/productcategory/${idProductCategory}`,{nameProductCategory:categoryNameToUpdate})
       .then(response => {
         this.GetAll()
+        this.DialogueUpdate=false;
         })
         .catch(error => {
           console.error(error);
@@ -395,6 +396,7 @@ export default {
       axios.delete(`http://localhost:8080/productcategory/${idProductCategory}`)
         .then(response => {
           this.GetAll()
+          this.DialogueDelete= false;
         })
         .catch(error => {
           console.error(error);
