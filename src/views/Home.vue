@@ -310,10 +310,7 @@ export default {
   },
 
   mounted() {
-    axios.get('http://localhost:8080/productcategory').then(response => 
-    {
-        this.ProductCategory = response.data;
-      }).catch(error => { console.error(error); });
+    this.GetAll()
   },
   methods: {
     confirmUpdate(categoryId,categoryname){
@@ -364,7 +361,7 @@ export default {
             return dateB - dateA;
           }
         });
-      },
+    },
     sortByNameCategory() {
         this.sortByName = this.sortByName === 'asc' ? 'desc' : 'asc';
         this.ProductCategory.sort((a, b) => {
@@ -381,7 +378,7 @@ export default {
 
           return 0;
         });
-      },
+    },
     sortByIdCategory() {
         this.sortBy = this.sortBy === 'asc' ? 'desc' : 'asc';
         this.ProductCategory.sort((a, b) => {
@@ -391,11 +388,17 @@ export default {
             return b.idProductCategory - a.idProductCategory;
           }
         });
-      },
+    },
+    GetAll(){
+      axios.get('http://localhost:8080/productcategory').then(response => 
+      {
+        this.ProductCategory = response.data;
+      }).catch(error => { console.error(error); });
+    },
     updateProductCategory(idProductCategory,categoryNameToUpdate){
       axios.put(`http://localhost:8080/productcategory/${idProductCategory}`,{nameProductCategory:categoryNameToUpdate})
       .then(response => {
-          window.location.reload();
+        this.GetAll()
         })
         .catch(error => {
           console.error(error);
@@ -404,7 +407,7 @@ export default {
     deleteProductCategory(idProductCategory) {
       axios.delete(`http://localhost:8080/productcategory/${idProductCategory}`)
         .then(response => {
-          window.location.reload();
+          this.GetAll()
         })
         .catch(error => {
           console.error(error);
@@ -419,7 +422,7 @@ export default {
           console.log(response.data);
           // Handle the response as needed
           this.CategoryName = "";
-          window.location.reload();
+          this.GetAll()
         })
         .catch(error => {
           console.error(error);
@@ -431,10 +434,8 @@ export default {
       this.ProductName = "";
     },
     Canceled(){
-      window.location.reload();
+      this.GetAll()
     },
-  
-
     doProducts(EditProducts) {
       console.log('EditP');
       this.EditProducts = EditProducts;
