@@ -154,7 +154,7 @@
     </transition>
     <!-- ===================   END DIALOGUE DELETE BAR    ========================== -->
 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-  <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+  <thead class="text-xs border border-indigo-600  text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
     <tr>
       <th scope="col" class=" py-3 px-6">
         <div @click="sortByIdCategory"  class="cursor-pointer flex items-center">
@@ -193,7 +193,6 @@
             </svg></a>
         </div>
       </th>
-
       <th scope="col" class="py-3 px-6">Delete
       
       </th>
@@ -202,7 +201,8 @@
     </tr>
   </thead>
   <tbody>
-    <tr v-for="category in ProductCategory" :key="category.idProductCategory" class="bg-gray-200 hover:bg-gray-300 border-b dark:bg-gray-800 dark:hover:bg-gray-600   dark:border-gray-700 w-96">
+    <tr v-for="category in ProductCategory" :key="category.idProductCategory" 
+    class="bg-gray-100 hover:bg-blue-100 border border-indigo-600 dark:bg-gray-800 dark:hover:bg-gray-600   dark:border-gray-700 w-96">
       <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
         {{ category.idProductCategory }}
       </th>
