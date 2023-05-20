@@ -76,68 +76,69 @@
   <!-- ===================   SEARCH BAR    ========================== -->
 
   <div class="flex space-x-3">
+    
     <div class="flex items-center w-full mb-4">
-    <div class="relative w-full ">
-      <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
-        <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
-        </svg>
+      <div class="relative w-full ">
+        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
+          <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+          </svg>
+        </div>
+        <input type="number" id="searchCategory" v-model="searchCategoryID" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[100%] pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="ID ..." required>
       </div>
-      <input type="number" id="searchCategory" v-model="searchCategoryID" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[100%] pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="ID ..." required>
     </div>
-  </div>
 
-  <div class="flex items-center w-full mb-4">
-    <div class="relative w-full ">
-      <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
-        <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
-        </svg>
+    <div class="flex items-center w-full mb-4">
+      <div class="relative w-full ">
+        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
+          <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+          </svg>
+        </div>
+        <input type="text" id="searchCategory" v-model="searchCategoryName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[100%] pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Name ..." required>
       </div>
-      <input type="text" id="searchCategory" v-model="searchCategoryName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[100%] pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Name ..." required>
     </div>
-  </div>
 
-  <div class="flex items-center w-full mb-4">
-    <div class="relative w-full ">
-      <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
-        <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
-        </svg>
+    <div class="flex items-center w-full mb-4">
+      <div class="relative w-full ">
+        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
+          <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+          </svg>
+        </div>
+        <input type="date" id="searchCategory" v-model="searchDateCreation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[100%] pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
       </div>
-      <input type="date" id="searchCategory" v-model="searchDateCreation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[100%] pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
     </div>
-  </div>
 
-  <div class="flex items-center w-full mb-4">
-    <div class="relative w-full ">
-      <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
-        <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
-        </svg>
-        
+    <div class="flex items-center w-full mb-4">
+      <div class="relative w-full ">
+        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
+          <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+          </svg>
+          
+        </div>
+        <input type="date" id="searchCategory" v-model="searchDateModification" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[100%] pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
       </div>
-      <input type="date" id="searchCategory" v-model="searchDateModification" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[100%] pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
     </div>
-  </div>
 
   </div>
     <!-- ===================   END SEARCH BAR    ========================== -->
     <!-- ===================   DIALOGUE UPDATE BAR    ========================== -->
-<transition name="slide">
-  <div v-if="DialogueUpdate" class=" modal text-gray-500 p-2 border-2 border-solid border-red-300 rounded bg-red-400">
-    <label class="flex justify-start">Modifier</label>
-    <div class="flex justify-center space-x-3 mb-3 mr-2">
-        <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-      <div class="relative w-full flex justify-center space-x-2">
-        <input disabled v-model="categoryIdToUpdate" required :class="['cursor-not-allowed','appearance-none','block','bg-white','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4']" type="number" placeholder="ID"> 
-        <input v-model="categoryNameToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-        <button @click="updateProductCategory(categoryIdToUpdate,categoryNameToUpdate)" class="bg-[#1e3a8a] hover:bg-blue-800 rounded text-white font-bold px-4 rounded-l"> Modifier </button>
-        <button @click="cancelUpdate" class="bg-[#b91c1c] hover:bg-red-600 rounded font-bold px-4 rounded-r text-white">Annuler</button>
+    <transition name="slide">
+      <div v-if="DialogueUpdate" class=" modal text-gray-500 p-2 border-2 border-solid border-red-300 rounded bg-red-400">
+        <label class="flex justify-start">Modifier</label>
+        <div class="flex justify-center space-x-3 mb-3 mr-2">
+            <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+          <div class="relative w-full flex justify-center space-x-2">
+            <input disabled v-model="categoryIdToUpdate" required :class="['cursor-not-allowed','appearance-none','block','bg-white','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4']" type="number" placeholder="ID"> 
+            <input v-model="categoryNameToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+            <button @click="updateProductCategory(categoryIdToUpdate,categoryNameToUpdate)" class="bg-[#1e3a8a] hover:bg-blue-800 rounded text-white font-bold px-4 rounded-l"> Modifier </button>
+            <button @click="cancelUpdate" class="bg-[#b91c1c] hover:bg-red-600 rounded font-bold px-4 rounded-r text-white">Annuler</button>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</transition>
+    </transition>
     <!-- ===================   END UPDATE DELETE BAR    ========================== -->
     <!-- ===================   DIALOGUE DELETE BAR    ========================== -->
     <transition name="slide">
@@ -152,10 +153,6 @@
     </div>
     </transition>
     <!-- ===================   END DIALOGUE DELETE BAR    ========================== -->
-
-
-
-
 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
   <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
     <tr>
@@ -264,6 +261,7 @@ export default {
 
     };
   },
+  
   computed: {
             ProductCategory() {
               if (this.searchCategoryID !== '') {
@@ -310,87 +308,46 @@ export default {
                 return this.ProductCategory;}},
         //========= End Search
   },
+
   mounted() {
-    // GET ALL CATEGORIES FROM SPRINGBOOT
-    axios.get('http://localhost:8080/productcategory')
-      .then(response => {
+    axios.get('http://localhost:8080/productcategory').then(response => 
+    {
         this.ProductCategory = response.data;
-      })
-      .catch(error => { console.error(error); });
+      }).catch(error => { console.error(error); });
   },
   methods: {
-
-
     confirmUpdate(categoryId,categoryname){
       this.categoryNameToUpdate=categoryname;
-    this.categoryIdToUpdate=categoryId;
-    this.DialogueUpdate=true;
+      this.categoryIdToUpdate=categoryId;
+      this.DialogueUpdate=true;
     },
     updateCategory(){
-        this.DialogueUpdate=false;
+      this.DialogueUpdate=false;
     },
     cancelUpdate(){
       this.DialogueUpdate=false;
     },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     confirmDelete(categoryId) {
       this.categoryIdToDelete = categoryId;
       this.DialogueDelete = true;
     },
     deleteProductCategory() {
-      // Perform the deletion logic here
       console.log("Deleting category with ID:", this.categoryIdToDelete);
       this.DialogueDelete = false;
     },
     cancelDelete() {
       this.DialogueDelete = false;
     },
-
-
-
-
-
-
-
-
-
-
-
-    
-//=========== OREDER TABLE==================================
     sortbymodifiedProductCategory(){
       this.sortByDate = this.sortByDate === 'asc' ? 'desc' : 'asc';
-        this.ProductCategory.sort((a, b) => {
+      this.ProductCategory.sort((a, b) => 
+        {
           const dateA = new Date(a.modifiedProductCategory);
           const dateB = new Date(b.modifiedProductCategory);
-
           if (this.sortByDate === 'asc') {
             return dateA - dateB;
-          } else {
+          }
+          else {
             return dateB - dateA;
           }
         });
@@ -435,29 +392,24 @@ export default {
           }
         });
       },
-  //=========== END OREDER TABLE==================================
-  
-  updateProductCategory(idProductCategory,categoryNameToUpdate){
-    axios.put(`http://localhost:8080/productcategory/${idProductCategory}`,{nameProductCategory:categoryNameToUpdate})
-    .then(response => {
-        window.location.reload();
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  },
-
-
-  deleteProductCategory(idProductCategory) {
-    axios.delete(`http://localhost:8080/productcategory/${idProductCategory}`)
+    updateProductCategory(idProductCategory,categoryNameToUpdate){
+      axios.put(`http://localhost:8080/productcategory/${idProductCategory}`,{nameProductCategory:categoryNameToUpdate})
       .then(response => {
-        window.location.reload();
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  },
-
+          window.location.reload();
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+    deleteProductCategory(idProductCategory) {
+      axios.delete(`http://localhost:8080/productcategory/${idProductCategory}`)
+        .then(response => {
+          window.location.reload();
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
     submitCategories() {
       const data = {
         nameProductCategory: this.CategoryName
@@ -491,6 +443,7 @@ export default {
   }
 };
 </script>
+
 <style>
 .slide-enter-active {
   transition: all 1s;
