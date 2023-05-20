@@ -16,21 +16,8 @@
         <div class="-mx-3 md:flex mb-6 justify-between space-x-4">
           <div class="w-full">
             <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Category Name</span></div>
-            <input required v-model="CategoryName" :class="[
-              'border-2',
-              'appearance-none',
-              'block',
-              'w-full',
-              'bg-white',
-              'dark:bg-gray-900',
-              'text-gray-800',
-              'dark:text-gray-100',
-              'rounded-lg',
-              'py-3',
-              'px-4',
-              { 'border-red-500': CategoryName.length <= 0 },
-              { 'border-green-500': CategoryName.length <= 1 }
-            ]" type="text" placeholder="Category Name">
+            <input type="text" placeholder="Category Name" required v-model="CategoryName" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
+              { 'border-red-500': CategoryName.length <= 0 },{ 'border-green-500': CategoryName.length <= 1 }]" >
             <p v-bind:hidden="CategoryName.length >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
           </div>
         </div>

@@ -1,11 +1,11 @@
 import { createWebHistory, createRouter } from 'vue-router';
 import Categories from '@/views/Categories.vue';
-import Profil from '@/views/Profil.vue';
+import Products from '@/views/Products.vue';
 import Dashboard from '@/views/master/Dashboard.vue';
 import Login from '@/views/master/Login.vue';
 
 //=============================Open on Click===========================
-const profil    = { path: '/profil', name: 'Profil', component: Profil}
+const profil    = { path: '/Products', name: 'Products', component: Products}
 //===========================Open on Default=========================
 const dashboard = {
                     path:'/dashboard', name:'Dashboard', component:Dashboard, 
