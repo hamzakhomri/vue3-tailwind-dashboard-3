@@ -1,10 +1,10 @@
 <template>
 <div class="flex justify-start ml-7 mb-5 ">
-  <p class="text-green-600 text-lg cursor-pointer" v-if="!EditProducts" @click="doProducts(true)" >+Add Categegories</p>
-</div>
 
-<form v-if="EditProducts" @submit.prevent="submitCategories" action="" class="bg-gray-200 dark:bg-gray-800 rounded-lg border border-gray-500 mb-5">
-  <div class="flex justify-end ">
+</div>
+    <transition name="slide">
+      <form  v-show="EditProducts"  @submit.prevent="submitCategories"  action=""  class="bg-gray-200 dark:bg-gray-800 rounded-lg border border-gray-500 mb-5" >
+ <div class="flex justify-end ">
     <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" @click="doProducts(false)">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
@@ -62,50 +62,16 @@
     </div>
   </div>
 </form>
-
+</transition>
 <div class="border-2 p-3 border-solid border-gray-500 rounded-xl">
 
 
 
-          <!-- ===================   DIALOGUE UPDATE BAR    ========================== -->
-          <div v-if="DialogueUpdate" class=" modal text-gray-500 p-2 border-2 border-solid border-gray-300 rounded">
-          <label class="flex justify-start">Modifier</label>
 
-      <div class="flex justify-center space-x-3 mb-3 mr-2">
-        <!-- <input required v-model="CategoryName" :class="['border-2','appearance-none','block','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',{ 'border-red-500': CategoryName.length <= 0 }]" 
-            type="text" placeholder="Category Name">  -->
-            
-
-
-
-
-
-
-            <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-    <div class="relative w-full flex justify-center space-x-2">
-      <input disabled v-model="categoryIdToUpdate" required :class="['cursor-not-allowed','appearance-none','block','bg-white','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4']" 
-            type="text" placeholder="ID"> 
-        <input v-model="categoryNameToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-        
-
-        <button @click="updateProductCategory(categoryIdToUpdate,categoryNameToUpdate)" class="bg-[#1e3a8a] hover:bg-blue-800 rounded text-white font-bold px-4 rounded-l">
-    Modifier
-  </button>
-  <button @click="cancelUpdate" class="bg-[#b91c1c] hover:bg-red-600 rounded font-bold px-4 rounded-r text-white">
-    Annuler
-  </button>
-    </div>
-
-
-
-
-      </div>
-
-
-    </div>
-    <!-- ===================   END UPDATE DELETE BAR    ========================== -->
-<div class="flex">
+<div class="flex justify-between">
     <h2 class="text-gray-500 p-2">Categories : {{ ProductCategory.length }}</h2>
+    <h2  v-if="!EditProducts" @click="doProducts(true)" class="text-green-600 text-lg cursor-pointer">+ Add Categories</h2>
+
 </div>
   <!-- ===================   SEARCH BAR    ========================== -->
 
@@ -157,8 +123,25 @@
 
   </div>
     <!-- ===================   END SEARCH BAR    ========================== -->
+    <!-- ===================   DIALOGUE UPDATE BAR    ========================== -->
+<transition name="slide">
+  <div v-if="DialogueUpdate" class=" modal text-gray-500 p-2 border-2 border-solid border-red-300 rounded bg-red-400">
+    <label class="flex justify-start">Modifier</label>
+    <div class="flex justify-center space-x-3 mb-3 mr-2">
+        <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+      <div class="relative w-full flex justify-center space-x-2">
+        <input disabled v-model="categoryIdToUpdate" required :class="['cursor-not-allowed','appearance-none','block','bg-white','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4']" type="number" placeholder="ID"> 
+        <input v-model="categoryNameToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+        <button @click="updateProductCategory(categoryIdToUpdate,categoryNameToUpdate)" class="bg-[#1e3a8a] hover:bg-blue-800 rounded text-white font-bold px-4 rounded-l"> Modifier </button>
+        <button @click="cancelUpdate" class="bg-[#b91c1c] hover:bg-red-600 rounded font-bold px-4 rounded-r text-white">Annuler</button>
+      </div>
+    </div>
+  </div>
+</transition>
+    <!-- ===================   END UPDATE DELETE BAR    ========================== -->
     <!-- ===================   DIALOGUE DELETE BAR    ========================== -->
-    <div v-if="DialogueDelete" class="modal text-gray-500 p-2">
+    <transition name="slide">
+    <div v-if="DialogueDelete" class="bg-red-200 modal text-gray-500 p-2">
       <div class="flex justify-center space-x-3">
         <h3 class="text-red-500">Vous voulez vraiment Supprimer se categories {{ categoryIdToDelete }} :</h3>
         <div class="modal-buttons space-x-3">
@@ -167,6 +150,7 @@
         </div>
       </div>
     </div>
+    </transition>
     <!-- ===================   END DIALOGUE DELETE BAR    ========================== -->
 
 
@@ -261,7 +245,7 @@ export default {
       DialogueDelete: false,
       categoryIdToDelete: null,
 
-      DialogueUpdate:true,
+      DialogueUpdate:false,
       categoryIdToUpdate: null,
       categoryNameToUpdate:null,
       
@@ -346,7 +330,6 @@ export default {
         this.DialogueUpdate=false;
     },
     cancelUpdate(){
-      this.categoryNameToUpdate='',
       this.DialogueUpdate=false;
     },
 
@@ -508,3 +491,20 @@ export default {
   }
 };
 </script>
+<style>
+.slide-enter-active {
+  transition: all 1s;
+  opacity: 0;
+}
+.slide-enter-to {
+  opacity: 1;
+}
+
+.slide-leave-active {
+  transition: all 1s;
+  opacity: 1;
+}
+.slide-leave-to {
+  opacity: 0;
+}
+</style>
