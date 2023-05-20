@@ -14,7 +14,7 @@
         <div class="flex flex-col justify-between h-full px-[20px] space-y-[10px]">
           <div class="flex flex-col justify-between space-y-[10px]">
 
-            <router-link to="/home">
+            <router-link to="/Categories">
               <div class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white dark:hover:bg-blue-700">
                 <i class="bi bi-house-door-fill"></i>
                 <span class="text-[15px] ml-4 text-gray-200 font-bold">Categories</span>
@@ -30,7 +30,7 @@
               </div>
             </router-link>
 
-            <router-link to="/home">
+            <router-link to="/Categories">
               <div class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white dark:hover:bg-blue-700">
                 <svg class="w-6 h-6 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
