@@ -128,7 +128,7 @@
     </transition>
     <!-- ===================   END UPDATE DELETE BAR    ========================== -->
     <!-- ===================   DIALOGUE DELETE BAR    ========================== -->
-    <transition name="slide">
+    <!-- <transition name="slide">
     <div v-if="DialogueDelete" class="bg-red-200 modal text-gray-500 p-2">
       <div class="flex justify-center space-x-3">
         <h3 class="text-red-500">Vous voulez vraiment Supprimer se categories {{ categoryIdToDelete }} :</h3>
@@ -138,7 +138,7 @@
         </div>
       </div>
     </div>
-    </transition>
+    </transition> -->
     <!-- ===================   END DIALOGUE DELETE BAR    ========================== -->
 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
   <thead class="text-xs dark:border-none  border border-indigo-600  text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -189,7 +189,7 @@
   </thead>
   <tbody>
     <tr v-for="category in ProductCategory" :key="category.idProductCategory" 
-    class="bg-gray-100 hover:bg-blue-100 border border-indigo-600 dark:bg-gray-800 dark:hover:bg-gray-600   dark:border-gray-700 w-96">
+    class="relative bg-gray-100 hover:bg-blue-100 border border-indigo-600 dark:bg-gray-800 dark:hover:bg-gray-600   dark:border-gray-700 w-96">
       <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
         {{ category.idProductCategory }}
       </th>
@@ -209,6 +209,17 @@
       <td class="py-4 px-6 text-right">
         <button @click="confirmUpdate(category.idProductCategory,category.nameProductCategory)">Modifier</button>
       </td>
+      <transition name="slide">
+    <div v-if="DialogueDelete && categoryIdToDelete===category.idProductCategory" class="absolute top-0 left-0 w-full h-full  bg-red-200 modal text-gray-500 py-4">
+      <div class="flex justify-center space-x-3">
+        <h3 class="text-red-500">Vous voulez vraiment Supprimer se categories {{ categoryIdToDelete }} :</h3>
+        <div class="modal-buttons space-x-3">
+          <button @click="deleteProductCategory(categoryIdToDelete)">Oui</button>
+          <button @click="cancelDelete">Non</button>
+        </div>
+      </div>
+    </div>
+    </transition>
     </tr>
 
   </tbody>
