@@ -16,10 +16,10 @@
           <div class="-mx-3 md:flex mb-6 justify-between space-x-4">
             <div class="w-full">
               <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Product Name</span></div>
-              <input type="text" placeholder="Products Name" required v-model="CategoryName" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
-                { 'border-red-500': CategoryName.length <= 0 },
-                { 'border-green-500': CategoryName.length >= 1 }]" >
-              <p v-bind:hidden="CategoryName.length >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
+              <input type="text" placeholder="Products Name" required v-model="Productnam" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
+                { 'border-red-500': Productnam.length <= 0 },
+                { 'border-green-500': Productnam.length >= 1 }]" >
+              <p v-bind:hidden="Productnam.length >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
             </div>
           </div>
         </div>
@@ -28,9 +28,9 @@
           <div class="-mx-3 md:flex mb-6 justify-between space-x-4">
             <div class="w-full">
               <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Price</span></div>
-              <input type="text" placeholder="Price" required v-model="CategoryName" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
-                { 'border-red-500': CategoryName.length <= 0 },{ 'border-green-500': CategoryName.length >= 1 }]" >
-              <p v-bind:hidden="CategoryName.length >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
+              <input type="number" placeholder="Price" required v-model="Price" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
+                { 'border-red-500': Price.length <= 0 },{ 'border-green-500': Price.length >= 1 }]" >
+              <p v-bind:hidden="Price.length >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
             </div>
           </div>
         </div>
@@ -39,24 +39,32 @@
           <div class="-mx-3 md:flex mb-6 justify-between space-x-4">
             <div class="w-full">
               <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Quantite</span></div>
-              <input type="text" placeholder="Quantite" required v-model="CategoryName" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
-                { 'border-red-500': CategoryName.length <= 0 },{ 'border-green-500': CategoryName.length >= 1 }]" >
-              <p v-bind:hidden="CategoryName.length >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
+              <input type="number" placeholder="Quantite" required v-model="quantite" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
+                { 'border-red-500': quantite.length <= 0 },{ 'border-green-500': quantite.length >= 1 }]" >
+              <p v-bind:hidden="quantite.length >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
             </div>
           </div>
         </div>
       </div>
+
+      
      
       <div class="flex-initial w-[40%] h-[10%] col-span-2 rounded-lg border border-gray-400 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 p-2 sm:col-span-3">
         <div class="bg-white dark:bg-gray-900 col-start-6 col-end-5 p-1 rounded-xl my-4 mr-auto shadow-md">
           <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Product name:
-            <a class="font-semibold text-gray-800 dark:text-gray-100">{{CategoryName}}</a>
+            <a class="font-semibold text-gray-800 dark:text-gray-100">{{Productnam}}</a>
+          </div>
+          <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Price:
+            <a class="font-semibold text-gray-800 dark:text-gray-100">{{Price}}</a>
+          </div>
+          <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Quantite:
+            <a class="font-semibold text-gray-800 dark:text-gray-100">{{quantite}}</a>
           </div>
         </div>
         
         <div class="space-y-1">
             <div class="flex w-full">
-              <button class="btn btn-primary group rounded-2xl h-12 w-full bg-green-500 dark:bg-green-600 font-bold text-lg text-white relative overflow-hidden" type="submit" @click="AddProducts" v-bind:disabled="CategoryName.length == 0">Submit
+              <button class="btn btn-primary group rounded-2xl h-12 w-full bg-green-500 dark:bg-green-600 font-bold text-lg text-white relative overflow-hidden" type="submit" @click="AddProducts" v-bind:disabled="Productnam.length == 0">Submit
               <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl"></div>
               </button>
             </div>
@@ -105,7 +113,7 @@
               <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
             </svg>
           </div>
-          <input type="text" id="searchCategory" v-model="searchCategoryName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[100%] pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Name ..." required>
+          <input type="text" id="searchCategory" v-model="searchProductnam" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[100%] pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Name ..." required>
         </div>
       </div>
   
@@ -142,8 +150,8 @@
               <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
             <div class="relative w-full flex justify-center space-x-2">
               <input disabled v-model="categoryIdToUpdate" required :class="['cursor-not-allowed','appearance-none','block','bg-white','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4']" type="number" placeholder="ID"> 
-              <input v-model="categoryNameToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-              <button @click="updateProductCategory(categoryIdToUpdate,categoryNameToUpdate)" class="bg-[#1e3a8a] hover:bg-blue-800 rounded text-white font-bold px-4 rounded-l"> Modifier </button>
+              <input v-model="ProductnamToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+              <button @click="updateProductCategory(categoryIdToUpdate,ProductnamToUpdate)" class="bg-[#1e3a8a] hover:bg-blue-800 rounded text-white font-bold px-4 rounded-l"> Modifier </button>
               <button @click="cancelUpdate" class="bg-[#b91c1c] hover:bg-red-600 rounded font-bold px-4 rounded-r text-white">Annuler</button>
             </div>
           </div>
@@ -284,14 +292,16 @@
       return {
         header_table: 'Products',
         EditProducts: true,
-        CategoryName: '',
+        Productnam: '',
+        Price:'',
+        quantite:'',
   
         DialogueDelete: false,
         categoryIdToDelete: null,
   
         DialogueUpdate:false,
         categoryIdToUpdate: null,
-        categoryNameToUpdate:null,
+        ProductnamToUpdate:null,
         
   
         ProductCategory: [],
@@ -301,7 +311,7 @@
         sortBycreatedProductCategory:'asc',
         sortbymodifiedProductCategory:'asc',
   
-        searchCategoryName: '',
+        searchProductnam: '',
         searchCategoryID:'',
         searchDateModification:'',
         searchDateCreation: '',
@@ -315,7 +325,7 @@
                   return this.ProductCategory; // Return all categories when searchCategoryID is empty
                 } else {
                   return this.ProductCategory.filter(category => 
-                  category.nameProductCategory.includes(this.searchCategoryName) ||
+                  category.nameProductCategory.includes(this.searchProductnam) ||
                   category.idProductCategory === this.searchCategoryID
                   );
                 }
@@ -328,9 +338,9 @@
                 );
               }
               
-              if (this.searchCategoryName !== '') {
+              if (this.searchProductnam !== '') {
                 return this.ProductCategory.filter(category =>
-                  category.nameProductCategory.includes(this.searchCategoryName)
+                  category.nameProductCategory.includes(this.searchProductnam)
                 );
               }
               
@@ -360,8 +370,8 @@
       this.GetAll()
     },
     methods: {
-      confirmUpdate(categoryId,categoryname){
-        this.categoryNameToUpdate=categoryname;
+      confirmUpdate(categoryId,Productnam){
+        this.ProductnamToUpdate=Productnam;
         this.categoryIdToUpdate=categoryId;
         this.DialogueUpdate=true;
       },
@@ -445,7 +455,7 @@
   
   
       AddProducts() {
-        this.Products.push({ id: this.Products.length + 1, name: this.CategoryName });
+        this.Products.push({ id: this.Products.length + 1, name: this.Productnam });
         this.ProductName = "";
       },
       Canceled(){
