@@ -3,7 +3,7 @@
   
   </div>
       <transition name="slide">
-        <form  v-show="EditProducts"  @submit.prevent="submitCategories"  action=""  class="bg-gray-200 dark:bg-gray-800 rounded-lg border border-gray-500 mb-5" >
+        <form  v-show="EditProducts"  @submit.prevent="submitProduct"  action=""  class="bg-gray-200 dark:bg-gray-800 rounded-lg border border-gray-500 mb-5" >
    <div class="flex justify-end ">
       <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" @click="doProducts(false)">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -16,10 +16,10 @@
           <div class="-mx-3 md:flex mb-6 justify-between space-x-4">
             <div class="w-full">
               <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Product Name</span></div>
-              <input type="text" placeholder="Products Name" required v-model="Productnam" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
-                { 'border-red-500': Productnam.length <= 0 },
-                { 'border-green-500': Productnam.length >= 1 }]" >
-              <p v-bind:hidden="Productnam.length >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
+              <input type="text" placeholder="Products Name" required v-model="Productname" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
+                { 'border-red-500': Productname.length <= 0 },
+                { 'border-green-500': Productname.length >= 1 }]" >
+              <p v-bind:hidden="Productname.length >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
             </div>
           </div>
         </div>
@@ -52,7 +52,7 @@
       <div class="flex-initial w-[40%] h-[10%] col-span-2 rounded-lg border border-gray-400 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 p-2 sm:col-span-3">
         <div class="bg-white dark:bg-gray-900 col-start-6 col-end-5 p-1 rounded-xl my-4 mr-auto shadow-md">
           <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Product name:
-            <a class="font-semibold text-gray-800 dark:text-gray-100">{{Productnam}}</a>
+            <a class="font-semibold text-gray-800 dark:text-gray-100">{{Productname}}</a>
           </div>
           <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Price:
             <a class="font-semibold text-gray-800 dark:text-gray-100">{{Price}}</a>
@@ -64,7 +64,7 @@
         
         <div class="space-y-1">
             <div class="flex w-full">
-              <button class="btn btn-primary group rounded-2xl h-12 w-full bg-green-500 dark:bg-green-600 font-bold text-lg text-white relative overflow-hidden" type="submit" @click="AddProducts" v-bind:disabled="Productnam.length == 0">Submit
+              <button class="btn btn-primary group rounded-2xl h-12 w-full bg-green-500 dark:bg-green-600 font-bold text-lg text-white relative overflow-hidden" type="submit" @click="AddProducts" v-bind:disabled="Productname.length == 0">Submit
               <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl"></div>
               </button>
             </div>
@@ -113,7 +113,7 @@
               <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
             </svg>
           </div>
-          <input type="text" id="searchCategory" v-model="searchProductnam" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[100%] pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Name ..." required>
+          <input type="text" id="searchCategory" v-model="searchProductname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[100%] pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Name ..." required>
         </div>
       </div>
   
@@ -150,8 +150,8 @@
               <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
             <div class="relative w-full flex justify-center space-x-2">
               <input disabled v-model="categoryIdToUpdate" required :class="['cursor-not-allowed','appearance-none','block','bg-white','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4']" type="number" placeholder="ID"> 
-              <input v-model="ProductnamToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-              <button @click="updateProductCategory(categoryIdToUpdate,ProductnamToUpdate)" class="bg-[#1e3a8a] hover:bg-blue-800 rounded text-white font-bold px-4 rounded-l"> Modifier </button>
+              <input v-model="ProductnameToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+              <button @click="updateProductCategory(categoryIdToUpdate,ProductnameToUpdate)" class="bg-[#1e3a8a] hover:bg-blue-800 rounded text-white font-bold px-4 rounded-l"> Modifier </button>
               <button @click="cancelUpdate" class="bg-[#b91c1c] hover:bg-red-600 rounded font-bold px-4 rounded-r text-white">Annuler</button>
             </div>
           </div>
@@ -292,7 +292,7 @@
       return {
         header_table: 'Products',
         EditProducts: true,
-        Productnam: '',
+        Productname: '',
         Price:'',
         quantite:'',
   
@@ -301,7 +301,7 @@
   
         DialogueUpdate:false,
         categoryIdToUpdate: null,
-        ProductnamToUpdate:null,
+        ProductnameToUpdate:null,
         
   
         ProductCategory: [],
@@ -311,7 +311,7 @@
         sortBycreatedProductCategory:'asc',
         sortbymodifiedProductCategory:'asc',
   
-        searchProductnam: '',
+        searchProductname: '',
         searchCategoryID:'',
         searchDateModification:'',
         searchDateCreation: '',
@@ -325,7 +325,7 @@
                   return this.ProductCategory; // Return all categories when searchCategoryID is empty
                 } else {
                   return this.ProductCategory.filter(category => 
-                  category.nameProductCategory.includes(this.searchProductnam) ||
+                  category.nameProductCategory.includes(this.searchProductname) ||
                   category.idProductCategory === this.searchCategoryID
                   );
                 }
@@ -338,9 +338,9 @@
                 );
               }
               
-              if (this.searchProductnam !== '') {
+              if (this.searchProductname !== '') {
                 return this.ProductCategory.filter(category =>
-                  category.nameProductCategory.includes(this.searchProductnam)
+                  category.nameProductCategory.includes(this.searchProductname)
                 );
               }
               
@@ -370,8 +370,8 @@
       this.GetAll()
     },
     methods: {
-      confirmUpdate(categoryId,Productnam){
-        this.ProductnamToUpdate=Productnam;
+      confirmUpdate(categoryId,Productname){
+        this.ProductnameToUpdate=Productname;
         this.categoryIdToUpdate=categoryId;
         this.DialogueUpdate=true;
       },
@@ -452,7 +452,41 @@
           this.ProductCategory = response.data;
         }).catch(error => { console.error(error); });
       },
+
+      submitProduct(){
+        const data={
+          nameProducts:this.Productname,
+          priceProducts:this.Price,
+          qteProducts:this.quantite
+        }
+        axios.post('http://localhost:8080/product',data) .then(response => {
+          console.log(response.data);
+          // Handle the response as needed
+          this.Productname = "";
+          this.GetAll()
+        })
+        .catch(error => {
+          console.error(error);
+        });
+      },
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
       AddProducts() {
         this.Products.push({ id: this.Products.length + 1, name: this.Productnam });
