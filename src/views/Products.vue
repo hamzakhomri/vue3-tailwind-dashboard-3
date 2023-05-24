@@ -28,7 +28,7 @@
           <div class="-mx-3 md:flex mb-6 justify-between space-x-4">
             <div class="w-full">
               <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Price</span></div>
-              <input type="number" placeholder="Price" required v-model="Price" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
+              <input type="text" placeholder="Price" required v-model="Price" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
                 { 'border-red-500': Price.length <= 0 },{ 'border-green-500': Price.length >= 1 }]" >
               <p v-bind:hidden="Price.length >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
             </div>
@@ -40,8 +40,8 @@
             <div class="w-full">
               <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Quantite</span></div>
               <input type="number" placeholder="Quantite" required v-model="quantite" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
-                { 'border-red-500': quantite.length <= 0 },{ 'border-green-500': quantite.length >= 1 }]" >
-              <p v-bind:hidden="quantite.length >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
+                { 'border-red-500': quantite <= 0 },{ 'border-green-500': quantite >= 1 }]" >
+              <p v-bind:hidden="quantite >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
             </div>
           </div>
         </div>
@@ -162,9 +162,9 @@
       <!-- <transition name="slide">
       <div v-if="DialogueDelete" class="fixed bg-red-200 modal text-gray-500 p-2">
         <div class="flex justify-center space-x-3">
-          <h3 class="text-red-500">Vous voulez vraiment Supprimer se categories {{ categoryIdToDelete }} :</h3>
+          <h3 class="text-red-500">Vous voulez vraiment Supprimer se categories {{ productIdToDelete }} :</h3>
           <div class="modal-buttons space-x-3">
-            <button @click="deleteProductCategory(categoryIdToDelete)">Oui</button>
+            <button @click="deleteProduct(productIdToDelete)">Oui</button>
             <button @click="cancelDelete">Non</button>
           </div>
         </div>
@@ -261,17 +261,17 @@
         </td>
   
         <td class="py-4 px-6 text-right">
-          <button @click="confirmDelete(product.idProductCategory)">Delete</button>
+          <button @click="confirmDelete(product.idProducts)">Delete</button>
         </td>
         <td class="py-4 px-6 text-right">
-          <button @click="confirmUpdate(product.idProductCategory,category.nameProductCategory)">Modifier</button>
+          <button @click="confirmUpdate(product.idProducts,category.nameProductCategory)">Modifier</button>
         </td>
         <transition name="slide">
-      <div v-if="DialogueDelete || categoryIdToDelete===product.idProducts"  class="absolute top-0 left-0 w-full bg-red-200 modal text-gray-500 p-2">
+      <div v-if="DialogueDelete && productIdToDelete===product.idProducts"  class="absolute top-0 left-0 w-full h-full bg-red-200 modal text-gray-500 py-4">
         <div class="flex justify-center space-x-3">
-          <h3 class="text-red-500">Vous voulez vraiment Supprimer se categories {{ categoryIdToDelete }} :</h3>
+          <h3 class="text-red-500">Vous voulez vraiment Supprimer se categories {{ productIdToDelete }} :</h3>
           <div class="modal-buttons space-x-3">
-            <button @click="deleteProductCategory(categoryIdToDelete)">Oui</button>
+            <button @click="deleteProduct(productIdToDelete)">Oui</button>
             <button @click="cancelDelete">Non</button>
           </div>
         </div>
@@ -288,8 +288,9 @@
   import axios from 'axios';
   
   export default {
-    data() {
+data() {
       return {
+        ProductCategory: [],
         header_table: 'Products',
         EditProducts: true,
         Productname: '',
@@ -297,14 +298,12 @@
         quantite:'',
   
         DialogueDelete: false,
-        categoryIdToDelete: null,
+        productIdToDelete: null,
   
         DialogueUpdate:false,
         categoryIdToUpdate: null,
         ProductnameToUpdate:null,
         
-  
-        ProductCategory: [],
   
         sortById: 'asc',
         sortByName: 'asc',
@@ -319,16 +318,16 @@
       };
     },
     
-    computed: {
-              ProductCategory() {
-                if (this.searchCategoryID !== '') {
-                  return this.ProductCategory; // Return all categories when searchCategoryID is empty
-                } else {
-                  return this.ProductCategory.filter(category => 
-                  category.nameProductCategory.includes(this.searchProductname) ||
-                  category.idProductCategory === this.searchCategoryID
-                  );
-                }
+computed: {
+          ProductCategory() {
+            if (this.searchCategoryID !== '') {
+              return this.ProductCategory; // Return all categories when searchCategoryID is empty
+            } else {
+              return this.ProductCategory.filter(category => 
+              category.nameProductCategory.includes(this.searchProductname) ||
+              category.idProductCategory === this.searchCategoryID
+              );
+            }
           },
           //========= Search
           ProductCategory() {
@@ -362,144 +361,162 @@
             }
               
               else{
-                  return this.ProductCategory;}},
+                  return this.ProductCategory;}
+          },
           //========= End Search
     },
-  
-    mounted() {
+  mounted() {
       this.GetAll()
     },
-    methods: {
+methods: {  
       confirmUpdate(categoryId,Productname){
-        this.ProductnameToUpdate=Productname;
-        this.categoryIdToUpdate=categoryId;
-        this.DialogueUpdate=true;
-      },
-      updateCategory(){
-        this.DialogueUpdate=false;
-      },
+            this.ProductnameToUpdate=Productname;
+            this.categoryIdToUpdate=categoryId;
+            this.DialogueUpdate=true;
+          },
+      pdateCategory(){
+            this.DialogueUpdate=false;
+          },
       cancelUpdate(){
-        this.DialogueUpdate=false;
-      },
-      confirmDelete(categoryId) {
-        this.categoryIdToDelete = categoryId;
-        this.DialogueDelete = true;
-      },
-      deleteProductCategory() {
-        console.log("Deleting category with ID:", this.categoryIdToDelete);
-        this.DialogueDelete = false;
-      },
+            this.DialogueUpdate=false;
+          },
+      
+
+
+      confirmDelete(idProducts) {
+            this.productIdToDelete = idProducts;
+            this.DialogueDelete = true;
+          },
+      deleteProduct() {
+            console.log("Deleting category with ID:", this.productIdToDelete);
+            this.DialogueDelete = false;
+          },
       cancelDelete() {
-        this.DialogueDelete = false;
-      },
+            this.DialogueDelete = false;
+          },
+
+
+
+
       sortbymodifiedProductCategory(){
-        this.sortByDate = this.sortByDate === 'asc' ? 'desc' : 'asc';
-        this.ProductCategory.sort((a, b) => 
-          {
-            const dateA = new Date(a.modifiedProductCategory);
-            const dateB = new Date(b.modifiedProductCategory);
-            if (this.sortByDate === 'asc') {
-              return dateA - dateB;
-            }
-            else {
-              return dateB - dateA;
-            }
-          });
-      },
+            this.sortByDate = this.sortByDate === 'asc' ? 'desc' : 'asc';
+            this.ProductCategory.sort((a, b) => 
+              {
+                const dateA = new Date(a.modifiedProductCategory);
+                const dateB = new Date(b.modifiedProductCategory);
+                if (this.sortByDate === 'asc') {
+                  return dateA - dateB;
+                }
+                else {
+                  return dateB - dateA;
+                }
+              });
+          },
       sortByDateCreation() {
-          this.sortByDate = this.sortByDate === 'asc' ? 'desc' : 'asc';
-          this.ProductCategory.sort((a, b) => {
-            const dateA = new Date(a.createdProductCategory);
-            const dateB = new Date(b.createdProductCategory);
-  
-            if (this.sortByDate === 'asc') {
-              return dateA - dateB;
-            } else {
-              return dateB - dateA;
-            }
-          });
-      },
+              this.sortByDate = this.sortByDate === 'asc' ? 'desc' : 'asc';
+              this.ProductCategory.sort((a, b) => {
+                const dateA = new Date(a.createdProductCategory);
+                const dateB = new Date(b.createdProductCategory);
+      
+                if (this.sortByDate === 'asc') {
+                  return dateA - dateB;
+                } else {
+                  return dateB - dateA;
+                }
+              });
+          },
       sortByNameCategory() {
-          this.sortByName = this.sortByName === 'asc' ? 'desc' : 'asc';
-          this.ProductCategory.sort((a, b) => {
-            const nameA = a.nameProductCategory.toUpperCase();
-            const nameB = b.nameProductCategory.toUpperCase();
-  
-            if (this.sortByName === 'asc') {
-              if (nameA < nameB) return -1;
-              if (nameA > nameB) return 1;
-            } else {
-              if (nameA > nameB) return -1;
-              if (nameA < nameB) return 1;
-            }
-  
-            return 0;
-          });
-      },
+              this.sortByName = this.sortByName === 'asc' ? 'desc' : 'asc';
+              this.ProductCategory.sort((a, b) => {
+                const nameA = a.nameProductCategory.toUpperCase();
+                const nameB = b.nameProductCategory.toUpperCase();
+      
+                if (this.sortByName === 'asc') {
+                  if (nameA < nameB) return -1;
+                  if (nameA > nameB) return 1;
+                } else {
+                  if (nameA > nameB) return -1;
+                  if (nameA < nameB) return 1;
+                }
+      
+                return 0;
+              });
+          },
       sortByIdCategory() {
-          this.sortBy = this.sortBy === 'asc' ? 'desc' : 'asc';
-          this.ProductCategory.sort((a, b) => {
-            if (this.sortBy === 'asc') {
-              return a.idProductCategory - b.idProductCategory;
-            } else {
-              return b.idProductCategory - a.idProductCategory;
-            }
-          });
-      },
+              this.sortBy = this.sortBy === 'asc' ? 'desc' : 'asc';
+              this.ProductCategory.sort((a, b) => {
+                if (this.sortBy === 'asc') {
+                  return a.idProductCategory - b.idProductCategory;
+                } else {
+                  return b.idProductCategory - a.idProductCategory;
+                }
+              });
+          },
       GetAll(){
-        axios.get('http://localhost:8080/product').then(response => 
-        {
-          this.ProductCategory = response.data;
-        }).catch(error => { console.error(error); });
-      },
-
+              axios.get('http://localhost:8080/product').then(response => 
+              {
+                this.ProductCategory = response.data;
+              }).catch(error => { console.error(error); });
+          },
       submitProduct(){
-        const data={
-          nameProducts:this.Productname,
-          priceProducts:this.Price,
-          qteProducts:this.quantite
-        }
-        axios.post('http://localhost:8080/product',data) .then(response => {
-          console.log(response.data);
-          // Handle the response as needed
-          this.Productname = "";
-          this.GetAll()
-        })
-        .catch(error => {
-          console.error(error);
-        });
-      },
+                const data={
+                  nameProducts:this.Productname,
+                  priceProducts:this.Price,
+                  qteProducts:this.quantite
+                }
+                axios.post('http://localhost:8080/product',data) .then(response => {
+                  console.log(response.data);
+                  // Handle the response as needed
+                  this.Canceled();
+                })
+                .catch(error => {
+                  console.error(error);
+                });
+          },
   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-      AddProducts() {
-        this.Products.push({ id: this.Products.length + 1, name: this.Productnam });
-        this.ProductName = "";
-      },
       Canceled(){
-        this.GetAll()
-      },
+            this.Productname="";
+            this.Price="";
+            this.quantite="";
+
+            this.GetAll()
+          },
       doProducts(EditProducts) {
-        console.log('EditP');
-        this.EditProducts = EditProducts;
-        this.ProductName = "";
-      }
+            console.log('EditP');
+            this.EditProducts = EditProducts;
+            this.ProductName = "";
+          },
+      GetAll(){
+              axios.get('http://localhost:8080/product').then(response => 
+              {
+                this.ProductCategory = response.data;
+              }).catch(error => { console.error(error); });
+          },
+      submitProduct(){
+                const data={
+                  nameProducts:this.Productname,
+                  priceProducts:this.Price,
+                  qteProducts:this.quantite
+                }
+                axios.post('http://localhost:8080/product',data) .then(response => {
+                  console.log(response.data);
+                  // Handle the response as needed
+                  this.Canceled();
+                })
+                .catch(error => {
+                  console.error(error);
+                });
+          },
+      
+          deleteProduct(idProducts){
+        axios.delete(`http://localhost:8080/product/${idProducts}`)
+            .then(response=>{
+              this.GetAll()
+              this.DialogueDelete=false;
+            }).catch(error=>{
+              console.error(error);
+            })
+       }, 
     }
   };
   </script>
