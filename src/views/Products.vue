@@ -153,15 +153,15 @@
                 <input disabled v-model="ProductIdToUpdate" required :class="['w-20 ,cursor-not-allowed','appearance-none','block','bg-white','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4']" type="number" placeholder="ID"> 
                 <input v-model="ProductnameToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
              
-                <input v-model="ProductnameToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                <input v-model="ProductnameToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                <input v-model="ProductPricetToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                <input v-model="ProductQteToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
              
         
               </div>
               
           </div>
           <div class="w-full relative space-y-2">
-                <button @click="updateProductCategory(ProductIdToUpdate,ProductnameToUpdate)" class="bg-[#1e3a8a] w-full h-10 hover:bg-blue-800 rounded text-white font-bold px-4 rounded-l"> Modifier </button>
+                <button @click="updateProduct(ProductIdToUpdate,ProductnameToUpdate,ProductPricetToUpdate,ProductQteToUpdate)" class="bg-[#1e3a8a] w-full h-10 hover:bg-blue-800 rounded text-white font-bold px-4 rounded-l"> Modifier </button>
                 <button @click="cancelUpdate" class="bg-[#b91c1c] hover:bg-red-600 rounded font-bold px-4 rounded-r w-full  h-10 text-white">Annuler</button>
               </div>
         </div>
@@ -273,7 +273,7 @@
           <button @click="confirmDelete(product.idProducts)">Delete</button>
         </td>
         <td class="py-4 px-6 text-right">
-          <button @click="confirmUpdate(product.idProducts,category.nameProductCategory)">Modifier</button>
+          <button @click="confirmUpdate(product.idProducts,product.nameProducts,product.priceProducts,product.qteProducts)">Modifier</button>
         </td>
         <transition name="slide">
       <div v-if="DialogueDelete && productIdToDelete===product.idProducts"  class="absolute top-0 left-0 w-full h-full bg-red-200 modal text-gray-500 py-4">
@@ -309,9 +309,11 @@ data() {
         DialogueDelete: false,
         productIdToDelete: null,
   
-        DialogueUpdate:true,
+        DialogueUpdate:false,
         ProductIdToUpdate: null,
         ProductnameToUpdate:null,
+        ProductPricetToUpdate:null,
+        ProductQteToUpdate:null,
         
   
         sortById: 'asc',
@@ -378,15 +380,18 @@ computed: {
       this.GetAll()
     },
 methods: {  
-      confirmUpdate(idProducts,Productname){
-            this.ProductnameToUpdate=Productname;
+      confirmUpdate(idProducts,Productname,priceProducts,qteProducts){
             this.ProductIdToUpdate=idProducts;
+            this.ProductnameToUpdate=Productname;
+            this.ProductPricetToUpdate=priceProducts;
+            this.ProductQteToUpdate=qteProducts;
+
             this.DialogueUpdate=true;
           },
-      pdateCategory(){
-            this.DialogueUpdate=false;
-          },
-      cancelUpdate(){
+          // updateProductCategory(){
+          //   this.DialogueUpdate=false;
+          // },
+          cancelUpdate(){
             this.DialogueUpdate=false;
           },
       
@@ -407,60 +412,7 @@ methods: {
 
 
 
-      sortbymodifiedProductCategory(){
-            this.sortByDate = this.sortByDate === 'asc' ? 'desc' : 'asc';
-            this.ProductCategory.sort((a, b) => 
-              {
-                const dateA = new Date(a.modifiedProductCategory);
-                const dateB = new Date(b.modifiedProductCategory);
-                if (this.sortByDate === 'asc') {
-                  return dateA - dateB;
-                }
-                else {
-                  return dateB - dateA;
-                }
-              });
-          },
-      sortByDateCreation() {
-              this.sortByDate = this.sortByDate === 'asc' ? 'desc' : 'asc';
-              this.ProductCategory.sort((a, b) => {
-                const dateA = new Date(a.createdProductCategory);
-                const dateB = new Date(b.createdProductCategory);
-      
-                if (this.sortByDate === 'asc') {
-                  return dateA - dateB;
-                } else {
-                  return dateB - dateA;
-                }
-              });
-          },
-      sortByNameCategory() {
-              this.sortByName = this.sortByName === 'asc' ? 'desc' : 'asc';
-              this.ProductCategory.sort((a, b) => {
-                const nameA = a.nameProductCategory.toUpperCase();
-                const nameB = b.nameProductCategory.toUpperCase();
-      
-                if (this.sortByName === 'asc') {
-                  if (nameA < nameB) return -1;
-                  if (nameA > nameB) return 1;
-                } else {
-                  if (nameA > nameB) return -1;
-                  if (nameA < nameB) return 1;
-                }
-      
-                return 0;
-              });
-          },
-      sortByIdCategory() {
-              this.sortBy = this.sortBy === 'asc' ? 'desc' : 'asc';
-              this.ProductCategory.sort((a, b) => {
-                if (this.sortBy === 'asc') {
-                  return a.idProductCategory - b.idProductCategory;
-                } else {
-                  return b.idProductCategory - a.idProductCategory;
-                }
-              });
-          },
+
       GetAll(){
               axios.get('http://localhost:8080/product').then(response => 
               {
@@ -516,8 +468,21 @@ methods: {
                   console.error(error);
                 });
           },
-      
-          deleteProduct(idProducts){
+      updateProduct(idProducts,ProductnameToUpdate,ProductPricetToUpdate,ProductQteToUpdate){
+        axios.put(`http://localhost:8080/product/${idProducts}`,{
+          nameProducts:ProductnameToUpdate,
+          priceProducts:ProductPricetToUpdate,
+          qteProducts:ProductQteToUpdate
+        }).then(response=>{
+          this.GetAll()
+          this.DialogueUpdate=false;
+        }).catch(error=>{
+          console.error(error);
+        });
+      },
+
+
+      deleteProduct(idProducts){
         axios.delete(`http://localhost:8080/product/${idProducts}`)
             .then(response=>{
               this.GetAll()
@@ -526,6 +491,62 @@ methods: {
               console.error(error);
             })
        }, 
+
+
+      sortbymodifiedProductCategory(){
+            this.sortByDate = this.sortByDate === 'asc' ? 'desc' : 'asc';
+            this.ProductCategory.sort((a, b) => 
+              {
+                const dateA = new Date(a.modifiedProductCategory);
+                const dateB = new Date(b.modifiedProductCategory);
+                if (this.sortByDate === 'asc') {
+                  return dateA - dateB;
+                }
+                else {
+                  return dateB - dateA;
+                }
+              });
+          },
+      sortByDateCreation() {
+              this.sortByDate = this.sortByDate === 'asc' ? 'desc' : 'asc';
+              this.ProductCategory.sort((a, b) => {
+                const dateA = new Date(a.createdProductCategory);
+                const dateB = new Date(b.createdProductCategory);
+      
+                if (this.sortByDate === 'asc') {
+                  return dateA - dateB;
+                } else {
+                  return dateB - dateA;
+                }
+              });
+          },
+      sortByNameCategory() {
+              this.sortByName = this.sortByName === 'asc' ? 'desc' : 'asc';
+              this.ProductCategory.sort((a, b) => {
+                const nameA = a.nameProductCategory.toUpperCase();
+                const nameB = b.nameProductCategory.toUpperCase();
+      
+                if (this.sortByName === 'asc') {
+                  if (nameA < nameB) return -1;
+                  if (nameA > nameB) return 1;
+                } else {
+                  if (nameA > nameB) return -1;
+                  if (nameA < nameB) return 1;
+                }
+      
+                return 0;
+              });
+          },
+      sortByIdCategory() {
+              this.sortBy = this.sortBy === 'asc' ? 'desc' : 'asc';
+              this.ProductCategory.sort((a, b) => {
+                if (this.sortBy === 'asc') {
+                  return a.idProductCategory - b.idProductCategory;
+                } else {
+                  return b.idProductCategory - a.idProductCategory;
+                }
+              });
+          }
     }
   };
   </script>

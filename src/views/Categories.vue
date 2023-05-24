@@ -316,9 +316,9 @@ export default {
       this.categoryIdToUpdate=categoryId;
       this.DialogueUpdate=true;
     },
-    updateCategory(){
-      this.DialogueUpdate=false;
-    },
+    // updateCategory(){
+    //   this.DialogueUpdate=false;
+    // },
     cancelUpdate(){
       this.DialogueUpdate=false;
     },
