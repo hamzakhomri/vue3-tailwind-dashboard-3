@@ -322,6 +322,9 @@ export default {
     cancelUpdate(){
       this.DialogueUpdate=false;
     },
+
+
+    
     confirmDelete(categoryId) {
       this.categoryIdToDelete = categoryId;
       this.DialogueDelete = true;
@@ -333,6 +336,10 @@ export default {
     cancelDelete() {
       this.DialogueDelete = false;
     },
+
+
+
+
     sortbymodifiedProductCategory(){
       this.sortByDate = this.sortByDate === 'asc' ? 'desc' : 'asc';
       this.ProductCategory.sort((a, b) => 
