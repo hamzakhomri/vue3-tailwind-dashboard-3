@@ -263,16 +263,7 @@ export default {
   },
   
   computed: {
-            ProductCategory() {
-              if (this.searchCategoryID !== '') {
-                return this.ProductCategory; // Return all categories when searchCategoryID is empty
-              } else {
-                return this.ProductCategory.filter(category => 
-                category.nameProductCategory.includes(this.searchCategoryName) ||
-                category.idProductCategory === this.searchCategoryID
-                );
-              }
-        },
+
         //========= Search
         ProductCategory() {
             if (this.searchCategoryID !== '') {

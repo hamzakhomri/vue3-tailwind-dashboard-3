@@ -88,9 +88,7 @@
   
   <div class="flex justify-between">
     <h2 class="text-gray-400 p-2" 
-  v-bind:class="{
-    'text-red-700 ': ProductCategory.length <= 5,
-    'text-red-400 ': ProductCategory.length <= 10,}">Products : {{ ProductCategory.length }}</h2>
+  v-bind:class="{'text-red-700 ': ProductCategory.length <= 5,'text-red-400 ': ProductCategory.length <= 10,}">Products : {{ ProductCategory.length }}</h2>
       <h2  v-if="!EditProducts" @click="doProducts(true)" class="text-green-600 text-lg cursor-pointer">+ Add Categories</h2>
   
   </div>
@@ -197,9 +195,9 @@
           </div>
         </th>
         <th scope="col" class="py-3 px-6">
-          <div @click="sortByNameCategory" class="cursor-pointer flex items-center">
+          <div @click="sortByNameProdcut" class="cursor-pointer flex items-center">
             Products
-            <a >
+            <a>
               <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 w-3 h-3" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
                 <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"></path>
               </svg>
@@ -207,9 +205,9 @@
           </div>
         </th>
         <th scope="col" class="py-3 px-6">
-          <div @click="sortByNameCategory" class="cursor-pointer flex items-center">
+          <div @click="sortByPrice" class="cursor-pointer flex items-center">
             Price
-            <a >
+            <a>
               <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 w-3 h-3" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
                 <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"></path>
               </svg>
@@ -217,7 +215,7 @@
           </div>
         </th>
         <th scope="col" class="py-3 px-6">
-          <div @click="sortByNameCategory" class="cursor-pointer flex items-center">
+          <div @click="sortByqte"  class="cursor-pointer flex items-center">
             Quentite
             <a >
               <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 w-3 h-3" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
@@ -227,20 +225,14 @@
           </div>
         </th>
         <th scope="col" class="py-3 px-6">
-          <div @click="sortByDateCreation" class="cursor-pointer flex items-center">
-  
+          <div class="cursor-pointer flex items-center">
             Date Creation
-            <a ><svg xmlns="http://www.w3.org/2000/svg" class="ml-1 w-3 h-3" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
-                <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"></path>
-              </svg></a>
           </div>
         </th>
         <th scope="col" class="py-3 px-6">
-          <div @click="sortbymodifiedProductCategory" class="cursor-pointer flex items-center">
+          <div class="cursor-pointer flex items-center">
             Date Modificatin
-            <a ><svg xmlns="http://www.w3.org/2000/svg" class="ml-1 w-3 h-3" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
-                <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"></path>
-              </svg></a>
+
           </div>
         </th>
         <th scope="col" class="py-3 px-6">Delete
@@ -318,11 +310,11 @@ data() {
         ProductPricetToUpdate:null,
         ProductQteToUpdate:null,
         
-  
+        sortbyPrices:'asc',
         sortById: 'asc',
-        sortByName: 'asc',
-        sortBycreatedProductCategory:'asc',
-        sortbymodifiedProductCategory:'asc',
+        sortbyqtes:'asc',
+        sortbynames:'asc',
+    
   
         searchProductname: '',
         searchCategoryID:'',
@@ -333,21 +325,12 @@ data() {
     },
     
 computed: {
-          ProductCategory() {
-            if (this.searchCategoryID !== '') {
-              return this.ProductCategory; // Return all categories when searchCategoryID is empty
-            } else {
-              return this.ProductCategory.filter(category => 
-              category.nameProductCategory.includes(this.searchProductname) ||
-              category.idProductCategory === this.searchCategoryID
-              );
-            }
-          },
+
           //========= Search
           ProductCategory() {
               if (this.searchCategoryID !== '') {
                 return this.ProductCategory.filter(category =>
-                  category.idProductCategory === this.searchCategoryID
+                  category.idProducts === this.searchCategoryID
                 );
               }
               
@@ -495,58 +478,53 @@ methods: {
             })
        }, 
 
+       sortByNameProdcut() {
+        this.sortbynames = this.sortbynames === 'asc' ? 'desc' : 'asc';
+        this.ProductCategory.sort((a, b) => {
+          const nameA = a.nameProducts.toUpperCase();
+          const nameB = b.nameProducts.toUpperCase();
 
-      sortbymodifiedProductCategory(){
-            this.sortByDate = this.sortByDate === 'asc' ? 'desc' : 'asc';
-            this.ProductCategory.sort((a, b) => 
-              {
-                const dateA = new Date(a.modifiedProductCategory);
-                const dateB = new Date(b.modifiedProductCategory);
-                if (this.sortByDate === 'asc') {
-                  return dateA - dateB;
-                }
-                else {
-                  return dateB - dateA;
-                }
-              });
-          },
-      sortByDateCreation() {
-              this.sortByDate = this.sortByDate === 'asc' ? 'desc' : 'asc';
+          if (this.sortbynames === 'asc') {
+            if (nameA < nameB) return -1;
+            if (nameA > nameB) return 1;
+          } else {
+            if (nameA > nameB) return -1;
+            if (nameA < nameB) return 1;
+          }
+
+          return 0;
+        });
+    },
+       sortByqte() {
+        this.sortbyqtes = this.sortbyqtes === 'asc' ? 'desc' : 'asc';
               this.ProductCategory.sort((a, b) => {
-                const dateA = new Date(a.createdProductCategory);
-                const dateB = new Date(b.createdProductCategory);
-      
-                if (this.sortByDate === 'asc') {
-                  return dateA - dateB;
+                if (this.sortbyqtes === 'asc') {
+                  return a.qteProducts - b.qteProducts;
                 } else {
-                  return dateB - dateA;
+                  return b.qteProducts - a.qteProducts;
                 }
               });
           },
-      sortByNameCategory() {
-              this.sortByName = this.sortByName === 'asc' ? 'desc' : 'asc';
+
+       sortByPrice() {
+        this.sortbyPrices = this.sortbyPrices === 'asc' ? 'desc' : 'asc';
               this.ProductCategory.sort((a, b) => {
-                const nameA = a.nameProductCategory.toUpperCase();
-                const nameB = b.nameProductCategory.toUpperCase();
-      
-                if (this.sortByName === 'asc') {
-                  if (nameA < nameB) return -1;
-                  if (nameA > nameB) return 1;
+                if (this.sortbyPrices === 'asc') {
+                  return a.priceProducts - b.priceProducts;
                 } else {
-                  if (nameA > nameB) return -1;
-                  if (nameA < nameB) return 1;
+                  return b.priceProducts - a.priceProducts;
                 }
-      
-                return 0;
               });
           },
+
+
       sortByIdCategory() {
-              this.sortBy = this.sortBy === 'asc' ? 'desc' : 'asc';
+              this.sortById = this.sortById === 'asc' ? 'desc' : 'asc';
               this.ProductCategory.sort((a, b) => {
-                if (this.sortBy === 'asc') {
-                  return a.idProductCategory - b.idProductCategory;
+                if (this.sortById === 'asc') {
+                  return a.idProducts - b.idProducts;
                 } else {
-                  return b.idProductCategory - a.idProductCategory;
+                  return b.idProducts - a.idProducts;
                 }
               });
           }
