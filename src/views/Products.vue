@@ -88,7 +88,7 @@
   
   <div class="flex justify-between">
     <h2 class="text-gray-400 p-2" 
-  v-bind:class="{'text-red-700 ': ProductCategory.length <= 5,'text-red-400 ': ProductCategory.length <= 10,}">Products : {{ ProductCategory.length }}</h2>
+  v-bind:class="{'text-red-700 ': Product.length <= 5,'text-red-400 ': Product.length <= 10,}">Products : {{ Product.length }}</h2>
       <h2  v-if="!EditProducts" @click="doProducts(true)" class="text-green-600 text-lg cursor-pointer">+ Add Categories</h2>
   
   </div>
@@ -96,8 +96,10 @@
   
     <div class="flex space-x-3">
   
-      <div class="flex items-center w-full mb-4">
+      <div class="w-full mb-4">          
+        <P class="text-left text-xs text-gray-300">ID</P>
         <div class="relative w-full ">
+
           <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
             <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
@@ -107,8 +109,10 @@
         </div>
       </div>
   
-      <div class="flex items-center w-full mb-4">
+      <div class=" w-full mb-4">
+        <P class="text-left text-xs text-gray-300">Nom</P>
         <div class="relative w-full ">
+          
           <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
             <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
@@ -119,8 +123,10 @@
       </div>
 
 
-      <div class="flex items-center w-full mb-4">
+      <div class=" w-full mb-4">
+        <P class="text-left text-xs text-gray-300">Price</P>
         <div class="relative w-full ">
+          
           <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
             <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
@@ -130,10 +136,26 @@
         </div>
       </div>
 
+
+      <div class=" w-full mb-4">
+        <P class="text-left text-xs text-gray-300">Quantite</P>
+        <div class="relative w-full ">
+          
+          <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
+            <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+          <input type="text" id="searchCategory" v-model="searchProductQte" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[100%] pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Price ..." required>
+        </div>
+      </div>
+
       
   
-      <div class="flex items-center w-full mb-4">
+      <div class="w-full mb-4">
+        <P class="text-left text-xs text-gray-300">Date Modefication</P>
         <div class="relative w-full ">
+          
           <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
             <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
@@ -143,8 +165,10 @@
         </div>
       </div>
   
-      <div class="flex items-center w-full mb-4">
+      <div class=" w-full mb-4">
+        <P class="text-left text-xs text-gray-300">Date Creation</P>
         <div class="relative w-full ">
+          
           <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
             <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
@@ -257,7 +281,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="product in ProductCategory" :key="product.idProducts" 
+      <tr v-for="product in Product" :key="product.idProducts" 
       class="relative bg-gray-100 hover:bg-blue-100 border border-indigo-600 dark:bg-gray-800 dark:hover:bg-gray-600   dark:border-gray-700 w-96">
         <td scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
           {{ product.idProducts }}
@@ -308,7 +332,7 @@
   export default {
 data() {
       return {
-        ProductCategory: [],
+        Product: [],
         header_table: 'Products',
         EditProducts: false,
         Productname: '',
@@ -332,6 +356,7 @@ data() {
         searchProductId:'',
         searchProductname: '',
         searchProductPrice:'',
+        searchProductQte:'',
         searchDateModification:'',
         searchDateCreation: '',
       };
@@ -340,20 +365,29 @@ data() {
 computed: {
 
           //========= Search
-          ProductCategory() {
-            if (this.searchProductPrice !== '') {
-                return this.ProductCategory.filter(product =>
-                product.priceProducts === this.searchProductPrice
+          Product() {
+
+            
+            if (this.searchProductQte !== '') {
+                return this.Product.filter(product =>
+                product.qteProducts === this.searchProductQte
                 );
               }
+
+
+              if (this.searchProductPrice !== '') {
+                    return this.Product.filter(product =>
+                    product.priceProducts === this.searchProductPrice
+                  );
+                }
               if (this.searchProductId !== '') {
-                return this.ProductCategory.filter(product =>
+                return this.Product.filter(product =>
                 product.idProducts === this.searchProductId
                 );
               }
               
               if (this.searchProductname !== '') {
-                return this.ProductCategory.filter(product =>
+                return this.Product.filter(product =>
                 product.nameProducts.includes(this.searchProductname)
                 );
               }
@@ -361,7 +395,7 @@ computed: {
               const dateParts = this.searchDateCreation.split('-');
               const searchDates = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
   
-              return this.ProductCategory.filter(product => 
+              return this.Product.filter(product => 
               product.createdatProduct === searchDates
               );
             }
@@ -369,13 +403,13 @@ computed: {
               const dateParts = this.searchDateModification.split('-');
               const searchDates = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
   
-              return this.ProductCategory.filter(category => 
+              return this.Product.filter(category => 
                 category.modifiedatProduct === searchDates
               );
             }
               
               else{
-                  return this.ProductCategory;}
+                  return this.Product;}
           },
           //========= End Search
     },
@@ -391,7 +425,7 @@ methods: {
 
             this.DialogueUpdate=true;
           },
-          // updateProductCategory(){
+          // updateProduct(){
           //   this.DialogueUpdate=false;
           // },
           cancelUpdate(){
@@ -411,33 +445,6 @@ methods: {
       cancelDelete() {
             this.DialogueDelete = false;
           },
-
-
-
-
-
-      GetAll(){
-              axios.get('http://localhost:8080/product').then(response => 
-              {
-                this.ProductCategory = response.data;
-              }).catch(error => { console.error(error); });
-          },
-      submitProduct(){
-                const data={
-                  nameProducts:this.Productname,
-                  priceProducts:this.Price,
-                  qteProducts:this.quantite
-                }
-                axios.post('http://localhost:8080/product',data) .then(response => {
-                  console.log(response.data);
-                  // Handle the response as needed
-                  this.Canceled();
-                })
-                .catch(error => {
-                  console.error(error);
-                });
-          },
-  
       Canceled(){
             this.Productname="";
             this.Price="";
@@ -450,10 +457,12 @@ methods: {
             this.EditProducts = EditProducts;
             this.ProductName = "";
           },
+
+
       GetAll(){
               axios.get('http://localhost:8080/product').then(response => 
               {
-                this.ProductCategory = response.data;
+                this.Product = response.data;
               }).catch(error => { console.error(error); });
           },
       submitProduct(){
@@ -494,10 +503,26 @@ methods: {
               console.error(error);
             })
        }, 
+       submitProduct(){
+                const data={
+                  nameProducts:this.Productname,
+                  priceProducts:this.Price,
+                  qteProducts:this.quantite
+                }
+                axios.post('http://localhost:8080/product',data) .then(response => {
+                  console.log(response.data);
+                  // Handle the response as needed
+                  this.Canceled();
+                })
+                .catch(error => {
+                  console.error(error);
+                });
+          },
+
 
        sortByNameProdcut() {
         this.sortbynames = this.sortbynames === 'asc' ? 'desc' : 'asc';
-        this.ProductCategory.sort((a, b) => {
+        this.Product.sort((a, b) => {
           const nameA = a.nameProducts.toUpperCase();
           const nameB = b.nameProducts.toUpperCase();
 
@@ -514,7 +539,7 @@ methods: {
     },
        sortByqte() {
         this.sortbyqtes = this.sortbyqtes === 'asc' ? 'desc' : 'asc';
-              this.ProductCategory.sort((a, b) => {
+              this.Product.sort((a, b) => {
                 if (this.sortbyqtes === 'asc') {
                   return a.qteProducts - b.qteProducts;
                 } else {
@@ -525,7 +550,7 @@ methods: {
 
        sortByPrice() {
         this.sortbyPrices = this.sortbyPrices === 'asc' ? 'desc' : 'asc';
-              this.ProductCategory.sort((a, b) => {
+              this.Product.sort((a, b) => {
                 if (this.sortbyPrices === 'asc') {
                   return a.priceProducts - b.priceProducts;
                 } else {
@@ -537,7 +562,7 @@ methods: {
 
       sortByIdCategory() {
               this.sortById = this.sortById === 'asc' ? 'desc' : 'asc';
-              this.ProductCategory.sort((a, b) => {
+              this.Product.sort((a, b) => {
                 if (this.sortById === 'asc') {
                   return a.idProducts - b.idProducts;
                 } else {
