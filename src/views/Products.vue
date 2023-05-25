@@ -87,7 +87,10 @@
   
   
   <div class="flex justify-between">
-      <h2 class="text-gray-500 p-2">Products : {{ ProductCategory.length }}</h2>
+    <h2 class="text-gray-400 p-2" 
+  v-bind:class="{
+    'text-red-700 ': ProductCategory.length <= 5,
+    'text-red-400 ': ProductCategory.length <= 10,}">Products : {{ ProductCategory.length }}</h2>
       <h2  v-if="!EditProducts" @click="doProducts(true)" class="text-green-600 text-lg cursor-pointer">+ Add Categories</h2>
   
   </div>
