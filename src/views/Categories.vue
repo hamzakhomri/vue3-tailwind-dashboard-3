@@ -51,13 +51,16 @@
 </form>
 </transition>
 <div class="border-2 p-3 border-solid border-gray-500 rounded-xl">
-
-
-
-
 <div class="flex justify-between">
-    <h2 class="text-gray-500 p-2">Categories : {{ ProductCategory.length }}</h2>
-    <h2  v-if="!EditProducts" @click="doProducts(true)" class="text-green-600 text-lg cursor-pointer">+ Add Categories</h2>
+
+  <h2 class="text-gray-400 p-2" 
+  v-bind:class="{
+    'text-red-700 ': ProductCategory.length <= 2,
+    'text-red-400 ': ProductCategory.length <= 6,
+    'text-white ': ProductCategory.length < 11,
+  }">
+  Categories: {{ ProductCategory.length }}</h2>
+  <h2  v-if="!EditProducts" @click="doProducts(true)" class="text-green-600 text-lg cursor-pointer">+ Add Categories</h2>
 
 </div>
   <!-- ===================   SEARCH BAR    ========================== -->
