@@ -66,7 +66,8 @@
 
   <div class="flex space-x-3">
 
-    <div class="flex items-center w-full mb-4">
+    <div class="w-full mb-4">
+      <P class="text-left text-xs text-gray-300">ID</P>
       <div class="relative w-full ">
         <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
           <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -77,7 +78,8 @@
       </div>
     </div>
 
-    <div class="flex items-center w-full mb-4">
+    <div class="w-full mb-4">
+      <P class="text-left text-xs text-gray-300">Nom</P>
       <div class="relative w-full ">
         <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
           <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -88,7 +90,8 @@
       </div>
     </div>
 
-    <div class="flex items-center w-full mb-4">
+    <div class="w-full mb-4">
+      <P class="text-left text-xs text-gray-300">Date Creation</P>
       <div class="relative w-full ">
         <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
           <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -99,7 +102,8 @@
       </div>
     </div>
 
-    <div class="flex items-center w-full mb-4">
+    <div class="w-full mb-4">
+      <P class="text-left text-xs text-gray-300">Date Modification</P>
       <div class="relative w-full ">
         <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
           <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
