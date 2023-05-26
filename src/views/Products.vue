@@ -367,19 +367,26 @@ computed: {
 
           //========= Search
           Product() {
-
-          
-              if (this.searchProductPrice !== '') {
-                    return this.Product.filter(product =>
-                    product.priceProducts === parseFloat(this.searchProductPrice)
-                  );
-                }
+            
               if (this.searchProductId !== '') {
                 return this.Product.filter(product =>
                 product.idProducts === this.searchProductId
                 );
               }
               
+              if(this.searchProductQte !==''){
+                return this.Product.filter(product =>
+                product.qteProducts === parseInt(this.searchProductQte)
+                );
+              }
+              
+              if (this.searchProductPrice !== '') {
+                    return this.Product.filter(product =>
+                    product.priceProducts === parseFloat(this.searchProductPrice)
+                  );
+              }
+
+
               if (this.searchProductname !== '') {
                 return this.Product.filter(product =>
                 product.nameProducts.includes(this.searchProductname)
