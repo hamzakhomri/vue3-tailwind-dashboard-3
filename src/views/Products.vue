@@ -330,249 +330,232 @@
   import axios from 'axios';
 import { parse } from 'postcss';
   
-  export default {
-data() {
-      return {
-        Product: [],
-        header_table: 'Products',
-        EditProducts: false,
-        Productname: '',
-        Price:'',
-        quantite:'',
-  
-        DialogueDelete: false,
-        productIdToDelete: null,
-  
-        DialogueUpdate:false,
-        ProductIdToUpdate: null,
-        ProductnameToUpdate:null,
-        ProductPricetToUpdate:null,
-        ProductQteToUpdate:null,
-        
-        sortbyPrices:'asc',
-        sortById: 'asc',
-        sortbyqtes:'asc',
-        sortbynames:'asc',
+export default {
+  data() {
+        return {
+          Product: [],
+          header_table: 'Products',
+          EditProducts: false,
+          Productname: '',
+          Price:'',
+          quantite:'',
     
-        searchProductId:'',
-        searchProductname: '',
-        searchProductPrice:'',
-        searchProductQte:'',
-        searchDateModification:'',
-        searchDateCreation: '',
-      };
-    },
-
-computed: {
-
-          //========= Search
-          Product() {
-            
-              if (this.searchProductId !== '') {
-                return this.Product.filter(product =>
-                product.idProducts === this.searchProductId
-                );
-              }
-              
-              if(this.searchProductQte !==''){
-                return this.Product.filter(product =>
-                product.qteProducts === parseInt(this.searchProductQte)
-                );
-              }
-              
-              if (this.searchProductPrice !== '') {
-                    return this.Product.filter(product =>
-                    product.priceProducts === parseFloat(this.searchProductPrice)
-                  );
-              }
-
-
-              if (this.searchProductname !== '') {
-                return this.Product.filter(product =>
-                product.nameProducts.includes(this.searchProductname)
-                );
-              }
-              if (this.searchDateCreation!=='') {
-              const dateParts = this.searchDateCreation.split('-');
-              const searchDates = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
-  
-              return this.Product.filter(product => 
-              product.createdatProduct === searchDates
-              );
-            }
-            if (this.searchDateModification!=='') {
-              const dateParts = this.searchDateModification.split('-');
-              const searchDates = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
-  
-              return this.Product.filter(category => 
-                category.modifiedatProduct === searchDates
-              );
-            }
-              
-              else{
-                  return this.Product;}
-          },
-          //========= End Search
-    },
-  mounted() {
-      this.GetAll()
-    },
-methods: {  
-      confirmUpdate(idProducts,Productname,priceProducts,qteProducts){
-            this.ProductIdToUpdate=idProducts;
-            this.ProductnameToUpdate=Productname;
-            this.ProductPricetToUpdate=priceProducts;
-            this.ProductQteToUpdate=qteProducts;
-
-            this.DialogueUpdate=true;
-          },
-          // updateProduct(){
-          //   this.DialogueUpdate=false;
-          // },
-          cancelUpdate(){
-            this.DialogueUpdate=false;
-          },
+          DialogueDelete: false,
+          productIdToDelete: null,
+    
+          DialogueUpdate:false,
+          ProductIdToUpdate: null,
+          ProductnameToUpdate:null,
+          ProductPricetToUpdate:null,
+          ProductQteToUpdate:null,
+          
+          sortbyPrices:'asc',
+          sortById: 'asc',
+          sortbyqtes:'asc',
+          sortbynames:'asc',
       
-
-
-      confirmDelete(idProducts) {
-            this.productIdToDelete = idProducts;
-            this.DialogueDelete = true;
-          },
-      deleteProduct() {
-            console.log("Deleting category with ID:", this.productIdToDelete);
-            this.DialogueDelete = false;
-          },
-      cancelDelete() {
-            this.DialogueDelete = false;
-          },
-      Canceled(){
-            this.Productname="";
-            this.Price="";
-            this.quantite="";
-
-            this.GetAll()
-          },
-      doProducts(EditProducts) {
-            console.log('EditP');
-            this.EditProducts = EditProducts;
-            this.ProductName = "";
-          },
-
-
-      GetAll(){
-              axios.get('http://localhost:8080/product').then(response => 
-              {
-                this.Product = response.data;
-              }).catch(error => { console.error(error); });
-          },
-      submitProduct(){
-                const data={
-                  nameProducts:this.Productname,
-                  priceProducts:this.Price,
-                  qteProducts:this.quantite
-                }
-                axios.post('http://localhost:8080/product',data) .then(response => {
-                  console.log(response.data);
-                  // Handle the response as needed
-                  this.Canceled();
-                })
-                .catch(error => {
-                  console.error(error);
-                });
-          },
-      updateProduct(idProducts,ProductnameToUpdate,ProductPricetToUpdate,ProductQteToUpdate){
-        axios.put(`http://localhost:8080/product/${idProducts}`,{
-          nameProducts:ProductnameToUpdate,
-          priceProducts:ProductPricetToUpdate,
-          qteProducts:ProductQteToUpdate
-        }).then(response=>{
-          this.GetAll()
-          this.DialogueUpdate=false;
-        }).catch(error=>{
-          console.error(error);
-        });
+          searchProductId:'',
+          searchProductname: '',
+          searchProductPrice:'',
+          searchProductQte:'',
+          searchDateModification:'',
+          searchDateCreation: '',
+        };
       },
 
+  computed: {
+            //========= Search
+            Product() {
+                if (this.searchProductId !== '') {
+                  return this.Product.filter(product =>
+                  product.idProducts === this.searchProductId
+                  );
+                }
+                
+                if(this.searchProductQte !==''){
+                  return this.Product.filter(product =>
+                  product.qteProducts === parseInt(this.searchProductQte)
+                  );
+                }
+                
+                if (this.searchProductPrice !== '') {
+                      return this.Product.filter(product =>
+                      product.priceProducts === parseFloat(this.searchProductPrice)
+                    );
+                }
 
-      deleteProduct(idProducts){
-        axios.delete(`http://localhost:8080/product/${idProducts}`)
-            .then(response=>{
+                if (this.searchProductname !== '') {
+                  return this.Product.filter(product =>
+                  product.nameProducts.includes(this.searchProductname)
+                  );
+                }
+                if (this.searchDateCreation!=='') {
+                const dateParts = this.searchDateCreation.split('-');
+                const searchDates = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+    
+                return this.Product.filter(product => 
+                product.createdatProduct === searchDates
+                );
+              }
+
+              if (this.searchDateModification!=='') {
+                const dateParts = this.searchDateModification.split('-');
+                const searchDates = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+    
+                return this.Product.filter(category => 
+                  category.modifiedatProduct === searchDates
+                );
+              }
+
+              else{
+                    return this.Product;
+                  }
+            },
+            //========= End Search
+      },
+
+  mounted() {
+            this.GetAll()
+      },
+  methods: {  
+  // ============= UPDATE==============================================
+        confirmUpdate(idProducts,Productname,priceProducts,qteProducts){
+              this.ProductIdToUpdate=idProducts;
+              this.ProductnameToUpdate=Productname;
+              this.ProductPricetToUpdate=priceProducts;
+              this.ProductQteToUpdate=qteProducts;
+
+              this.DialogueUpdate=true;
+            },
+        cancelUpdate(){
+              this.DialogueUpdate=false;
+            },
+  // ============= DELETE ==============================================
+        confirmDelete(idProducts) {
+              this.productIdToDelete = idProducts;
+              this.DialogueDelete = true;
+            },
+        deleteProduct() {
+              console.log("Deleting category with ID:", this.productIdToDelete);
+              this.DialogueDelete = false;
+            },
+        cancelDelete() {
+              this.DialogueDelete = false;
+            },
+        Canceled(){
+              this.Productname="";
+              this.Price="";
+              this.quantite="";
+
               this.GetAll()
-              this.DialogueDelete=false;
-            }).catch(error=>{
-              console.error(error);
-            })
-       }, 
-       submitProduct(){
-                const data={
-                  nameProducts:this.Productname,
-                  priceProducts:this.Price,
-                  qteProducts:this.quantite
-                }
-                axios.post('http://localhost:8080/product',data) .then(response => {
-                  console.log(response.data);
-                  // Handle the response as needed
-                  this.Canceled();
-                })
-                .catch(error => {
-                  console.error(error);
+            },
+        doProducts(EditProducts) {
+              console.log('EditP');
+              this.EditProducts = EditProducts;
+              this.ProductName = "";
+            },
+
+  // ============= REQUETE ==============================================
+        GetAll(){
+                axios.get('http://localhost:8080/product').then(response => 
+                {
+                  this.Product = response.data;
+                }).catch(error => { console.error(error); });
+              },
+              
+        submitProduct(){
+          const data={
+            nameProducts:this.Productname,
+            priceProducts:this.Price,
+            qteProducts:this.quantite
+          }
+          axios.post('http://localhost:8080/product',data) .then(response => {
+            console.log(response.data);
+            // Handle the response as needed
+            this.Canceled();
+          })
+          .catch(error => {
+            console.error(error);
+          });
+        },
+
+        updateProduct(idProducts,ProductnameToUpdate,ProductPricetToUpdate,ProductQteToUpdate){
+          axios.put(`http://localhost:8080/product/${idProducts}`,{
+            nameProducts:ProductnameToUpdate,
+            priceProducts:ProductPricetToUpdate,
+            qteProducts:ProductQteToUpdate
+          }).then(response=>{
+            this.GetAll()
+            this.DialogueUpdate=false;
+          }).catch(error=>{
+            console.error(error);
+          });
+        },
+
+        deleteProduct(idProducts){
+          axios.delete(`http://localhost:8080/product/${idProducts}`)
+              .then(response=>{
+                this.GetAll()
+                this.DialogueDelete=false;
+              }).catch(error=>{
+                console.error(error);
+              })
+        }, 
+  // ============= END REQUETE ==============================================
+  // ============= TRIER=====================================================
+        sortByNameProdcut() {
+          this.sortbynames = this.sortbynames === 'asc' ? 'desc' : 'asc';
+          this.Product.sort((a, b) => {
+            const nameA = a.nameProducts.toUpperCase();
+            const nameB = b.nameProducts.toUpperCase();
+
+            if (this.sortbynames === 'asc') {
+              if (nameA < nameB) return -1;
+              if (nameA > nameB) return 1;
+            } else {
+              if (nameA > nameB) return -1;
+              if (nameA < nameB) return 1;
+            }
+
+            return 0;
+          });
+        },
+
+        sortByqte() {
+          this.sortbyqtes = this.sortbyqtes === 'asc' ? 'desc' : 'asc';
+                this.Product.sort((a, b) => {
+                  if (this.sortbyqtes === 'asc') {
+                    return a.qteProducts - b.qteProducts;
+                  } else {
+                    return b.qteProducts - a.qteProducts;
+                  }
                 });
-          },
+        },
 
+        sortByPrice() {
+          this.sortbyPrices = this.sortbyPrices === 'asc' ? 'desc' : 'asc';
+                this.Product.sort((a, b) => {
+                  if (this.sortbyPrices === 'asc') {
+                    return a.priceProducts - b.priceProducts;
+                  } else {
+                    return b.priceProducts - a.priceProducts;
+                  }
+                });
+        },
 
-       sortByNameProdcut() {
-        this.sortbynames = this.sortbynames === 'asc' ? 'desc' : 'asc';
-        this.Product.sort((a, b) => {
-          const nameA = a.nameProducts.toUpperCase();
-          const nameB = b.nameProducts.toUpperCase();
-
-          if (this.sortbynames === 'asc') {
-            if (nameA < nameB) return -1;
-            if (nameA > nameB) return 1;
-          } else {
-            if (nameA > nameB) return -1;
-            if (nameA < nameB) return 1;
-          }
-
-          return 0;
-        });
-    },
-       sortByqte() {
-        this.sortbyqtes = this.sortbyqtes === 'asc' ? 'desc' : 'asc';
-              this.Product.sort((a, b) => {
-                if (this.sortbyqtes === 'asc') {
-                  return a.qteProducts - b.qteProducts;
-                } else {
-                  return b.qteProducts - a.qteProducts;
-                }
-              });
-          },
-
-       sortByPrice() {
-        this.sortbyPrices = this.sortbyPrices === 'asc' ? 'desc' : 'asc';
-              this.Product.sort((a, b) => {
-                if (this.sortbyPrices === 'asc') {
-                  return a.priceProducts - b.priceProducts;
-                } else {
-                  return b.priceProducts - a.priceProducts;
-                }
-              });
-          },
-
-
-      sortByIdCategory() {
-              this.sortById = this.sortById === 'asc' ? 'desc' : 'asc';
-              this.Product.sort((a, b) => {
-                if (this.sortById === 'asc') {
-                  return a.idProducts - b.idProducts;
-                } else {
-                  return b.idProducts - a.idProducts;
-                }
-              });
-          }
-    }
-  };
+        sortByIdCategory() {
+                this.sortById = this.sortById === 'asc' ? 'desc' : 'asc';
+                this.Product.sort((a, b) => {
+                  if (this.sortById === 'asc') {
+                    return a.idProducts - b.idProducts;
+                  } else {
+                    return b.idProducts - a.idProducts;
+                  }
+                });
+        }
+  // ============= END TRIER============================================
+      }
+};
   </script>
   
   <style>
