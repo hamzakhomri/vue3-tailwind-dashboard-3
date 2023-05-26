@@ -368,17 +368,10 @@ computed: {
           //========= Search
           Product() {
 
-            
-            if (this.searchProductQte !== '') {
-                return this.Product.filter(product =>
-                parseInt(product.qteProducts) ===parseInt(this.searchProductQte)
-                );
-              }
-
-
+          
               if (this.searchProductPrice !== '') {
                     return this.Product.filter(product =>
-                    product.priceProducts === this.searchProductPrice
+                    product.priceProducts === parseFloat(this.searchProductPrice)
                   );
                 }
               if (this.searchProductId !== '') {
