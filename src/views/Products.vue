@@ -1,7 +1,8 @@
 <template>
+  
   <div>
     <h2>{{ current }}</h2>
-    <!-- Render step content based on the current step -->
+  
     <template v-if="current === 'user-information'">
       <form  v-show="EditProducts"  @submit.prevent="submitProduct"  action=""  class="bg-gray-200 dark:bg-gray-800 rounded-lg border border-gray-500 mb-5" >
    <div class="flex justify-end ">
@@ -11,7 +12,7 @@
     </div>
     <div class="w-full flex  mx-auto  rounded-lg grid-cols-12 gap-2 p-1 mb-5">
       <div class="flex flex-wrap justify-center w-full rounded-lg border border-gray-500 dark:border-gray-700 sm:col-span-9 mb-auto">
-        <!-- component -->
+
         <div class="w-[100%] rounded-lg px-8  flex flex-col">
           <div class="-mx-3 md:flex mb-6 justify-between space-x-4">
             <div class="w-full">
@@ -83,7 +84,15 @@
     </template>
     <template v-else-if="current === 'billing-address'">
   
-      <h1>BB</h1>
+      <label for="countries" class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-white">Les Categories</label>
+  <select id="countries" v-model="selectedCategory" class="w-[50%] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+    <option hidden value="">Les Categories</option>
+    <option v-for="category in ProductCategory" :key="category.idProductCategory" :value="category.idProductCategory">
+      {{ category.idProductCategory }} | {{ category.nameProductCategory }}
+    </option>
+  </select>
+  <h1 class="bg-white" v-if="selectedCategory !== ''">Selected Category: {{ selectedCategory }}</h1>
+
     </template>
     <template v-else-if="current === 'terms'">
 
@@ -114,18 +123,13 @@
       </div>
     </button>
   </div>
-  </div>
+  </div> 
+
+  <div>
+
+</div>
 
 
-<label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
-<select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-  <option selected>Choose a country</option>
-  <option value="US">United States</option>
-  <option value="CA">Canada</option>
-  <option value="FR">France</option>
-  <option value="DE">Germany</option>
-</select>
- 
     <h1 class="text-2xl color-black font-bold dark:text-gray-300 italic text-left mb-2">{{ header_table }}</h1>
 
       <!-- <transition name="slide">
@@ -452,32 +456,34 @@ import { useStepper } from '@vueuse/core';
 
   
 export default {
-  setup() {
-    const {
-      current,
-      goToNext,
-      goToPrevious,
-      isFirst,
-      isLast,
-    } = useStepper([
-      'user-information',
-      'billing-address',
-      'terms',
-      'payment',
-    ]);
+setup() {
+          const {
+              current,
+              goToNext,
+              goToPrevious,
+              isFirst,
+              isLast,
+          } = useStepper([
+              'user-information',
+              'billing-address',
+              'terms',
+              'payment',
+          ]);
 
-    return {
-      current,
-      goToNext,
-      goToPrevious,
-      isFirst,
-      isLast,
-    };
-  },
+          return {
+              current,
+              goToNext,
+              goToPrevious,
+              isFirst,
+              isLast,
+          };
+},
   // 
   data() {
         return {
           Product: [],
+          ProductCategory: [],
+           selectedCategory: '', 
           header_table: 'Products',
           EditProducts: false,
           Productname: '',
@@ -560,6 +566,7 @@ export default {
 
   mounted() {
             this.GetAll()
+            this.GetAllGategory()
       },
   methods: {  
   // ============= UPDATE==============================================
@@ -600,7 +607,16 @@ export default {
             },
 
   // ============= REQUETE ==============================================
-        GetAll(){
+        GetAllGategory(){
+            axios.get('http://localhost:8080/productcategory').then(response => 
+            {
+              this.ProductCategory = response.data;
+            }).catch(error => { console.error(error); });
+          },
+              
+  
+  
+          GetAll(){
                 axios.get('http://localhost:8080/product').then(response => 
                 {
                   this.Product = response.data;
