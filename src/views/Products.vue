@@ -131,6 +131,14 @@
 
 
 
+
+
+
+
+
+
+
+
     <h1 class="text-2xl color-black font-bold dark:text-gray-300 italic text-left mb-2">{{ header_table }}</h1>
 
       <!-- <transition name="slide">
