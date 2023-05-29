@@ -1,9 +1,9 @@
 <template>
-  <div class="flex justify-start ml-7 mb-5 ">
-  
-  </div>
-      <transition name="slide">
-        <form  v-show="EditProducts"  @submit.prevent="submitProduct"  action=""  class="bg-gray-200 dark:bg-gray-800 rounded-lg border border-gray-500 mb-5" >
+  <div>
+    <h2>{{ current }}</h2>
+    <!-- Render step content based on the current step -->
+    <template v-if="current === 'user-information'">
+      <form  v-show="EditProducts"  @submit.prevent="submitProduct"  action=""  class="bg-gray-200 dark:bg-gray-800 rounded-lg border border-gray-500 mb-5" >
    <div class="flex justify-end ">
       <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" @click="doProducts(false)">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -80,24 +80,143 @@
       </div>
     </div>
   </form>
-  </transition>
-  <div class="overflow-auto border-2 p-3 border-solid border-gray-500 rounded-xl">
+    </template>
+    <template v-else-if="current === 'billing-address'">
   
-  
-  
-  
-  <div class="flex justify-between">
-    <h2 class="text-gray-400 p-2" 
-  v-bind:class="{'text-red-700 ': Product.length <= 5,'text-red-400 ': Product.length <= 10,}">Products : {{ Product.length }}</h2>
-      <h2  v-if="!EditProducts" @click="doProducts(true)" class="text-green-600 text-lg cursor-pointer">+ Add Categories</h2>
-  
+      <h1>BB</h1>
+    </template>
+    <template v-else-if="current === 'terms'">
+
+      <h1>CC</h1>
+    </template>
+    <template v-else-if="current === 'payment'">
+      
+      <h1>DD</h1>
+    </template>
+
+
+
+  <div class="flex flex-row mx-auto justify-center">
+    <button @click="goToPrevious()" :disabled="isFirst" type="button" class="bg-gray-500 text-white rounded-l-md border-r border-gray-100 py-2 hover:bg-red-700 hover:text-white px-3">
+      <div class="flex flex-row align-middle">
+        <svg class="w-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
+        </svg>
+        <p class="ml-2">Prev</p>
+      </div>
+    </button>
+    <button @click="goToNext()" :disabled="isLast" type="button" class="bg-gray-500 text-white rounded-r-md py-2 border-l border-gray-200 hover:bg-red-700 hover:text-white px-3">
+      <div class="flex flex-row align-middle">
+        <span class="mr-2">Next</span>
+        <svg class="w-5 ml-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+        </svg>
+      </div>
+    </button>
   </div>
-    <!-- ===================   SEARCH BAR    ========================== -->
+  </div>
+
+
+<label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
+<select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+  <option selected>Choose a country</option>
+  <option value="US">United States</option>
+  <option value="CA">Canada</option>
+  <option value="FR">France</option>
+  <option value="DE">Germany</option>
+</select>
+ 
+    <h1 class="text-2xl color-black font-bold dark:text-gray-300 italic text-left mb-2">{{ header_table }}</h1>
+
+      <!-- <transition name="slide">
+        <form  v-show="EditProducts"  @submit.prevent="submitProduct"  action=""  class="bg-gray-200 dark:bg-gray-800 rounded-lg border border-gray-500 mb-5" >
+   <div class="flex justify-end ">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" @click="doProducts(false)">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    </div>
+    <div class="w-full flex  mx-auto  rounded-lg grid-cols-12 gap-2 p-1 mb-5">
+      <div class="flex flex-wrap justify-center w-full rounded-lg border border-gray-500 dark:border-gray-700 sm:col-span-9 mb-auto">
+    
+        <div class="w-[100%] rounded-lg px-8  flex flex-col">
+          <div class="-mx-3 md:flex mb-6 justify-between space-x-4">
+            <div class="w-full">
+              <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Product Name</span></div>
+              <input type="text" placeholder="Products Name" required v-model="Productname" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
+                { 'border-red-500': Productname.length <= 0 },
+                { 'border-green-500': Productname.length >= 1 }]" >
+              <p v-bind:hidden="Productname.length >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
+            </div>
+          </div>
+        </div>
   
-    <div class="flex space-x-3">
+        <div class="w-[50%]  rounded-lg px-8  flex flex-col">
+          <div class="-mx-3 md:flex mb-6 justify-between space-x-4">
+            <div class="w-full">
+              <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Price</span></div>
+              <input type="text" placeholder="Price" required v-model="Price" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
+                { 'border-red-500': Price.length <= 0 },{ 'border-green-500': Price.length >= 1 }]" >
+              <p v-bind:hidden="Price.length >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
+            </div>
+          </div>
+        </div>
+  
+        <div class="w-[50%] rounded-lg px-8  flex flex-col">
+          <div class="-mx-3 md:flex mb-6 justify-between space-x-4">
+            <div class="w-full">
+              <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Quantite</span></div>
+              <input type="number" placeholder="Quantite" required v-model="quantite" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
+                { 'border-red-500': quantite <= 0 },{ 'border-green-500': quantite >= 1 }]" >
+              <p v-bind:hidden="quantite >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+     
+      <div class="flex-initial w-[40%] h-[10%] col-span-2 rounded-lg border border-gray-400 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 p-2 sm:col-span-3">
+        <div class="bg-white dark:bg-gray-900 col-start-6 col-end-5 p-1 rounded-xl my-4 mr-auto shadow-md">
+          <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Product name:
+            <a class="font-semibold text-gray-800 dark:text-gray-100">{{Productname}}</a>
+          </div>
+          <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Price:
+            <a class="font-semibold text-gray-800 dark:text-gray-100">{{Price}}</a>
+          </div>
+          <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Quantite:
+            <a class="font-semibold text-gray-800 dark:text-gray-100">{{quantite}}</a>
+          </div>
+        </div>
+        
+        <div class="space-y-1">
+            <div class="flex w-full">
+              <button class="btn btn-primary group rounded-2xl h-12 w-full bg-green-500 dark:bg-green-600 font-bold text-lg text-white relative overflow-hidden" type="submit" @click="AddProducts" v-bind:disabled="Productname.length == 0">Submit
+              <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl"></div>
+              </button>
+            </div>
+          
+            <div class="flex w-full">
+            <button class="group rounded-2xl h-12 w-full bg-red-500 dark:bg-red-700 font-bold text-lg text-white dark:text-gray-200 relative overflow-hidden" @click="Canceled">
+              Cancel
+              <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 dark:group-hover:bg-gray-800/30 rounded-2xl">
+              </div>
+            </button>
+            </div>
+          </div>
+      </div>
+    </div>
+  </form>
+  </transition> -->
+  <div class="overflow-auto border-2 p-3 border-solid border-gray-500 rounded-xl">
+    <div class="flex justify-between mb-2 mt-2">
+    <h2 class="text-gray-400 p-2" v-bind:class="{'text-red-700 ': Product.length <= 5,'text-red-400 ': Product.length <= 10,}">Products : {{ Product.length }}</h2>
+      <h2  v-if="!EditProducts" @click="doProducts(true)" class="text-green-600 text-lg cursor-pointer">+ Add Categories</h2>
+    </div>
+    <!-- ===================   SEARCH BAR    ========================== -->
+    <div class="flex space-x-3 font-bold">
   
       <div class="w-full mb-4">          
-        <P class="text-left text-xs text-gray-300">ID</P>
+        <P class="text-black text-left text-xs dark:text-gray-300 ">ID</P>
         <div class="relative w-full ">
 
           <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
@@ -110,7 +229,7 @@
       </div>
   
       <div class=" w-full mb-4">
-        <P class="text-left text-xs text-gray-300">Nom</P>
+        <P class="text-black text-left text-xs dark:text-gray-300 ">Nom</P>
         <div class="relative w-full ">
           
           <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
@@ -124,7 +243,7 @@
 
 
       <div class=" w-full mb-4">
-        <P class="text-left text-xs text-gray-300">Price</P>
+        <P class="text-black text-left text-xs dark:text-gray-300 ">Price</P>
         <div class="relative w-full ">
           
           <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
@@ -138,7 +257,7 @@
 
 
       <div class=" w-full mb-4">
-        <P class="text-left text-xs text-gray-300">Quantite</P>
+        <P class="text-black text-left text-xs dark:text-gray-300 ">Quantite</P>
         <div class="relative w-full ">
           
           <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
@@ -153,7 +272,7 @@
       
   
       <div class="w-full mb-4">
-        <P class="text-left text-xs text-gray-300">Date Modefication</P>
+        <P class="text-black text-left text-xs dark:text-gray-300 ">Date Modefication</P>
         <div class="relative w-full ">
           
           <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
@@ -166,7 +285,7 @@
       </div>
   
       <div class=" w-full mb-4">
-        <P class="text-left text-xs text-gray-300">Date Creation</P>
+        <P class="text-black text-left text-xs dark:text-gray-300 ">Date Creation</P>
         <div class="relative w-full ">
           
           <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
@@ -219,8 +338,8 @@
       </div>
       </transition> -->
       <!-- ===================   END DIALOGUE DELETE BAR    ========================== -->
-  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-    <thead class="text-xs dark:border-none  border border-indigo-600  text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 ">
+    <thead class="text-xs dark:border-none  border border-indigo-600  text-gray-500 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
       <tr>
         <th scope="col" class=" py-3 px-6">
           <div @click="sortByIdCategory"  class="cursor-pointer flex items-center">
@@ -280,13 +399,13 @@
         </th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="">
       <tr v-for="product in Product" :key="product.idProducts" 
-      class="relative bg-gray-100 hover:bg-blue-100 border border-indigo-600 dark:bg-gray-800 dark:hover:bg-gray-600   dark:border-gray-700 w-96">
-        <td scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+      class="font-bold  relative bg-gray-100 hover:bg-blue-100 border border-indigo-600 dark:bg-gray-800 dark:hover:bg-gray-600   dark:border-gray-700 w-96">
+        <td scope="row" class="py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white">
           {{ product.idProducts }}
         </td>
-        <td class="py-4 px-6">
+        <td class="py-4 px-6 ">
           {{ product.nameProducts }}
         </td>
         <td class="py-4 px-6">
@@ -329,8 +448,33 @@
   <script>
   import axios from 'axios';
 import { parse } from 'postcss';
+import { useStepper } from '@vueuse/core';
+
   
 export default {
+  setup() {
+    const {
+      current,
+      goToNext,
+      goToPrevious,
+      isFirst,
+      isLast,
+    } = useStepper([
+      'user-information',
+      'billing-address',
+      'terms',
+      'payment',
+    ]);
+
+    return {
+      current,
+      goToNext,
+      goToPrevious,
+      isFirst,
+      isLast,
+    };
+  },
+  // 
   data() {
         return {
           Product: [],
@@ -559,6 +703,8 @@ export default {
   </script>
   
   <style>
+
+  
   .slide-enter-active {
     transition: all 500ms;
     opacity: 0;

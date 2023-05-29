@@ -1,7 +1,6 @@
 <template>
-<div class="flex justify-start ml-7 mb-5 ">
+  <h1 class="text-2xl color-black font-bold dark:text-gray-300 italic text-left mb-2">{{ header_table }}</h1>
 
-</div>
     <transition name="slide">
       <form  v-show="EditProducts"  @submit.prevent="submitCategories"  action=""  class="bg-gray-200 dark:bg-gray-800 rounded-lg border border-gray-500 mb-5" >
  <div class="flex justify-end ">
@@ -51,23 +50,20 @@
 </form>
 </transition>
 <div class="border-2 p-3 border-solid border-gray-500 rounded-xl">
-<div class="flex justify-between">
-
-  <h2 class="text-gray-400 p-2" 
-  v-bind:class="{
-    'text-red-700 ': ProductCategory.length <= 5,
-    'text-red-400 ': ProductCategory.length <= 10,
-  }">
-  Categories: {{ ProductCategory.length }}</h2>
-  <h2  v-if="!EditProducts" @click="doProducts(true)" class="text-green-600 text-lg cursor-pointer">+ Add Categories</h2>
-
-</div>
+  <div class="flex justify-between mb-2 mt-2">
+    <h2 class="text-gray-400 p-2" 
+    v-bind:class="{
+      'text-red-700 ': ProductCategory.length <= 5,
+      'text-red-400 ': ProductCategory.length <= 10,}">
+    Categories: {{ ProductCategory.length }}</h2>
+    <h2  v-if="!EditProducts" @click="doProducts(true)" class="text-green-600 text-lg cursor-pointer">+ Add Categories</h2>
+  </div>
   <!-- ===================   SEARCH BAR    ========================== -->
 
-  <div class="flex space-x-3">
+  <div class="flex space-x-3 font-bold">
 
     <div class="w-full mb-4">
-      <P class="text-left text-xs text-gray-300">ID</P>
+      <P class="text-left text-xs dark:text-gray-300 text-black">ID</P>
       <div class="relative w-full ">
         <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
           <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -79,7 +75,7 @@
     </div>
 
     <div class="w-full mb-4">
-      <P class="text-left text-xs text-gray-300">Nom</P>
+      <P class="text-left text-xs dark:text-gray-300 text-black">Nom</P>
       <div class="relative w-full ">
         <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
           <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -91,7 +87,7 @@
     </div>
 
     <div class="w-full mb-4">
-      <P class="text-left text-xs text-gray-300">Date Creation</P>
+      <P class="text-left text-xs dark:text-gray-300 text-black">Date Creation</P>
       <div class="relative w-full ">
         <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
           <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -103,7 +99,7 @@
     </div>
 
     <div class="w-full mb-4">
-      <P class="text-left text-xs text-gray-300">Date Modification</P>
+      <P class="text-left text-xs dark:text-gray-300 text-black">Date Modification</P>
       <div class="relative w-full ">
         <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none ">
           <svg aria-hidden="true" class="w-5 h-auto text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -195,7 +191,7 @@
   </thead>
   <tbody>
     <tr v-for="category in ProductCategory" :key="category.idProductCategory" 
-    class="relative bg-gray-100 hover:bg-blue-100 border border-indigo-600 dark:bg-gray-800 dark:hover:bg-gray-600   dark:border-gray-700 w-96">
+    class="relative font-bold bg-gray-100 hover:bg-blue-100 border border-indigo-600 dark:bg-gray-800 dark:hover:bg-gray-600   dark:border-gray-700 w-96">
       <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
         {{ category.idProductCategory }}
       </th>
@@ -239,7 +235,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      header_table: 'Products',
+      header_table: 'Categories',
       EditProducts: false,
       CategoryName: '',
 
