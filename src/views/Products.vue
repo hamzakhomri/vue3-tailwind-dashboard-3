@@ -68,14 +68,17 @@
               </div>
               </template>
 
-              <template v-else-if="current === 'terms'">
-                <div class="flex flex-col items-start">
-                  <button class="text-left text-white" @click="AddNewPicture">Ajouter une nouvelle photo</button>
-                  <div id="file_inputs" class="space-y-3">
-                    <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="multiple_files" type="file" multiple>
+              <template v-else-if="current === 'Pictures'">
+                <button class="text-white" @click="RemoveLastInput">Remove</button>
+                  <button class="text-left text-white mb-3" @click="AddNewPicture">Plus une photo</button>
+                 
+                <div class="flex justify-center">
+                  <div id="file_inputs" class="space-y-3  w-[90%]">
+                    <input  id="multiple_files" type="file" multiple class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
                   </div>
                 </div>
               </template>
+
 
               <template v-else-if="current === 'payment'">
                 <h1>DD</h1>
@@ -83,7 +86,7 @@
     </div>
 
 
-    <div class="flex-initial w-[30%] h-[10%] col-span-2 rounded-lg border border-gray-400 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 p-2 sm:col-span-3">
+    <div class="flex-initial w-[30%]  col-span-2 rounded-lg border border-gray-400 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 p-2 sm:col-span-3">
             <div class="bg-white dark:bg-gray-900 col-start-6 col-end-5 p-1 rounded-xl my-4 mr-auto shadow-md">
               <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Product name:
                 <a class="font-semibold text-gray-800 dark:text-gray-100">{{Productname}}</a>
@@ -97,8 +100,10 @@
               <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Categories:
                 <a class="font-semibold text-gray-800 dark:text-gray-100">{{CategoryName}}</a>
               </div>
+              <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Pictures:
+                <a class="font-semibold text-gray-800 dark:text-gray-100">{{picturelength}}</a>
+              </div>
             </div>
-
             <div class="space-y-1">
               <div class="flex w-full">
                 <button class="btn btn-primary group rounded-2xl h-12 w-full bg-green-500 dark:bg-green-600 font-bold text-lg text-white relative overflow-hidden" type="submit" @click="AddProducts" v-bind:disabled="Productname.length == 0">Submit
@@ -121,24 +126,27 @@
 
 
 
-  <div class="flex flex-row mx-auto justify-center">
-    <button @click="goToPrevious()" :disabled="isFirst" type="button" class="bg-gray-500 text-white rounded-l-md border-r border-gray-100 py-2 hover:bg-red-700 hover:text-white px-3">
-      <div class="flex flex-row align-middle">
-        <svg class="w-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
-        </svg>
-        <p class="ml-2">Precedent</p>
-      </div>
-    </button>
-    <button @click="goToNext()" :disabled="isLast" type="button" class="bg-gray-500 text-white rounded-r-md py-2 border-l border-gray-200 hover:bg-red-700 hover:text-white px-3">
-      <div class="flex flex-row align-middle">
-        <span class="mr-2">Suivant</span>
-        <svg class="w-5 ml-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L16.586 11H5a1 1 0 010-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-        </svg>
-      </div>
-    </button>
+  <div class="flex flex-row  justify-start">
+      
+        <button @click="goToPrevious()" :disabled="isFirst" type="button" class=" w-[35%] bg-gray-500 text-white rounded-l-md border-r border-gray-100 py-2 hover:bg-gray-400 hover:text-white px-3">
+          <div class="flex flex-row align-middle">
+            <svg class="w-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
+            </svg>
+            <p class="ml-2">Precedent</p>
+          </div>
+        </button>
+        <button @click="goToNext()" :disabled="isLast" type="button" class="w-[35%] bg-gray-500 text-white rounded-r-md py-2 border-l border-gray-200 hover:bg-gray-400  hover:text-white px-3">
+          <div class="flex flex-row align-middle">
+            <span class="mr-2">Suivant</span>
+            <svg class="w-5 ml-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L16.586 11H5a1 1 0 010-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+        </button>
+
   </div>
+
 </div>
 
 
@@ -490,7 +498,7 @@ setup() {
           } = useStepper([
               'Products',
               'Categories',
-              'terms',
+              'Pictures',
               'payment',
           ]);
 
@@ -507,6 +515,9 @@ setup() {
         return {
           ProductCategory: [],
           CategoryName: '',
+
+         picturelength : 0,
+
 
           Product: [],
 
@@ -606,11 +617,28 @@ setup() {
     input.type = 'file';
     input.multiple = true;
     document.getElementById('file_inputs').appendChild(input);
+  } else if (fileInputs.length > 1) {
+    // Remove the last input
+    const lastInput = fileInputs[fileInputs.length - 1];
+    lastInput.parentNode.removeChild(lastInput);
   } else {
-      alert("input picture empty")
+    alert("Input picture empty");
+  }
+this.picturelength = fileInputs.length;
+},
+
+RemoveLastInput() {
+  const fileInputs = document.querySelectorAll('#file_inputs input[type="file"]');
+  const lastInput = fileInputs[fileInputs.length - 1];
+
+  if (fileInputs.length < 2 ) {
+    alert("You can't remove the input");
+    
+  } else {
+    lastInput.parentNode.removeChild(lastInput);
   }
 }
-
+  
 ,
 
   // ============= UPDATE==============================================
@@ -641,7 +669,7 @@ setup() {
               this.Productname="";
               this.Price="";
               this.quantite="";
-
+              this.CategoryName="";
               this.GetAll()
             },
         doProducts(EditProducts) {
