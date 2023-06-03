@@ -60,7 +60,7 @@
                 <label for="countries" class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-white">Les Categories</label>
                 <select id="countries" v-model="idProductCategory" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',{'border-red-500': idProductCategory.length <= 0 },{ 'border-green-500': idProductCategory.length >= 1 }]">
                   <option hidden value="">Les Categories</option>
-                  <option v-for="category in ProductCategory" :key="category.idProductCategory" :value="category.idProductCategory">
+                  <option v-for="category in ProductCategory" :key="category.idProductCategory" :value="category.nameProductCategory">
                             {{ category.nameProductCategory }}
                   </option>
 
@@ -244,7 +244,7 @@
     </div>
   </form>
   </transition> -->
-  <div class="overflow-auto border-2 p-3 border-solid border-gray-500 rounded-xl">
+  <div class=" border-2 p-3 border-solid border-gray-500 rounded-xl">
     <div class="flex justify-between mb-2 mt-2">
     <h2 class="text-gray-400 p-2" v-bind:class="{'text-red-700 ': Product.length <= 5,'text-red-400 ': Product.length <= 10,}">Products : {{ Product.length }}</h2>
       <h2  v-if="!EditProducts" @click="doProducts(true)" class="text-green-600 text-lg cursor-pointer">+ Add Categories</h2>
@@ -342,21 +342,27 @@
         <div v-if="DialogueUpdate" class=" modal text-gray-500 p-2 border-2 border-solid border-red-300 rounded bg-red-400">
           <label class="flex justify-start">Modifier</label>
           <div class="flex justify-center space-x-3 mb-3 mr-2">
-              <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-            <div class="relative w-full flex space-x-2">
-         
-                <input disabled v-model="ProductIdToUpdate" required :class="['w-20 ,cursor-not-allowed','appearance-none','block','bg-white','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4']" type="number" placeholder="ID"> 
-                <input v-model="ProductnameToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-             
-                <input v-model="ProductPricetToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                <input v-model="ProductQteToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-             
-        
-              </div>
+                <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+              <div class="relative w-full flex space-x-2">
+          
+                  <input disabled v-model="ProductIdToUpdate" required :class="['w-20 ,cursor-not-allowed','appearance-none','block','bg-white','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4']" type="number" placeholder="ID"> 
+                  <input v-model="ProductnameToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
               
+                  <input v-model="ProductPricetToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                  <input v-model="ProductQteToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+        
+                  <select id="countries" v-model="CategoryToUpdate" :class="['border-2','appearance-none','block','w-full','bg-gray-50','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',{'border-red-500': idProductCategory.length <= 0 },{ 'border-green-500': idProductCategory.length >= 1 }]">
+                    <option hidden value="">{{  this.CategoryToUpdate}}</option>
+                    <option v-for="category in ProductCategory" :key="category.idProductCategory" :value="category.idProductCategory">
+                              {{ category.nameProductCategory }}
+                    </option>
+                  </select>
+                  <p>{{ CategoryToUpdate }}</p>
+                  
+                </div>
           </div>
           <div class="w-full relative space-y-2">
-                <button @click="updateProduct(ProductIdToUpdate,ProductnameToUpdate,ProductPricetToUpdate,ProductQteToUpdate)" class="bg-[#1e3a8a] w-full h-10 hover:bg-blue-800 rounded text-white font-bold px-4 rounded-l"> Modifier </button>
+                <button @click="updateProduct(ProductIdToUpdate,ProductnameToUpdate,CategoryToUpdate,ProductPricetToUpdate,ProductQteToUpdate)" class="bg-[#1e3a8a] w-full h-10 hover:bg-blue-800 rounded text-white font-bold px-4 rounded-l"> Modifier </button>
                 <button @click="cancelUpdate" class="bg-[#b91c1c] hover:bg-red-600 rounded font-bold px-4 rounded-r w-full  h-10 text-white">Annuler</button>
               </div>
         </div>
@@ -375,7 +381,8 @@
       </div>
       </transition> -->
       <!-- ===================   END DIALOGUE DELETE BAR    ========================== -->
-  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 ">
+      <div class="overflow-auto mt-6">
+      <table class=" w-full text-sm text-left text-gray-500 dark:text-gray-400 ">
     <thead class="text-xs dark:border-none  border border-indigo-600  text-gray-500 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
       <tr>
         <th scope="col" class=" py-3 px-6">
@@ -475,7 +482,12 @@
           <button @click="confirmDelete(product.idProducts)">Delete</button>
         </td>
         <td class="py-4 px-6 text-right">
-          <button @click="confirmUpdate(product.idProducts,product.nameProducts,product.priceProducts,product.qteProducts)">Modifier</button>
+          <button @click="confirmUpdate(product.idProducts, product.nameProducts, product.productCategory.nameProductCategory, product.priceProducts, product.qteProducts)">
+  Modifier
+</button>
+
+
+
         </td>
         <transition name="slide">
       <div v-if="DialogueDelete && productIdToDelete===product.idProducts"  class="absolute top-0 left-0 w-full h-full bg-red-200 modal text-gray-500 py-4">
@@ -492,6 +504,7 @@
   
     </tbody>
   </table>
+</div>
   </div>
   
   </template>
@@ -530,8 +543,7 @@ setup() {
           ProductCategory: [],
           idProductCategory: '',
 
-         picturelength : 0,
-
+          picturelength : 0,
 
           Product: [],
 
@@ -544,11 +556,12 @@ setup() {
           DialogueDelete: false,
           productIdToDelete: null,
     
-          DialogueUpdate:false,
+          DialogueUpdate:true,
           ProductIdToUpdate: null,
           ProductnameToUpdate:null,
           ProductPricetToUpdate:null,
           ProductQteToUpdate:null,
+          CategoryToUpdate:null,
           
           sortbyPrices:'asc',
           sortById: 'asc',
@@ -656,14 +669,16 @@ RemoveLastInput() {
 ,
 
   // ============= UPDATE==============================================
-        confirmUpdate(idProducts,Productname,priceProducts,qteProducts){
-              this.ProductIdToUpdate=idProducts;
-              this.ProductnameToUpdate=Productname;
-              this.ProductPricetToUpdate=priceProducts;
-              this.ProductQteToUpdate=qteProducts;
+  confirmUpdate(idProducts, Productname, CategoryToUpdate, priceProducts, qteProducts) {
+  this.ProductIdToUpdate = idProducts;
+  this.ProductnameToUpdate = Productname;
+  this.CategoryToUpdate = CategoryToUpdate;
+  this.ProductPricetToUpdate = priceProducts;
+  this.ProductQteToUpdate = qteProducts;
 
-              this.DialogueUpdate=true;
-            },
+  this.DialogueUpdate = true;
+},
+
         cancelUpdate(){
               this.DialogueUpdate=false;
             },
@@ -725,18 +740,29 @@ RemoveLastInput() {
           });
         },
 
-        updateProduct(idProducts,ProductnameToUpdate,ProductPricetToUpdate,ProductQteToUpdate){
-          axios.put(`http://localhost:8080/product/${idProducts}`,{
-            nameProducts:ProductnameToUpdate,
-            priceProducts:ProductPricetToUpdate,
-            qteProducts:ProductQteToUpdate
-          }).then(response=>{
-            this.GetAll()
-            this.DialogueUpdate=false;
-          }).catch(error=>{
-            console.error(error);
-          });
-        },
+        updateProduct(idProducts, ProductnameToUpdate, CategoryToUpdate, ProductPricetToUpdate, ProductQteToUpdate) {
+  axios.put(`http://localhost:8080/product/${idProducts}`, {
+    nameProducts: ProductnameToUpdate,
+    productCategory: {
+      nameProductCategory: CategoryToUpdate
+    },
+    priceProducts: ProductPricetToUpdate,
+    qteProducts: ProductQteToUpdate
+  })
+  .then(response => {
+    this.GetAll();
+    this.DialogueUpdate = false;
+    this.ProductIdToUpdate = null;
+    this.ProductnameToUpdate = '';
+    this.CategoryToUpdate = '';
+    this.ProductPricetToUpdate = null;
+    this.ProductQteToUpdate = null;
+  })
+  .catch(error => {
+    console.error(error);
+  });
+},
+
 
         deleteProduct(idProducts){
           axios.delete(`http://localhost:8080/product/${idProducts}`)
