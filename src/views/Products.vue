@@ -7,7 +7,7 @@
 
     <div class="flex-auto w-[60%] ">
               <template v-if="current === 'Products'">
-                <form v-show="EditProducts" @submit.prevent="submitProduct" action="" class="bg-gray-200 dark:bg-gray-800 rounded-lg border border-gray-500 mb-5">
+                <form v-show="EditProducts" @submit.prevent="submitProduct(idProductCategory)" action="" class="bg-gray-200 dark:bg-gray-800 rounded-lg border border-gray-500 mb-5">
                   <div class="flex justify-end">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" @click="doProducts(false)">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -49,17 +49,31 @@
                           </div>
                         </div>
                       </div>
+                      <div class="border border-gray-400 p-4">
+                <label for="countries" class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-white">Les Categories</label>
+                <select id="countries" v-model="idProductCategory" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',{'border-red-500': idProductCategory.length <= 0 },{ 'border-green-500': idProductCategory.length >= 1 }]">
+                  <option hidden value="">Les Categories</option>
+                  <option v-for="category in ProductCategory" :key="category.idProductCategory" :value="category.idProductCategory">
+                            {{ category.nameProductCategory }}
+                  </option>
+
+                </select>
+                
+              </div>
                     </div>
                   </div>
+                  <button class="btn btn-primary group rounded-2xl h-12 w-full bg-green-500 dark:bg-green-600 font-bold text-lg text-white relative overflow-hidden" type="submit" @click="AddProducts" v-bind:disabled="Productname.length == 0">Submit
+                  <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl"></div>
+                </button>
                 </form>
               </template>
 
               <template v-else-if="current === 'Categories'">
                 <div class="border border-gray-400 p-4">
                 <label for="countries" class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-white">Les Categories</label>
-                <select id="countries" v-model="CategoryName" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',{'border-red-500': CategoryName.length <= 0 },{ 'border-green-500': CategoryName.length >= 1 }]">
+                <select id="countries" v-model="idProductCategory" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',{'border-red-500': idProductCategory.length <= 0 },{ 'border-green-500': idProductCategory.length >= 1 }]">
                   <option hidden value="">Les Categories</option>
-                  <option v-for="category in ProductCategory" :key="category.idProductCategory" :value="category.nameProductCategory">
+                  <option v-for="category in ProductCategory" :key="category.idProductCategory" :value="category.idProductCategory">
                             {{ category.nameProductCategory }}
                   </option>
 
@@ -98,7 +112,7 @@
                 <a class="font-semibold text-gray-800 dark:text-gray-100">{{quantite}}</a>
               </div>
               <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Categories:
-                <a class="font-semibold text-gray-800 dark:text-gray-100">{{CategoryName}}</a>
+                <a class="font-semibold text-gray-800 dark:text-gray-100">{{idProductCategory}}</a>
               </div>
               <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Pictures:
                 <a class="font-semibold text-gray-800 dark:text-gray-100">{{picturelength}}</a>
@@ -514,7 +528,7 @@ setup() {
   data() {
         return {
           ProductCategory: [],
-          CategoryName: '',
+          idProductCategory: '',
 
          picturelength : 0,
 
@@ -669,7 +683,7 @@ RemoveLastInput() {
               this.Productname="";
               this.Price="";
               this.quantite="";
-              this.CategoryName="";
+              this.idProductCategory="";
               this.GetAll()
             },
         doProducts(EditProducts) {
@@ -695,13 +709,13 @@ RemoveLastInput() {
                 }).catch(error => { console.error(error); });
               },
               
-        submitProduct(){
+        submitProduct(idProductCategory){
           const data={
             nameProducts:this.Productname,
             priceProducts:this.Price,
             qteProducts:this.quantite
           }
-          axios.post('http://localhost:8080/product',data) .then(response => {
+          axios.post(`http://localhost:8080/product/category/${idProductCategory}`,data) .then(response => {
             console.log(response.data);
             // Handle the response as needed
             this.Canceled();
