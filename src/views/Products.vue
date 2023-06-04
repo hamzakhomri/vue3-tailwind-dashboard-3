@@ -247,7 +247,7 @@
       <h2  v-if="!EditProducts" @click="doProducts(true)" class="text-green-600 text-lg cursor-pointer">+ Add Categories</h2>
     </div>
     <!-- ===================   SEARCH BAR    ========================== -->
-    <div class="overflow-auto flex space-x-3 font-bold">
+    <div class="flex space-x-3 font-bold">
   
       <div class="w-full mb-4">          
         <P class="text-black text-left text-xs dark:text-gray-300 ">ID</P>
@@ -348,19 +348,22 @@
                   <input v-model="ProductPricetToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                   <input v-model="ProductQteToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
         
-                  <select id="countries"  :class="['border-2','appearance-none','block','w-full','bg-gray-50','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',{'border-red-500': idProductCategory.length <= 0 },{ 'border-green-500': idProductCategory.length >= 1 }]">
-                    <option selected hidden value="">{{CategoryToUpdate}}</option>
-                    <option v-for="category in ProductCategory" :key="category.idProductCategory" :value="this.CategoryToUpdate">
-                      {{ category.nameProductCategory }}
+    
+                  
+                  <select id="countries" v-model="selectedCategory" :class="['border-2','appearance-none','block','w-full','bg-gray-50','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',{'border-red-500': selectedCategory.length <= 0 },{ 'border-green-500': selectedCategory.length >= 1 }]">
+                    <option selected hidden value="">{{ CategoryToUpdate }}</option>
+                    <option v-for="category in ProductCategory" :key="category.idProductCategory" :value="category.idProductCategory">
+                      {{ category.idProductCategory }}
                     </option>
                   </select>
+               
                   
                 </div>
           </div>
           <div class="w-full relative space-y-2">
-                <button @click="updateProduct(ProductIdToUpdate,ProductnameToUpdate,CategoryToUpdate,ProductPricetToUpdate,ProductQteToUpdate)" class="bg-[#1e3a8a] w-full h-10 hover:bg-blue-800 rounded text-white font-bold px-4 rounded-l"> Modifier </button>
+            <p>Selected Category: {{ selectedCategory }}</p>
+            <button @click="updateProduct(ProductIdToUpdate, ProductnameToUpdate, CategoryToUpdate, ProductPricetToUpdate, ProductQteToUpdate)" class="bg-[#1e3a8a] w-full h-10 hover:bg-blue-800 rounded text-white font-bold px-4 rounded-l"> Modifier </button>
                 <button @click="cancelUpdate" class="bg-[#b91c1c] hover:bg-red-600 rounded font-bold px-4 rounded-r w-full  h-10 text-white">Annuler</button>
-              
               </div>
         </div>
       </transition>
@@ -479,7 +482,7 @@
           <button @click="confirmDelete(product.idProducts)">Delete</button>
         </td>
         <td class="py-4 px-6 text-right">
-          <button @click="confirmUpdate(product.idProducts, product.nameProducts, product.productCategory.nameProductCategory, product.priceProducts, product.qteProducts)">
+          <button @click="confirmUpdate(product.idProducts, product.idProducts, product.productCategory.idProductCategory, product.priceProducts, product.qteProducts)">
   Modifier
 </button>
 
@@ -558,7 +561,10 @@ setup() {
           ProductnameToUpdate:null,
           ProductPricetToUpdate:null,
           ProductQteToUpdate:null,
+
           CategoryToUpdate:null,
+          CategoryId:'',
+          selectedCategory: '',
           
           sortbyPrices:'asc',
           sortById: 'asc',
