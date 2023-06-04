@@ -362,7 +362,7 @@
           </div>
           <div class="w-full relative space-y-2">
             <p>Selected Category: {{ selectedCategory }}</p>
-            <button @click="updateProduct(ProductIdToUpdate, ProductnameToUpdate, CategoryToUpdate, ProductPricetToUpdate, ProductQteToUpdate)" class="bg-[#1e3a8a] w-full h-10 hover:bg-blue-800 rounded text-white font-bold px-4 rounded-l"> Modifier </button>
+            <button @click="updateProduct(ProductIdToUpdate, ProductnameToUpdate, selectedCategory, ProductPricetToUpdate, ProductQteToUpdate)" class="bg-[#1e3a8a] w-full h-10 hover:bg-blue-800 rounded text-white font-bold px-4 rounded-l"> Modifier </button>
                 <button @click="cancelUpdate" class="bg-[#b91c1c] hover:bg-red-600 rounded font-bold px-4 rounded-r w-full  h-10 text-white">Annuler</button>
               </div>
         </div>
@@ -675,6 +675,7 @@ setup() {
               this.CategoryToUpdate = idProductCategory;
               this.ProductPricetToUpdate = priceProducts;
               this.ProductQteToUpdate = qteProducts;
+              this.selectedCategory="";
 
               this.DialogueUpdate = true;
           },
@@ -737,11 +738,11 @@ setup() {
           });
         },
 
-        updateProduct(idProducts, ProductnameToUpdate, CategoryToUpdate, ProductPricetToUpdate, ProductQteToUpdate) {
+        updateProduct(idProducts, ProductnameToUpdate, selectedCategory, ProductPricetToUpdate, ProductQteToUpdate) {
             axios.put(`http://localhost:8080/product/${idProducts}/category/${idProductCategory}`, {
               nameProducts: ProductnameToUpdate,
               productCategory: {
-                idProductCategory: CategoryToUpdate
+                idProductCategory: selectedCategory
               },
               priceProducts: ProductPricetToUpdate,
               qteProducts: ProductQteToUpdate
