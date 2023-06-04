@@ -1,154 +1,149 @@
 <template>
   
-  <div class="border border-gray-400 p-4">
-  <h2>{{ current }}</h2>
-  <form v-show="EditProducts" @submit.prevent="submitProduct(idProductCategory)" action="" class="bg-gray-200 dark:bg-gray-800 rounded-lg border border-gray-500 mb-5">
-<div class="flex ">
-
-
-    <div class="flex-auto w-[60%] ">
-      
-              <template v-if="current === 'Products'">
-                  <div class="flex justify-end">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" @click="doProducts(false)">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                  <div class="w-full flex mx-auto rounded-lg grid-cols-12 gap-2 p-1 mb-5">
-                    <div class="flex flex-wrap justify-center w-full rounded-lg border border-gray-500 dark:border-gray-700 sm:col-span-9 mb-auto">
-
-                      <div class="w-[100%] rounded-lg px-8 flex flex-col">
-                        <div class="-mx-3 md:flex mb-6 justify-between space-x-4">
-                          <div class="w-full">
-                            <div class="flex justify-start"><span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Product Name</span></div>
-                            <input type="text" placeholder="Products Name" required v-model="Productname" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
-                              { 'border-red-500': Productname.length <= 0 },
-                              { 'border-green-500': Productname.length >= 1 }]">
-                            <p v-bind:hidden="Productname.length >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="w-[50%] rounded-lg px-8 flex flex-col">
-                        <div class="-mx-3 md:flex mb-6 justify-between space-x-4">
-                          <div class="w-full">
-                            <div class="flex justify-start"><span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Price</span></div>
-                            <input type="text" placeholder="Price" required v-model="Price" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
-                              { 'border-red-500': Price.length <= 0 },{ 'border-green-500': Price.length >= 1 }]">
-                            <p v-bind:hidden="Price.length >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="w-[50%] rounded-lg px-8 flex flex-col">
-                        <div class="-mx-3 md:flex mb-6 justify-between space-x-4">
-                          <div class="w-full">
-                            <div class="flex justify-start"><span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Quantite</span></div>
-                            <input type="number" placeholder="Quantite" required v-model="quantite" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
-                              { 'border-red-500': quantite <= 0 },{ 'border-green-500': quantite >= 1 }]">
-                            <p v-bind:hidden="quantite >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
- 
-              </template>
-
-              <template v-else-if="current === 'Categories'">
-                <div class="border border-gray-400 p-4">
-                <label for="countries" class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-white">Les Categories</label>
-                <select id="countries" v-model="idProductCategory" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',{'border-red-500': idProductCategory.length <= 0 },{ 'border-green-500': idProductCategory.length >= 1 }]">
-                  <option hidden value="">Les Categories</option>
-                  <option v-for="category in ProductCategory" :key="category.idProductCategory" :value="category.nameProductCategory">
-                            {{ category.nameProductCategory }}
-                  </option>
-
-                </select>
+  <div  v-show="EditProducts" class="border mb-4 p-4">
+        <div class="flex justify-end">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" @click="doProducts(false)">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h1 class="tracking-widest text-2xl mb-2 text-white italic font-bold">{{ current }}</h1>
+        <form @submit.prevent="submitProduct(idProductCategory)" action="" class=" p-5 bg-gray-200 dark:bg-gray-800 rounded-lg border border-gray-500 mb-5">
+          <div class="flex">
+              <div class="flex-auto w-[60%] ">
                 
+
+                        <template v-if="current === 'Products'">
+                              <div class="flex p-4 flex-wrap justify-center w-full rounded-lg border border-gray-400 dark:border-gray-400 sm:col-span-9 ">
+
+                                <div class="w-[100%] rounded-lg px-8 flex flex-col">
+                                  <div class="-mx-3 md:flex mb-6 justify-between space-x-4">
+                                    <div class="w-full">
+                                      <div class="flex justify-start"><span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Product Name</span></div>
+                                      <input type="text" placeholder="Products Name" required v-model="Productname" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
+                                        { 'border-red-500': Productname.length <= 0 },
+                                        { 'border-green-500': Productname.length >= 1 }]">
+                                      <p v-bind:hidden="Productname.length >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="w-[50%] rounded-lg px-8 flex flex-col">
+                                  <div class="-mx-3 md:flex mb-6 justify-between space-x-4">
+                                    <div class="w-full">
+                                      <div class="flex justify-start"><span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Price</span></div>
+                                      <input type="text" placeholder="Price" required v-model="Price" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
+                                        { 'border-red-500': Price.length <= 0 },{ 'border-green-500': Price.length >= 1 }]">
+                                      <p v-bind:hidden="Price.length >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="w-[50%] rounded-lg px-8 flex flex-col">
+                                  <div class="-mx-3 md:flex mb-6 justify-between space-x-4">
+                                    <div class="w-full">
+                                      <div class="flex justify-start"><span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Quantite</span></div>
+                                      <input type="number" placeholder="Quantite" required v-model="quantite" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
+                                        { 'border-red-500': quantite <= 0 },{ 'border-green-500': quantite >= 1 }]">
+                                      <p v-bind:hidden="quantite >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
+                                    </div>
+                                  </div>
+                                </div>
+
+                              </div>
+                           
+                        </template>
+
+                        <template v-else-if="current === 'Categories'">
+                          <div class="border border-gray-400 p-4 rounded-lg">
+                          <label for="countries" class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-white">Les Categories</label>
+                          <select id="countries" v-model="idProductCategory" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',{'border-red-500': idProductCategory.length <= 0 },{ 'border-green-500': idProductCategory.length >= 1 }]">
+                            <option hidden value="">Les Categories</option>
+                            <option v-for="category in ProductCategory" :key="category.idProductCategory" :value="category.idProductCategory">
+                                      {{ category.nameProductCategory }}
+                            </option>
+
+                          </select>
+                          
+                        </div>
+                        </template>
+
+                        <template v-else-if="current === 'Pictures'">
+                          <button class="text-white" @click="RemoveLastInput">Remove</button>
+                            <button class="text-left text-white mb-3" @click="AddNewPicture">Plus une photo</button>
+                          
+                          <div class="flex justify-center">
+                            <div id="file_inputs" class="space-y-3  w-[90%]">
+                              <input  id="multiple_files" type="file" multiple class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                            </div>
+                          </div>
+                        </template>
+
+
+                        <template v-else-if="current === 'payment'">
+                          <h1>DD</h1>
+                        </template>
               </div>
-              </template>
 
-              <template v-else-if="current === 'Pictures'">
-                <button class="text-white" @click="RemoveLastInput">Remove</button>
-                  <button class="text-left text-white mb-3" @click="AddNewPicture">Plus une photo</button>
-                 
-                <div class="flex justify-center">
-                  <div id="file_inputs" class="space-y-3  w-[90%]">
-                    <input  id="multiple_files" type="file" multiple class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
-                  </div>
-                </div>
-              </template>
+              <div class="flex-initial w-[30%]  col-span-2 rounded-lg border border-gray-400 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 p-2 sm:col-span-3">
+                      <div class="bg-white dark:bg-gray-900 col-start-6 col-end-5 p-1 rounded-xl my-4 mr-auto shadow-md">
+                        <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Product name:
+                          <a class="font-semibold text-gray-800 dark:text-gray-100">{{Productname}}</a>
+                        </div>
+                        <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Price:
+                          <a class="font-semibold text-gray-800 dark:text-gray-100">{{Price}}</a>
+                        </div>
+                        <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Quantite:
+                          <a class="font-semibold text-gray-800 dark:text-gray-100">{{quantite}}</a>
+                        </div>
+                        <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Categories:
+                          <a class="font-semibold text-gray-800 dark:text-gray-100">{{idProductCategory}}</a>
+                        </div>
+                        <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Pictures:
+                          <a class="font-semibold text-gray-800 dark:text-gray-100">{{picturelength}}</a>
+                        </div>
+                      </div>
+                      <div class="space-y-1">
+                        <div class="flex w-full">
+                          <button class="btn btn-primary group rounded-2xl h-12 w-full bg-green-500 dark:bg-green-600 font-bold text-lg text-white relative overflow-hidden" type="submit" @click="AddProducts" v-bind:disabled="Productname.length == 0">Submit
+                            <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl"></div>
+                          </button>
+                        </div>
 
-
-              <template v-else-if="current === 'payment'">
-                <h1>DD</h1>
-              </template>
-    </div>
-
-
-    <div class="flex-initial w-[30%]  col-span-2 rounded-lg border border-gray-400 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 p-2 sm:col-span-3">
-            <div class="bg-white dark:bg-gray-900 col-start-6 col-end-5 p-1 rounded-xl my-4 mr-auto shadow-md">
-              <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Product name:
-                <a class="font-semibold text-gray-800 dark:text-gray-100">{{Productname}}</a>
+                        <div class="flex w-full">
+                          <button class="group rounded-2xl h-12 w-full bg-red-500 dark:bg-red-700 font-bold text-lg text-white dark:text-gray-200 relative overflow-hidden" @click="Canceled">
+                            Cancel
+                            <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 dark:group-hover:bg-gray-800/30 rounded-2xl">
+                            </div>
+                          </button>
+                        </div>
+                      </div>
               </div>
-              <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Price:
-                <a class="font-semibold text-gray-800 dark:text-gray-100">{{Price}}</a>
-              </div>
-              <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Quantite:
-                <a class="font-semibold text-gray-800 dark:text-gray-100">{{quantite}}</a>
-              </div>
-              <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Categories:
-                <a class="font-semibold text-gray-800 dark:text-gray-100">{{idProductCategory}}</a>
-              </div>
-              <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Pictures:
-                <a class="font-semibold text-gray-800 dark:text-gray-100">{{picturelength}}</a>
-              </div>
-            </div>
-            <div class="space-y-1">
-              <div class="flex w-full">
-                <button class="btn btn-primary group rounded-2xl h-12 w-full bg-green-500 dark:bg-green-600 font-bold text-lg text-white relative overflow-hidden" type="submit" @click="AddProducts" v-bind:disabled="Productname.length == 0">Submit
-                  <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl"></div>
-                </button>
-              </div>
-
-              <div class="flex w-full">
-                <button class="group rounded-2xl h-12 w-full bg-red-500 dark:bg-red-700 font-bold text-lg text-white dark:text-gray-200 relative overflow-hidden" @click="Canceled">
-                  Cancel
-                  <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 dark:group-hover:bg-gray-800/30 rounded-2xl">
-                  </div>
-                </button>
-              </div>
-            </div>
-    </div>
-
-
-</div>
-</form>
-
-
-  <div class="flex flex-row  justify-start">
-      
-        <button @click="goToPrevious()" :disabled="isFirst" type="button" class=" w-[35%] bg-gray-500 text-white rounded-l-md border-r border-gray-100 py-2 hover:bg-gray-400 hover:text-white px-3">
-          <div class="flex flex-row align-middle">
-            <svg class="w-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
-            </svg>
-            <p class="ml-2">Precedent</p>
           </div>
-        </button>
-        <button @click="goToNext()" :disabled="isLast" type="button" class="w-[35%] bg-gray-500 text-white rounded-r-md py-2 border-l border-gray-200 hover:bg-gray-400  hover:text-white px-3">
-          <div class="flex flex-row align-middle">
-            <span class="mr-2">Suivant</span>
-            <svg class="w-5 ml-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L16.586 11H5a1 1 0 010-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-            </svg>
-          </div>
-        </button>
+        </form>
+
+
+      <div class="flex flex-row  justify-start">
+          
+            <button @click="goToPrevious()" :disabled="isFirst" type="button" class=" w-[35%] bg-gray-500 text-white rounded-l-md border-r border-gray-100 py-2 hover:bg-gray-400 hover:text-white px-3">
+              <div class="flex flex-row align-middle">
+                <svg class="w-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
+                </svg>
+                <p class="ml-2">Precedent</p>
+              </div>
+            </button>
+            <button @click="goToNext()" :disabled="isLast" type="button" class="w-[35%] bg-gray-500 text-white rounded-r-md py-2 border-l border-gray-200 hover:bg-gray-400  hover:text-white px-3">
+              <div class="flex flex-row align-middle">
+                <span class="mr-2">Suivant</span>
+                <svg class="w-5 ml-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L16.586 11H5a1 1 0 010-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                </svg>
+              </div>
+            </button>
+
+      </div>
 
   </div>
-
-</div>
 
 
 
@@ -244,13 +239,15 @@
     </div>
   </form>
   </transition> -->
+
+
   <div class=" border-2 p-3 border-solid border-gray-500 rounded-xl">
     <div class="flex justify-between mb-2 mt-2">
     <h2 class="text-gray-400 p-2" v-bind:class="{'text-red-700 ': Product.length <= 5,'text-red-400 ': Product.length <= 10,}">Products : {{ Product.length }}</h2>
       <h2  v-if="!EditProducts" @click="doProducts(true)" class="text-green-600 text-lg cursor-pointer">+ Add Categories</h2>
     </div>
     <!-- ===================   SEARCH BAR    ========================== -->
-    <div class="flex space-x-3 font-bold">
+    <div class="overflow-auto flex space-x-3 font-bold">
   
       <div class="w-full mb-4">          
         <P class="text-black text-left text-xs dark:text-gray-300 ">ID</P>
@@ -351,19 +348,19 @@
                   <input v-model="ProductPricetToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                   <input v-model="ProductQteToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
         
-                  <select id="countries" v-model="CategoryToUpdate" :class="['border-2','appearance-none','block','w-full','bg-gray-50','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',{'border-red-500': idProductCategory.length <= 0 },{ 'border-green-500': idProductCategory.length >= 1 }]">
-                    <option hidden value="">{{  this.CategoryToUpdate}}</option>
-                    <option v-for="category in ProductCategory" :key="category.idProductCategory" :value="category.idProductCategory">
-                              {{ category.nameProductCategory }}
+                  <select id="countries"  :class="['border-2','appearance-none','block','w-full','bg-gray-50','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',{'border-red-500': idProductCategory.length <= 0 },{ 'border-green-500': idProductCategory.length >= 1 }]">
+                    <option selected hidden value="">{{CategoryToUpdate}}</option>
+                    <option v-for="category in ProductCategory" :key="category.idProductCategory" :value="this.CategoryToUpdate">
+                      {{ category.nameProductCategory }}
                     </option>
                   </select>
-                  <p>{{ CategoryToUpdate }}</p>
                   
                 </div>
           </div>
           <div class="w-full relative space-y-2">
                 <button @click="updateProduct(ProductIdToUpdate,ProductnameToUpdate,CategoryToUpdate,ProductPricetToUpdate,ProductQteToUpdate)" class="bg-[#1e3a8a] w-full h-10 hover:bg-blue-800 rounded text-white font-bold px-4 rounded-l"> Modifier </button>
                 <button @click="cancelUpdate" class="bg-[#b91c1c] hover:bg-red-600 rounded font-bold px-4 rounded-r w-full  h-10 text-white">Annuler</button>
+              
               </div>
         </div>
       </transition>
@@ -463,8 +460,8 @@
           {{ product.nameProducts }}
         </td>
         <td class="py-4 px-6">
-          {{ product.productCategory.nameProductCategory }}
-        </td>
+          {{ product.productCategory.idProductCategory }} : {{ product.productCategory.nameProductCategory }}
+        </td> 
         <td class="py-4 px-6">
           {{ product.priceProducts }}
         </td>
@@ -548,7 +545,7 @@ setup() {
           Product: [],
 
           header_table: 'Products',
-          EditProducts: true,
+          EditProducts: false,
           Productname: '',
           Price:'',
           quantite:'',
@@ -633,79 +630,76 @@ setup() {
             this.GetAllGategory()
       },
   methods: {
-    AddNewPicture() {
-  const fileInputs = document.querySelectorAll('#file_inputs input[type="file"]');
-  const lastFileInput = fileInputs[fileInputs.length - 1];
+      AddNewPicture() {
+            const fileInputs = document.querySelectorAll('#file_inputs input[type="file"]');
+            const lastFileInput = fileInputs[fileInputs.length - 1];
 
-  if (lastFileInput && lastFileInput.files.length > 0) {
-    // Last input is not empty, add new picture
-    const input = document.createElement('input');
-    input.className = 'block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400';
-    input.type = 'file';
-    input.multiple = true;
-    document.getElementById('file_inputs').appendChild(input);
-  } else if (fileInputs.length > 1) {
-    // Remove the last input
-    const lastInput = fileInputs[fileInputs.length - 1];
-    lastInput.parentNode.removeChild(lastInput);
-  } else {
-    alert("Input picture empty");
-  }
-this.picturelength = fileInputs.length;
-},
+            if (lastFileInput && lastFileInput.files.length > 0) {
+              // Last input is not empty, add new picture
+              const input = document.createElement('input');
+              input.className = 'block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400';
+              input.type = 'file';
+              input.multiple = true;
+              document.getElementById('file_inputs').appendChild(input);
+            } else if (fileInputs.length > 1) {
+              // Remove the last input
+              const lastInput = fileInputs[fileInputs.length - 1];
+              lastInput.parentNode.removeChild(lastInput);
+            } else {
+              alert("Input picture empty");
+            }
+          this.picturelength = fileInputs.length;
+      },
 
-RemoveLastInput() {
-  const fileInputs = document.querySelectorAll('#file_inputs input[type="file"]');
-  const lastInput = fileInputs[fileInputs.length - 1];
+      RemoveLastInput() {
+          const fileInputs = document.querySelectorAll('#file_inputs input[type="file"]');
+          const lastInput = fileInputs[fileInputs.length - 1];
 
-  if (fileInputs.length < 2 ) {
-    alert("You can't remove the input");
-    
-  } else {
-    lastInput.parentNode.removeChild(lastInput);
-  }
-}
-  
-,
-
+          if (fileInputs.length < 2 ) {
+            alert("You can't remove the input");
+            
+          } else {
+            lastInput.parentNode.removeChild(lastInput);
+          }
+      },
   // ============= UPDATE==============================================
-  confirmUpdate(idProducts, Productname, CategoryToUpdate, priceProducts, qteProducts) {
-  this.ProductIdToUpdate = idProducts;
-  this.ProductnameToUpdate = Productname;
-  this.CategoryToUpdate = CategoryToUpdate;
-  this.ProductPricetToUpdate = priceProducts;
-  this.ProductQteToUpdate = qteProducts;
+      confirmUpdate(idProducts, Productname, idProductCategory, priceProducts, qteProducts) {
+              this.ProductIdToUpdate = idProducts;
+              this.ProductnameToUpdate = Productname;
+              this.CategoryToUpdate = idProductCategory;
+              this.ProductPricetToUpdate = priceProducts;
+              this.ProductQteToUpdate = qteProducts;
 
-  this.DialogueUpdate = true;
-},
+              this.DialogueUpdate = true;
+          },
 
-        cancelUpdate(){
-              this.DialogueUpdate=false;
-            },
-  // ============= DELETE ==============================================
-        confirmDelete(idProducts) {
-              this.productIdToDelete = idProducts;
-              this.DialogueDelete = true;
-            },
-        deleteProduct() {
-              console.log("Deleting category with ID:", this.productIdToDelete);
-              this.DialogueDelete = false;
-            },
-        cancelDelete() {
-              this.DialogueDelete = false;
-            },
-        Canceled(){
-              this.Productname="";
-              this.Price="";
-              this.quantite="";
-              this.idProductCategory="";
-              this.GetAll()
-            },
-        doProducts(EditProducts) {
-              console.log('EditP');
-              this.EditProducts = EditProducts;
-              this.ProductName = "";
-            },
+      cancelUpdate(){
+            this.DialogueUpdate=false;
+          },
+// ============= DELETE ==============================================
+      confirmDelete(idProducts) {
+            this.productIdToDelete = idProducts;
+            this.DialogueDelete = true;
+          },
+      deleteProduct() {
+            console.log("Deleting category with ID:", this.productIdToDelete);
+            this.DialogueDelete = false;
+          },
+      cancelDelete() {
+            this.DialogueDelete = false;
+          },
+      Canceled(){
+            this.Productname="";
+            this.Price="";
+            this.quantite="";
+            this.idProductCategory="";
+            this.GetAll()
+          },
+      doProducts(EditProducts) {
+            console.log('EditP');
+            this.EditProducts = EditProducts;
+            this.ProductName = "";
+          },
 
   // ============= REQUETE ==============================================
         GetAllGategory(){
@@ -715,9 +709,7 @@ RemoveLastInput() {
             }).catch(error => { console.error(error); });
           },
               
-  
-  
-          GetAll(){
+        GetAll(){
                 axios.get('http://localhost:8080/product').then(response => 
                 {
                   this.Product = response.data;
@@ -732,7 +724,6 @@ RemoveLastInput() {
           }
           axios.post(`http://localhost:8080/product/category/${idProductCategory}`,data) .then(response => {
             console.log(response.data);
-            // Handle the response as needed
             this.Canceled();
           })
           .catch(error => {
@@ -741,27 +732,27 @@ RemoveLastInput() {
         },
 
         updateProduct(idProducts, ProductnameToUpdate, CategoryToUpdate, ProductPricetToUpdate, ProductQteToUpdate) {
-  axios.put(`http://localhost:8080/product/${idProducts}`, {
-    nameProducts: ProductnameToUpdate,
-    productCategory: {
-      nameProductCategory: CategoryToUpdate
-    },
-    priceProducts: ProductPricetToUpdate,
-    qteProducts: ProductQteToUpdate
-  })
-  .then(response => {
-    this.GetAll();
-    this.DialogueUpdate = false;
-    this.ProductIdToUpdate = null;
-    this.ProductnameToUpdate = '';
-    this.CategoryToUpdate = '';
-    this.ProductPricetToUpdate = null;
-    this.ProductQteToUpdate = null;
-  })
-  .catch(error => {
-    console.error(error);
-  });
-},
+            axios.put(`http://localhost:8080/product/${idProducts}/category/${idProductCategory}`, {
+              nameProducts: ProductnameToUpdate,
+              productCategory: {
+                idProductCategory: CategoryToUpdate
+              },
+              priceProducts: ProductPricetToUpdate,
+              qteProducts: ProductQteToUpdate
+            })
+            .then(response => {
+              this.GetAll();
+              this.DialogueUpdate = false;
+              this.ProductIdToUpdate = null;
+              this.ProductnameToUpdate = '';
+              this.CategoryToUpdate = '';
+              this.ProductPricetToUpdate = null;
+              this.ProductQteToUpdate = null;
+            })
+            .catch(error => {
+              console.error(error);
+            });
+          },
 
 
         deleteProduct(idProducts){
