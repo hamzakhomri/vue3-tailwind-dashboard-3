@@ -362,7 +362,7 @@
           </div>
           <div class="w-full relative space-y-2">
             <p>Selected Category: {{ selectedCategory }}</p>
-            <button @click="updateProduct(ProductIdToUpdate, ProductnameToUpdate, selectedCategory, ProductPricetToUpdate, ProductQteToUpdate)" class="bg-[#1e3a8a] w-full h-10 hover:bg-blue-800 rounded text-white font-bold px-4 rounded-l"> Modifier </button>
+            <button @click="updateProduct(ProductIdToUpdate, ProductnameToUpdate, ProductPricetToUpdate, ProductQteToUpdate,idProductCategory)" class="bg-[#1e3a8a] w-full h-10 hover:bg-blue-800 rounded text-white font-bold px-4 rounded-l"> Modifier </button>
                 <button @click="cancelUpdate" class="bg-[#b91c1c] hover:bg-red-600 rounded font-bold px-4 rounded-r w-full  h-10 text-white">Annuler</button>
               </div>
         </div>
@@ -482,7 +482,7 @@
           <button @click="confirmDelete(product.idProducts)">Delete</button>
         </td>
         <td class="py-4 px-6 text-right">
-          <button @click="confirmUpdate(product.idProducts, product.idProducts, product.productCategory.idProductCategory, product.priceProducts, product.qteProducts)">
+          <button @click="confirmUpdate(product.idProducts, product.nameProducts, product.productCategory.idProductCategory, product.priceProducts, product.qteProducts)">
   Modifier
 </button>
 
@@ -564,7 +564,7 @@ setup() {
 
           CategoryToUpdate:null,
           CategoryId:'',
-          selectedCategory: '',
+          selectedCategory:2,
           
           sortbyPrices:'asc',
           sortById: 'asc',
@@ -678,6 +678,7 @@ setup() {
               this.selectedCategory="";
 
               this.DialogueUpdate = true;
+              console.log("Finish confirmUpdate");
           },
 
       cancelUpdate(){
@@ -738,11 +739,11 @@ setup() {
           });
         },
 
-        updateProduct(idProducts, ProductnameToUpdate, selectedCategory, ProductPricetToUpdate, ProductQteToUpdate) {
+        updateProduct(idProducts, ProductnameToUpdate,  ProductPricetToUpdate, ProductQteToUpdate,idProductCategory) {
             axios.put(`http://localhost:8080/product/${idProducts}/category/${idProductCategory}`, {
               nameProducts: ProductnameToUpdate,
               productCategory: {
-                idProductCategory: selectedCategory
+                idProductCategory: idProductCategory
               },
               priceProducts: ProductPricetToUpdate,
               qteProducts: ProductQteToUpdate
