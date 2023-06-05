@@ -350,8 +350,8 @@
         
     
                   
-                  <select id="countries" v-model="selectedCategory" :class="['border-2','appearance-none','block','w-full','bg-gray-50','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',{'border-red-500': selectedCategory.length <= 0 },{ 'border-green-500': selectedCategory.length >= 1 }]">
-                    <option selected hidden value="">{{ CategoryToUpdate }}</option>
+                  <select id="countries" v-model="idProductCategory" :class="['border-2','appearance-none','block','w-full','bg-gray-50','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',{'border-red-500': selectedCategory.length <= 0 },{ 'border-green-500': selectedCategory.length >= 1 }]">
+                    <option selected hidden value="">{{ idProductCategory }}</option>
                     <option v-for="category in ProductCategory" :key="category.idProductCategory" :value="category.idProductCategory">
                       {{ category.idProductCategory }}
                     </option>
@@ -361,7 +361,7 @@
                 </div>
           </div>
           <div class="w-full relative space-y-2">
-            <p>Selected Category: {{ selectedCategory }}</p>
+            <p>Selected Category: {{ idProductCategory }}</p>
             <button @click="updateProduct(ProductIdToUpdate, ProductnameToUpdate, ProductPricetToUpdate, ProductQteToUpdate,idProductCategory)" class="bg-[#1e3a8a] w-full h-10 hover:bg-blue-800 rounded text-white font-bold px-4 rounded-l"> Modifier </button>
                 <button @click="cancelUpdate" class="bg-[#b91c1c] hover:bg-red-600 rounded font-bold px-4 rounded-r w-full  h-10 text-white">Annuler</button>
               </div>
@@ -562,7 +562,7 @@ setup() {
           ProductPricetToUpdate:null,
           ProductQteToUpdate:null,
 
-          CategoryToUpdate:null,
+          idProductCategory:null,
           CategoryId:'',
           selectedCategory:2,
           
@@ -672,13 +672,14 @@ setup() {
       confirmUpdate(idProducts, Productname, idProductCategory, priceProducts, qteProducts) {
               this.ProductIdToUpdate = idProducts;
               this.ProductnameToUpdate = Productname;
-              this.CategoryToUpdate = idProductCategory;
+              this.idProductCategory = idProductCategory;
               this.ProductPricetToUpdate = priceProducts;
               this.ProductQteToUpdate = qteProducts;
               this.selectedCategory="";
 
               this.DialogueUpdate = true;
               console.log("Finish confirmUpdate");
+              
           },
 
       cancelUpdate(){
@@ -704,7 +705,6 @@ setup() {
             this.GetAll()
           },
       doProducts(EditProducts) {
-            console.log('EditP');
             this.EditProducts = EditProducts;
             this.ProductName = "";
           },
@@ -753,7 +753,7 @@ setup() {
               this.DialogueUpdate = false;
               this.ProductIdToUpdate = null;
               this.ProductnameToUpdate = '';
-              this.CategoryToUpdate = '';
+              this.idProductCategory = '';
               this.ProductPricetToUpdate = null;
               this.ProductQteToUpdate = null;
             })
