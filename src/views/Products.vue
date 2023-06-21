@@ -56,7 +56,7 @@
                         <template v-else-if="current === 'Categories'">
                           <div class="border border-gray-400 p-4 rounded-lg">
                           <label for="countries" class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-white">Les Categories</label>
-                          <select id="countries" v-model="idProductCategory" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',{'border-red-500': idProductCategory.length <= 0 },{ 'border-green-500': idProductCategory.length >= 1 }]">
+                          <select id="countries" v-model="idProductCategory" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4']">
                             <option hidden value="">Les Categories</option>
                             <option v-for="category in ProductCategory" :key="category.idProductCategory" :value="category.idProductCategory">
                                       {{ category.nameProductCategory }}
@@ -244,7 +244,7 @@
   <div class=" border-2 p-3 border-solid border-gray-500 rounded-xl">
     <div class="flex justify-between mb-2 mt-2">
     <h2 class="text-gray-400 p-2" v-bind:class="{'text-red-700 ': Product.length <= 5,'text-red-400 ': Product.length <= 10,}">Products : {{ Product.length }}</h2>
-      <h2  v-if="!EditProducts" @click="doProducts(true)" class="text-green-600 text-lg cursor-pointer">+ Add Categories</h2>
+      <h2  v-if="!EditProducts" @click="doProducts(true)" class="text-green-600 text-lg cursor-pointer">+ Add Products</h2>
     </div>
     <!-- ===================   SEARCH BAR    ========================== -->
     <div class="flex space-x-3 font-bold">
