@@ -28,56 +28,51 @@
       };
     },
     mounted() {
-      axios.get('http://localhost:8080/productpicture')
-        .then((response) => {
+      this.GetAll();
+    },
+
+
+    methods: {
+GetAll(){
+  axios.get('http://localhost:8080/productpicture').then((response) => {
           this.myData = response.data;
         })
         .catch((error) => {
           console.error(error);
         });
-    },
-    methods: {
-
+},
 
    
-
-
-      
       onPictureChange(event) {
       this.pictureFile = event.target.files[0];
     },
-uploadPicture() {
-  if (!this.pictureFile) {
-    console.log('No file selected');
-    return;
-  }
+    uploadPicture() {
+        if (!this.pictureFile) {
+          console.log('No file selected');
+          return;
+        }
 
-  const formData = new FormData();
-  formData.append('file', this.pictureFile);
-// Use 'file' instead of 'picture'
+        const formData = new FormData();
+        formData.append('file', this.pictureFile);
+      // Use 'file' instead of 'picture'
 
-  axios
-    .post('http://localhost:8080/productpicture', formData)
-    .then((response) => {
-      console.log(response.data);
-    })
-    .catch((error) => {
-      if (error.response) {
-        console.log("eroor is :" + error);
-        console.log("this :"+this.pictureFile);
-        console.log(error.response.data);
-        console.log(error.response.status);
-        console.log(error.response.headers);
-      }
-    });
-},
+        axios
+          .post('http://localhost:8080/productpicture', formData).then((response) => {
+            console.log(response.data);
+            this.GetAll();
+          })
+          .catch((error) => {
+            if (error.response) {
+              console.log("eroor is :" + error);
+              console.log("this :"+this.pictureFile);
+              console.log(error.response.data);
+              console.log(error.response.status);
+              console.log(error.response.headers);
+            }
+          });
+    },
 
             
-
-
-
-
-
 
           getPictureSrc(picture) {
             if (picture) {
