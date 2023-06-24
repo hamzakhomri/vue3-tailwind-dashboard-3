@@ -68,14 +68,22 @@
                         </template>
 
                         <template v-else-if="current === 'Pictures'">
-                          <button class="text-white" @click="RemoveLastInput">Remove</button>
-                            <button class="text-left text-white mb-3" @click="AddNewPicture">Plus une photo</button>
                           
-                          <div class="flex justify-center">
-                            <div id="file_inputs" class="space-y-3  w-[90%]">
-                              <input  id="multiple_files" type="file" multiple class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                  
+                            <div class="flex justify-center">
+                              <div id="file_inputs" class="space-y-3  w-[90%]">
+                                <input  id="multiple_files" type="file" multiple class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                              </div>
                             </div>
-                          </div>
+                            
+                            <div class=" flex justify-end">
+                          
+                              <svg @click="AddNewPicture" class="cursor-pointer w-6 h-6 text-white hover:text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                              </svg>
+
+                            </div>
                         </template>
 
 
@@ -548,7 +556,7 @@ setup() {
           Product: [],
 
           header_table: 'Products',
-          EditProducts: false,
+          EditProducts: true,
           Productname: '',
           Price:'',
           quantite:'',
@@ -556,7 +564,7 @@ setup() {
           DialogueDelete: false,
           productIdToDelete: null,
     
-          DialogueUpdate:true,
+          DialogueUpdate:false,
           ProductIdToUpdate: null,
           ProductnameToUpdate:null,
           ProductPricetToUpdate:null,
@@ -636,26 +644,29 @@ setup() {
             this.GetAllGategory()
       },
   methods: {
-      AddNewPicture() {
-            const fileInputs = document.querySelectorAll('#file_inputs input[type="file"]');
-            const lastFileInput = fileInputs[fileInputs.length - 1];
+    AddNewPicture() {
+  const fileInputs = document.querySelectorAll('#file_inputs input[type="file"]');
+  const lastFileInput = fileInputs[fileInputs.length - 1];
 
-            if (lastFileInput && lastFileInput.files.length > 0) {
-              // Last input is not empty, add new picture
-              const input = document.createElement('input');
-              input.className = 'block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400';
-              input.type = 'file';
-              input.multiple = true;
-              document.getElementById('file_inputs').appendChild(input);
-            } else if (fileInputs.length > 1) {
-              // Remove the last input
-              const lastInput = fileInputs[fileInputs.length - 1];
-              lastInput.parentNode.removeChild(lastInput);
-            } else {
-              alert("Input picture empty");
-            }
-          this.picturelength = fileInputs.length;
-      },
+  if (lastFileInput && lastFileInput.files.length > 0) {
+    // Last input is not empty, add new picture
+    const input = document.createElement('input');
+    input.className = 'block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400';
+    input.type = 'file';
+    input.multiple = true;
+    document.getElementById('file_inputs').appendChild(input);
+
+  } else if (fileInputs.length > 1) {
+    // Remove the last input
+    const lastInput = fileInputs[fileInputs.length - 1];
+    lastInput.parentNode.removeChild(lastInput);
+  } else {
+    alert("Input picture empty");
+  }
+
+  this.picturelength = fileInputs.length;
+},
+
 
       RemoveLastInput() {
           const fileInputs = document.querySelectorAll('#file_inputs input[type="file"]');
