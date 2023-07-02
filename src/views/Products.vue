@@ -140,7 +140,8 @@
                 <p class="ml-2">Precedent</p>
               </div>
             </button>
-            <button @click="goToNext()" :disabled="isLast" type="button" class="w-[35%] bg-gray-500 text-white rounded-r-md py-2 border-l border-gray-200 hover:bg-gray-400  hover:text-white px-3">
+            
+            <button @click="goToNext()" :disabled="isLast" type="button" class="flex justify-end w-[35%] bg-gray-500 text-white rounded-r-md py-2 border-l border-gray-200 hover:bg-gray-400  hover:text-white px-3">
               <div class="flex flex-row align-middle">
                 <span class="mr-2">Suivant</span>
                 <svg class="w-5 ml-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">

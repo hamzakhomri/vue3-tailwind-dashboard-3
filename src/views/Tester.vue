@@ -10,7 +10,9 @@
     <ul>
       <li v-for="productpicture in myData" :key="productpicture.idProductPicture" class="flex items-center mb-2">
         <span class="mr-2">{{ productpicture.namePicture }}</span>
-        <img :src="getPictureSrc(productpicture.picture)" alt="Product Picture" class="h-40 w-40 rounded" />
+        
+        <img :src="getPicturePath(productpicture.idProductPicture)" alt="Product Picture" class="h-40 w-40 rounded" />
+
         <button @click="confirmDelete(productpicture.idProductPicture)" class="text-white">Delete</button>
       </li>
     </ul>
@@ -59,17 +61,6 @@
     },
  
 
-
-
-
-
-
-
-
-
-
-
-
       GetAll(){
       axios.get('http://localhost:8080/productpicture').then((response) => {
           this.myData = response.data;
@@ -108,12 +99,23 @@
             });
     },
 
+
       getPictureSrc(picture) {
         if (picture) {
+          console.log("getPicturesSrc");
           return `data:image/jpeg;base64,${picture}`;
         }
         return '';
       },
+      getPicturePath(id) {
+        if (id) {
+          console.log("getPicturesSrc");
+          return `http://localhost:8080/productpicture/${id}/preview`;
+        }
+        return '';
+      },
+
+
     },
   };
   </script>
