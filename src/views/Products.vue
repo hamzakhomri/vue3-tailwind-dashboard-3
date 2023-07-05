@@ -7,7 +7,7 @@
           </svg>
         </div>
         <h1 class="tracking-widest text-2xl mb-2 text-white italic font-bold">{{ current }}</h1>
-        <form @submit.prevent="submitProduct(idProductCategory)" action="" class=" p-5 bg-gray-200 dark:bg-gray-800 rounded-lg border border-gray-500 mb-5">
+        <!-- <form @submit.prevent="submitProduct(idProductCategory)" action="" class=" p-5 bg-gray-200 dark:bg-gray-800 rounded-lg border border-gray-500 mb-5"> -->
           <div class="flex">
               <div class="flex-auto w-[60%] ">
                 
@@ -68,22 +68,19 @@
                         </template>
 
                         <template v-else-if="current === 'Pictures'">
-                          
-                  
-                            <div class="flex justify-center">
-                              <div id="file_inputs" class="space-y-3  w-[90%]">
-                                <input  id="multiple_files" type="file" multiple class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
-                              </div>
-                            </div>
-                            
-                            <div class=" flex justify-end">
-                          
-                              <svg @click="AddNewPicture" class="cursor-pointer w-6 h-6 text-white hover:text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="12" y1="5" x2="12" y2="19"></line>
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                              </svg>
+                          <h1>{{ files.length }}</h1>
+                          <div class="bg-blue-400">
+                            <div v-for="(file, index) in files" :key="index">
+                              <p>{{ index }}</p>
+                              <input type="file" @change="onFileChange(index)" />
+                              <button @click="removeFile(index)" class=" text text-red">X</button>
+                              <img :src="file && fileUrl(file)" v-if="file" alt="Uploaded Image" />
 
                             </div>
+                            <button @click="addFileInput">Add Input File</button>
+                          </div>
+
+    
                         </template>
 
 
@@ -127,7 +124,7 @@
                       </div>
               </div>
           </div>
-        </form>
+        <!-- </form> -->
 
 
       <div class="flex flex-row  justify-start">
@@ -532,9 +529,10 @@ setup() {
               isFirst,
               isLast,
           } = useStepper([
+             'Pictures',
               'Products',
               'Categories',
-              'Pictures',
+             
               'payment',
           ]);
 
@@ -555,6 +553,10 @@ setup() {
           picturelength : 0,
 
           Product: [],
+
+          fileInputs: [{}],
+          files: [], // Store the selected files
+
 
           header_table: 'Products',
           EditProducts: true,
@@ -586,6 +588,7 @@ setup() {
           searchProductQte:'',
           searchDateModification:'',
           searchDateCreation: '',
+
         };
       },
 
@@ -645,28 +648,23 @@ setup() {
             this.GetAllGategory()
       },
   methods: {
-    AddNewPicture() {
-  const fileInputs = document.querySelectorAll('#file_inputs input[type="file"]');
-  const lastFileInput = fileInputs[fileInputs.length - 1];
+    addFileInput() {
+      this.files.push(null); // Add an entry to the files array to represent the new file input
+      console.log(this.files.length)
+    },
+    onFileChange(index) {
+      const input = event.target;
+      const file = input.files[0];
+      this.files[index] = file; // Update the files array with the selected file at the specified index
+    },
+    removeFile(index) {
+      this.files.splice(index, 1); // Remove the file entry at the specified index from the files array
+    },
+    fileUrl(file) {
+      return URL.createObjectURL(file);
+    },
 
-  if (lastFileInput && lastFileInput.files.length > 0) {
-    // Last input is not empty, add new picture
-    const input = document.createElement('input');
-    input.className = 'block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400';
-    input.type = 'file';
-    input.multiple = true;
-    document.getElementById('file_inputs').appendChild(input);
 
-  } else if (fileInputs.length > 1) {
-    // Remove the last input
-    const lastInput = fileInputs[fileInputs.length - 1];
-    lastInput.parentNode.removeChild(lastInput);
-  } else {
-    alert("Input picture empty");
-  }
-
-  this.picturelength = fileInputs.length;
-},
 
 
       RemoveLastInput() {

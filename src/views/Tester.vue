@@ -49,13 +49,10 @@
     deletePicture(pictureId) {
       axios.delete(`http://localhost:8080/productpicture/${pictureId}`)
         .then(response => {
-          // Handle success
           console.log('Picture deleted successfully!');
-          // Remove the deleted picture from myData array
           this.myData = this.myData.filter(productpicture => productpicture.idProductPicture !== pictureId);
         })
         .catch(error => {
-          // Handle error
           console.error('Failed to delete picture:', error);
         });
     },
