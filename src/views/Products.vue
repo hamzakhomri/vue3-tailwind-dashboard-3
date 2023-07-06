@@ -8,8 +8,8 @@
         </div>
         <h1 class="tracking-widest text-2xl mb-2 text-white italic font-bold">{{ current }}</h1>
         <!-- <form @submit.prevent="submitProduct(idProductCategory)" action="" class=" p-5 bg-gray-200 dark:bg-gray-800 rounded-lg border border-gray-500 mb-5"> -->
-          <div class="flex">
-              <div class="flex-auto w-[60%] ">
+          <div class="flex ">
+              <div class="flex-auto w-[60%] p-5">
                 
 
                         <template v-if="current === 'Products'">
@@ -67,20 +67,20 @@
                         </div>
                         </template>
 
-                        <template v-else-if="current === 'Pictures'">
-                          <h1>{{ files.length }}</h1>
-                          <div class="bg-blue-400">
-                            <div v-for="(file, index) in files" :key="index">
-                              <p>{{ index }}</p>
-                              <input type="file" @change="onFileChange(index)" />
-                              <button @click="removeFile(index)" class=" text text-red">X</button>
-                              <img :src="file && fileUrl(file)" v-if="file" alt="Uploaded Image" />
-
-                            </div>
-                            <button @click="addFileInput">Add Input File</button>
+                        <template v-else-if="current === 'Pictures'" >
+                          <div class=" h-[100%] ">    
+                              <p @click="addFileInput" class="text-white text-end text-4xl cursor-pointer">+</p>
+                              <div class="flex flex-col-reverse">
+                                <div class=" space-between mb-2" v-for="(file, index) in files" :key="index">
+                                  <!-- <img :src="file && fileUrl(file)" v-if="file" class="w-50 h-50" alt=" Uploaded Image" /> -->
+                                  <div class="flex justify-around border border-gray-600 rounded-lg p-2">
+                                    <p class="text-gray-500 mt-1">{{ index }}</p>
+                                    <input  type="file" @change="onFileChange(index)" class="rounded-lg bg-gray-600 block w-[90%] text-sm text-gray-500 file:mr-4 file:py-2 file:px-4  file:rounded-md file:border-0  file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"/>
+                                    <button @click="removeFile(index)" class="bg-red text text-red-500">X</button>
+                                  </div>
+                                </div>
+                              </div>                    
                           </div>
-
-    
                         </template>
 
 
@@ -104,7 +104,7 @@
                           <a class="font-semibold text-gray-800 dark:text-gray-100">{{idProductCategory}}</a>
                         </div>
                         <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Pictures:
-                          <a class="font-semibold text-gray-800 dark:text-gray-100">{{picturelength}}</a>
+                          <a class="font-semibold text-gray-800 dark:text-gray-100">{{files.length}}</a>
                         </div>
                       </div>
                       <div class="space-y-1">
@@ -554,7 +554,7 @@ setup() {
 
           Product: [],
 
-          fileInputs: [{}],
+          picturesUpload: [],
           files: [], // Store the selected files
 
 
@@ -650,15 +650,14 @@ setup() {
   methods: {
     addFileInput() {
       this.files.push(null); // Add an entry to the files array to represent the new file input
-      console.log(this.files.length)
     },
-    onFileChange(index) {
-      const input = event.target;
-      const file = input.files[0];
-      this.files[index] = file; // Update the files array with the selected file at the specified index
+    onFileChange(index, fileList) {
+      this.files.splice(index, 1, Array.from(fileList));
+      this.picturesUpload = this.files.flat(); // Flatten the files array into picturesUpload array
     },
     removeFile(index) {
-      this.files.splice(index, 1); // Remove the file entry at the specified index from the files array
+      this.files.splice(index, 1);
+      this.picturesUpload = this.files.flat(); // Update picturesUpload array after removing the file
     },
     fileUrl(file) {
       return URL.createObjectURL(file);
