@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1 class="bg-red-300">Length: {{ myData.length }}</h1>
+    
     <form @submit.prevent="uploadPictures" class="bg-blue-500">
       <div v-for="index in 2" :key="index">
         <input type="file" name="file" :ref="'fileInput-' + index" @change="onFileChange(index)" />
@@ -17,27 +18,68 @@
         </li>
       </ul>
     </div>
+
+    <div>
+    <input type="file" @change="handleFileChange">
+    <img :src="imageUrl" alt="Selected Image" v-if="imageUrl">
   </div>
+
+    <div class="demo bg-green-500">
+      Type a number: <input v-model.number="number" />
+      <p class="big-number">{{ tweened.number.toFixed(0) }}</p>
+    </div>
+    
+  </div>
+  
 </template>
+
+<script setup>
+import { ref, reactive, watch } from 'vue'
+import gsap from 'gsap'
+
+const number = ref(0)
+const tweened = reactive({
+  number: 0
+})
+
+watch(
+  number,
+  (n) => {
+    gsap.to(tweened, { duration: 0.5, number: Number(n) || 0 })
+  }
+)
+</script>
 
 <script>
 import axios from 'axios';
 
 export default {
+  props: {},
   data() {
     return {
       myData: [],
-      pictureFiles: []
+      imageUrl: [],
+      pictureFiles: [],
+      picturePreviews: []
+
+
     };
   },
   mounted() {
     this.getAll();
   },
   methods: {
+    handleFileChange(event) {
+      const file = event.target.files[0];
+      this.imageUrl = URL.createObjectURL(file);
+    },
+
+    
     onFileChange(index) {
       const file = this.$refs['fileInput-' + index][0].files[0];
       if (file) {
         this.pictureFiles[index - 1] = file;
+        
       }
     },
     uploadPictures() {
@@ -74,14 +116,14 @@ export default {
       axios.delete(`http://localhost:8080/productpicture/${pictureId}`)
         .then((response) => {
           console.log('Picture deleted successfully!');
-          this.myData = this.myData.filter(productpicture => productpicture.idProductPicture !== pictureId);
+          this.myData = this.myData.filter((productpicture) => productpicture.idProductPicture !== pictureId);
         })
         .catch((error) => {
           console.error('Failed to delete picture:', error);
         });
     },
     getAll() {
-      axios.get('http://localhost:8080/productpicture')
+axios.get('http://localhost:8080/productpicture')
         .then((response) => {
           this.myData = response.data;
         })
@@ -98,6 +140,7 @@ export default {
   }
 };
 </script>
+
 
 
 

@@ -67,21 +67,26 @@
                         </div>
                         </template>
 
-                        <template v-else-if="current === 'Pictures'" >
-                          <div class=" h-[100%] ">    
-                              <p @click="addFileInput" class="text-white text-end text-4xl cursor-pointer">+</p>
-                              <div class="flex flex-col-reverse">
-                                <div class=" space-between mb-2" v-for="(file, index) in files" :key="index">
-                                  <!-- <img :src="file && fileUrl(file)" v-if="file" class="w-50 h-50" alt=" Uploaded Image" /> -->
-                                  <div class="flex justify-around border border-gray-600 rounded-lg p-2">
-                                    <p class="text-gray-500 mt-1">{{ index }}</p>
-                                    <input  type="file" @change="onFileChange(index)" class="rounded-lg bg-gray-600 block w-[90%] text-sm text-gray-500 file:mr-4 file:py-2 file:px-4  file:rounded-md file:border-0  file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"/>
-                                    <button @click="removeFile(index)" class="bg-red text text-red-500">X</button>
-                                  </div>
-                                </div>
-                              </div>                    
-                          </div>
-                        </template>
+                        <template v-else-if="current === 'Pictures'">
+  <div class="h-[100%]">
+    <p @click="addFileInput()" class="text-white text-end text-4xl cursor-pointer">+</p>
+    <div class="flex flex-col-reverse">
+      <div class="space-between mb-2" v-for="(file, index) in files" :key="index">
+        <div class="flex justify-around border border-gray-600 rounded-lg p-2">
+          <p class="text-gray-500 mt-1">{{ index }}</p>
+          <input type="file" @change="onFileChange(index, $event.target.files)" class="rounded-lg bg-gray-600 block w-[90%] text-sm text-gray-500 file:mr-4 file:py-2 file:px-4  file:rounded-md file:border-0  file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600" />
+          <button @click="removeFile(index)" class="bg-red text text-red-500">X</button>
+        </div>
+        <div class="bg-blue-300">
+          <img :src="imageUrl[index]" v-if="file" class="w-50 h-50" alt="Uploaded Image" />
+      </div>
+      <input type="file" @change="handleFileChange">
+    <img :src="imageUrl" alt="Selected Image" v-if="imageUrl">
+      </div>
+    </div>
+  </div>
+</template>
+
 
 
                         <template v-else-if="current === 'payment'">
@@ -555,6 +560,7 @@ setup() {
           Product: [],
 
           picturesUpload: [],
+          imageUrl:  [],
           files: [], // Store the selected files
 
 
@@ -647,13 +653,20 @@ setup() {
             this.GetAll()
             this.GetAllGategory()
       },
-  methods: {
+  methods: { 
+    handleFileChange(event) {
+      const file = event.target.files[0];
+      this.imageUrl = URL.createObjectURL(file);
+    },
     addFileInput() {
       this.files.push(null); // Add an entry to the files array to represent the new file input
     },
-    onFileChange(index, fileList) {
-      this.files.splice(index, 1, Array.from(fileList));
-      this.picturesUpload = this.files.flat(); // Flatten the files array into picturesUpload array
+    onFileChange(index) {
+      const file = this.$refs['fileInput-' + index][0].files[0];
+      if (file) {
+        this.pictureFiles[index - 1] = file;
+        
+      }
     },
     removeFile(index) {
       this.files.splice(index, 1);
