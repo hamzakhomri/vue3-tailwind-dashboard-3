@@ -68,39 +68,25 @@
                         </template>
 
                         <template v-else-if="current === 'Pictures'">
-  <div class="h-[100%]">
-    <p @click="addFileInput()" class="text-white text-end text-4xl cursor-pointer">+</p>
-    <!-- <div class="flex flex-col-reverse">
-      <div class="space-between mb-2" v-for="(file, index) in files" :key="index">
-        <div class="flex justify-around border border-gray-600 rounded-lg p-2">
-          <input type="file" @change="uploadFile($event, index)" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"/>
+                          <div class="h-[100%] dark:bg-gray-800">
+                            <p class="bg-red-500 dark:bg-red-700 text-white">Pictures: {{ inputs.length }}</p>
+                            <button @click="addFile" class="bg-blue-500 dark:bg-blue-700 text-white">Add File</button>
+                            
+                            <div class="flex flex-row bg-white-800">
+                              
+                                <div v-for="(input, index) in inputs" :key="index" class="bg-blue-300 w-3/5 justify-around border border-gray-600 dark:border-gray-400 rounded-lg p-2">
+                                  <input type="file" @change="uploadFile($event, index)" class="block w-full text-sm text-gray-500 dark:text-gray-300 mr-4 py-2 px-4 rounded-full border-0 font-semibold bg-blue-50 dark:bg-gray-600 text-blue-700 dark:text-white hover:bg-blue-100 dark:hover:bg-gray-500" />
+                                </div>
 
-          <button @click="removeFile(index)" class="bg-red text text-red-500">X</button>
-        </div>
-        <div class="bg-blue-300">
-          <img :src="imageUrl[index]" v-if="file" class="w-50 h-50" alt="Uploaded Image" />
-      </div>
-      <div v-for="(file, index) in files" :key="index">
-      <img :src="file.url" alt="Uploaded File" />
-    </div>
-      </div>
-    </div> -->
+                                <div v-for="(file, index) in files" :key="index" class="w-2/5 bg-green-400 flex flex-col">
+                                  <img :src="file.url" alt="Uploaded File" class="w-20 h-20 rounded-full" />
+                                </div>
+                            </div>
+
+                          </div>
+                        </template>
 
 
-    <button @click="addFile" class="bg-blue-500">Add File</button>
-    <div class="bg-blue-600 ">
-    
-      <div v-for="(input, index) in inputs" :key="index">
-        <input type="file" @change="uploadFile($event, index)" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"/>
-    </div>
-  
-    <div v-for="(file, index) in files" :key="index">
-      <img :src="file.url" alt="Uploaded File" />
-    </div>
-</div>
-  </div>
-
-</template> 
 
 
 
@@ -576,7 +562,7 @@ setup() {
 
           files: [], // Array to store uploaded files
           inputs: [], // Array to store input elements
-     
+       
 
 
           header_table: 'Products',
