@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="bg-red-300">Length: {{ myData.length }}</h1>
+    <!-- <h1 class="bg-red-300">Length: {{ myData.length }}</h1>
     
     <form @submit.prevent="uploadPictures" class="bg-blue-500">
       <div v-for="index in 2" :key="index">
@@ -22,24 +22,27 @@
     <div>
     <input type="file" @change="handleFileChange">
     <img :src="imageUrl" alt="Selected Image" v-if="imageUrl">
-  </div>
+    </div>
 
     <div class="demo bg-green-500">
       Type a number: <input v-model.number="number" />
       <p class="big-number">{{ tweened.number.toFixed(0) }}</p>
-    </div>
-
-    <div class="bg-blue-600">
+    </div> -->
+  <button @click="addFile" class="bg-blue-500">Add File</button>
+    <div class="bg-blue-600 ">
+    
       <div v-for="(input, index) in inputs" :key="index">
-      <input type="file" @change="uploadFile($event, index)" />
+        <input type="file" @change="uploadFile($event, index)" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"/>
     </div>
-    <button @click="addFile">Add File</button>
+  
     <div v-for="(file, index) in files" :key="index">
       <img :src="file.url" alt="Uploaded File" />
     </div>
-  </div>
+</div>
 
-    
+
+
+
   </div>
   
 </template>
@@ -111,10 +114,6 @@ export default {
 
 
 
-    handleFileChange(event) {
-      const file = event.target.files[0];
-      this.imageUrl = URL.createObjectURL(file);
-    },
 
     
     onFileChange(index) {

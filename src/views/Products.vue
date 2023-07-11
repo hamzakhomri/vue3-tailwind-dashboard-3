@@ -70,22 +70,37 @@
                         <template v-else-if="current === 'Pictures'">
   <div class="h-[100%]">
     <p @click="addFileInput()" class="text-white text-end text-4xl cursor-pointer">+</p>
-    <div class="flex flex-col-reverse">
+    <!-- <div class="flex flex-col-reverse">
       <div class="space-between mb-2" v-for="(file, index) in files" :key="index">
         <div class="flex justify-around border border-gray-600 rounded-lg p-2">
-          <p class="text-gray-500 mt-1">{{ index }}</p>
-          <input type="file" @change="onFileChange(index, $event.target.files)" class="rounded-lg bg-gray-600 block w-[90%] text-sm text-gray-500 file:mr-4 file:py-2 file:px-4  file:rounded-md file:border-0  file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600" />
+          <input type="file" @change="uploadFile($event, index)" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"/>
+
           <button @click="removeFile(index)" class="bg-red text text-red-500">X</button>
         </div>
         <div class="bg-blue-300">
           <img :src="imageUrl[index]" v-if="file" class="w-50 h-50" alt="Uploaded Image" />
       </div>
-      <input type="file" @change="handleFileChange">
-    <img :src="imageUrl" alt="Selected Image" v-if="imageUrl">
-      </div>
+      <div v-for="(file, index) in files" :key="index">
+      <img :src="file.url" alt="Uploaded File" />
     </div>
+      </div>
+    </div> -->
+
+
+    <button @click="addFile" class="bg-blue-500">Add File</button>
+    <div class="bg-blue-600 ">
+    
+      <div v-for="(input, index) in inputs" :key="index">
+        <input type="file" @change="uploadFile($event, index)" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"/>
+    </div>
+  
+    <div v-for="(file, index) in files" :key="index">
+      <img :src="file.url" alt="Uploaded File" />
+    </div>
+</div>
   </div>
-</template>
+
+</template> 
 
 
 
@@ -559,9 +574,9 @@ setup() {
 
           Product: [],
 
-          picturesUpload: [],
-          imageUrl:  [],
-          files: [], // Store the selected files
+          files: [], // Array to store uploaded files
+          inputs: [], // Array to store input elements
+     
 
 
           header_table: 'Products',
@@ -654,27 +669,33 @@ setup() {
             this.GetAllGategory()
       },
   methods: { 
-    handleFileChange(event) {
+
+    
+    addFile() {
+      this.inputs.push({}); // Add an empty object to the inputs array
+    },
+
+    
+
+    uploadFile(event, index) {
       const file = event.target.files[0];
-      this.imageUrl = URL.createObjectURL(file);
-    },
-    addFileInput() {
-      this.files.push(null); // Add an entry to the files array to represent the new file input
-    },
-    onFileChange(index) {
-      const file = this.$refs['fileInput-' + index][0].files[0];
-      if (file) {
-        this.pictureFiles[index - 1] = file;
-        
-      }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        const url = reader.result;
+
+        // Update the corresponding file object in the files array
+        this.files.splice(index, 1, { id: Date.now(), url });
+        console.log("Upload FIles");
+      };
+
+      reader.readAsDataURL(file);
     },
     removeFile(index) {
       this.files.splice(index, 1);
       this.picturesUpload = this.files.flat(); // Update picturesUpload array after removing the file
     },
-    fileUrl(file) {
-      return URL.createObjectURL(file);
-    },
+   
 
 
 
