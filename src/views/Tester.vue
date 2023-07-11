@@ -28,6 +28,17 @@
       Type a number: <input v-model.number="number" />
       <p class="big-number">{{ tweened.number.toFixed(0) }}</p>
     </div>
+
+    <div class="bg-blue-600">
+      <div v-for="(input, index) in inputs" :key="index">
+      <input type="file" @change="uploadFile($event, index)" />
+    </div>
+    <button @click="addFile">Add File</button>
+    <div v-for="(file, index) in files" :key="index">
+      <img :src="file.url" alt="Uploaded File" />
+    </div>
+  </div>
+
     
   </div>
   
@@ -45,7 +56,7 @@ const tweened = reactive({
 watch(
   number,
   (n) => {
-    gsap.to(tweened, { duration: 0.5, number: Number(n) || 0 })
+    gsap.to(tweened, { duration: 0.75, number: Number(n) || 0 })
   }
 )
 </script>
@@ -57,6 +68,8 @@ export default {
   props: {},
   data() {
     return {
+      files: [], // Array to store uploaded files
+      inputs: [], // Array to store input elements
       myData: [],
       imageUrl: [],
       pictureFiles: [],
@@ -69,6 +82,35 @@ export default {
     this.getAll();
   },
   methods: {
+
+
+    addFile() {
+      this.inputs.push({}); // Add an empty object to the inputs array
+    },
+
+    
+
+    uploadFile(event, index) {
+      const file = event.target.files[0];
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        const url = reader.result;
+
+        // Update the corresponding file object in the files array
+        this.files.splice(index, 1, { id: Date.now(), url });
+      };
+
+      reader.readAsDataURL(file);
+    },
+
+
+
+
+
+
+
+
     handleFileChange(event) {
       const file = event.target.files[0];
       this.imageUrl = URL.createObjectURL(file);
