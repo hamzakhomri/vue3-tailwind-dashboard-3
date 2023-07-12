@@ -68,24 +68,28 @@
                         </template>
 
                         <template v-else-if="current === 'Pictures'">
-                          <div class="h-[100%] dark:bg-gray-800">
-                            <p class="bg-red-500 dark:bg-red-700 text-white">Pictures: {{ inputs.length }}</p>
-                            <button @click="addFile" class="bg-blue-500 dark:bg-blue-700 text-white">Add File</button>
-                            
-                            <div class="flex flex-row bg-white-800">
-                              
-                                <div v-for="(input, index) in inputs" :key="index" class="bg-blue-300 w-3/5 justify-around border border-gray-600 dark:border-gray-400 rounded-lg p-2">
-                                  <input type="file" @change="uploadFile($event, index)" class="block w-full text-sm text-gray-500 dark:text-gray-300 mr-4 py-2 px-4 rounded-full border-0 font-semibold bg-blue-50 dark:bg-gray-600 text-blue-700 dark:text-white hover:bg-blue-100 dark:hover:bg-gray-500" />
-                                </div>
 
-                                <div v-for="(file, index) in files" :key="index" class="w-2/5 bg-green-400 flex flex-col">
-                                  <img :src="file.url" alt="Uploaded File" class="w-20 h-20 rounded-full" />
+                            <p class="bg-red-500 dark:bg-red-700 text-white">Pictures: {{ inputs.length }}</p>
+                            <button @click="addFile" class="bg-blue-500 dark:bg-blue-700 text-white">Add File</button>                      
+                                          
+                            <div class="flex w-[100%] bg-gray-200">
+                              
+                              <div class="flex-initial w-[30%] text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">
+                                <div v-for="(input, index) in inputs" :key="index" class="flex">
+                                  <p>{{ index+1 }}</p>  
+                                  <input type="file" @change="uploadFile($event, index)" class=" block  text-sm text-gray-500 dark:text-gray-300 mr-4 py-2 px-4 rounded-full border-0 font-semibold bg-blue-50 dark:bg-gray-600 text-blue-700 dark:text-white hover:bg-blue-100 dark:hover:bg-gray-500" />
+                                </div>
+                              </div>
+
+                                <div class="flex-initial w-[90%] text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">
+                                  <div v-for="(file, index) in files" :key="index" class="flex">
+                                    <p>{{ index +1}}</p>
+                                      <img :src="file.url" alt="Uploaded File" class="w-20 h-20 rounded-full" />
+                                  </div>
                                 </div>
                             </div>
 
-                          </div>
                         </template>
-
 
 
 
@@ -672,7 +676,8 @@ setup() {
 
         // Update the corresponding file object in the files array
         this.files.splice(index, 1, { id: Date.now(), url });
-        console.log("Upload FIles");
+        console.log("Upload " + index + " FIles");
+        
       };
 
       reader.readAsDataURL(file);
