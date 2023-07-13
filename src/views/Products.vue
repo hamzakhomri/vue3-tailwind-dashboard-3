@@ -68,27 +68,45 @@
                         </template>
 
                         <template v-else-if="current === 'Pictures'">
+                     
 
-                            <p class="bg-red-500 dark:bg-red-700 text-white">Pictures: {{ inputs.length }}</p>
-                            <button @click="addFile" class="bg-blue-500 dark:bg-blue-700 text-white">Add File</button>                      
-                                          
-                            <div class="flex w-[100%] bg-gray-200">
+                            <p class="bg-red-500 dark:bg-red-700 text-white">Files: {{ inputs.length }}</p>
+                                        
+                            
+                            <div class="flex w-[100%]  overflow-y-scroll">
                               
-                              <div class="flex-initial w-[30%] text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">
-                                <div v-for="(input, index) in inputs" :key="index" class="flex">
-                                  <p>{{ index+1 }}</p>  
-                                  <input type="file" @change="uploadFile($event, index)" class=" block  text-sm text-gray-500 dark:text-gray-300 mr-4 py-2 px-4 rounded-full border-0 font-semibold bg-blue-50 dark:bg-gray-600 text-blue-700 dark:text-white hover:bg-blue-100 dark:hover:bg-gray-500" />
+                              <div class="bg-red-200 w-[30%]">
+                                    
+                                  <P @click="addFile" class="cursor-pointer border text-2xl bg-gray-800 text-white">+</P>  
+                                          
+
+                                <div v-for="(input, index) in inputs" :key="index" class="flex mt-2">
+                                  <p class="mr-2 ml-1">{{ index+1 }}</p>  
+                                  <input type="file" @change="uploadFile($event, index)" class="" />
                                 </div>
                               </div>
 
-                                <div class="flex-initial w-[90%] text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">
-                                  <div v-for="(file, index) in files" :key="index" class="flex">
-                                    <p>{{ index +1}}</p>
-                                      <img :src="file.url" alt="Uploaded File" class="w-20 h-20 rounded-full" />
-                                  </div>
-                                </div>
-                            </div>
+                                  <!-- <div v-for="(file, index) in files" :key="index" class="flex-col"> -->
+                                    <div class="border grid w-[70%] grid-cols-3 gap-2 border-b">
+    <div v-for="(file, index) in files" :key="file.id" class="p-1">
+      <div class="flex justify-between p-0.5 border-x border-t rounded-lg mb-[-1]">
+        <p class="text-gray-300">{{ index + 1 }}</p>
+        <svg @click="removeFile(index)" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <img :src="file.url" alt="Uploaded File" class="border-2 border-b-red-500 transition duration-300 ease-in-out hover:scale-110" />
+    </div>
+  </div>
 
+
+
+
+
+
+
+                                  
+                            </div>
                         </template>
 
 
@@ -151,9 +169,13 @@
             <button @click="goToNext()" :disabled="isLast" type="button" class="flex justify-end w-[35%] bg-gray-500 text-white rounded-r-md py-2 border-l border-gray-200 hover:bg-gray-400  hover:text-white px-3">
               <div class="flex flex-row align-middle">
                 <span class="mr-2">Suivant</span>
+
+
                 <svg class="w-5 ml-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L16.586 11H5a1 1 0 010-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                 </svg>
+
+
               </div>
             </button>
 
@@ -662,11 +684,20 @@ setup() {
 
     
     addFile() {
-      this.inputs.push({}); // Add an empty object to the inputs array
+      if(this.inputs.length !=this.files.length){
+        alert("inputs is empty");
+        return null;
+      }
+      else
+      {
+        this.inputs.push({});
+      }
     },
-
-    
-
+    removeFile(index) {
+      this.files.splice(index, 1);
+      this.inputs.splice(index, 1);
+      console.log("Input/File: " + index + " removed");
+    },
     uploadFile(event, index) {
       const file = event.target.files[0];
 
@@ -674,34 +705,14 @@ setup() {
       reader.onload = () => {
         const url = reader.result;
 
-        // Update the corresponding file object in the files array
         this.files.splice(index, 1, { id: Date.now(), url });
-        console.log("Upload " + index + " FIles");
-        
+        console.log(Date.now(), url);
+        console.log("Upload " + index + " files");
       };
 
       reader.readAsDataURL(file);
     },
-    removeFile(index) {
-      this.files.splice(index, 1);
-      this.picturesUpload = this.files.flat(); // Update picturesUpload array after removing the file
-    },
-   
-
-
-
-
-      RemoveLastInput() {
-          const fileInputs = document.querySelectorAll('#file_inputs input[type="file"]');
-          const lastInput = fileInputs[fileInputs.length - 1];
-
-          if (fileInputs.length < 2 ) {
-            alert("You can't remove the input");
-            
-          } else {
-            lastInput.parentNode.removeChild(lastInput);
-          }
-      },
+ 
   // ============= UPDATE==============================================
       confirmUpdate(idProducts, Productname, idProductCategory, priceProducts, qteProducts) {
               this.ProductIdToUpdate = idProducts;
