@@ -686,6 +686,7 @@ setup() {
     addFile() {
       if(this.inputs.length !=this.files.length){
         alert("inputs is empty");
+        console.log(this.inputs.length+"!="+this.files.length);
         return null;
       }
       else
