@@ -7,105 +7,88 @@
           </svg>
         </div>
         <h1 class="tracking-widest text-2xl mb-2 text-white italic font-bold">{{ current }}</h1>
-        <!-- <form @submit.prevent="submitProduct(idProductCategory)" action="" class=" p-5 bg-gray-200 dark:bg-gray-800 rounded-lg border border-gray-500 mb-5"> -->
+        <form @submit.prevent="submitProduct(idProductCategory)" action="" class=" p-5 bg-gray-200 dark:bg-gray-800 rounded-lg border border-gray-500 mb-5">
           <div class="flex ">
               <div class="flex-auto w-[60%] p-5">
-                
-
+              
                         <template v-if="current === 'Products'">
-                              <div class="flex p-4 flex-wrap justify-center w-full rounded-lg border border-gray-400 dark:border-gray-400 sm:col-span-9 ">
+                          <div class="flex p-4 flex-wrap justify-center w-full rounded-lg border border-gray-400 dark:border-gray-400 sm:col-span-9 ">
 
-                                <div class="w-[100%] rounded-lg px-8 flex flex-col">
-                                  <div class="-mx-3 md:flex mb-6 justify-between space-x-4">
-                                    <div class="w-full">
-                                      <div class="flex justify-start"><span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Product Name</span></div>
-                                      <input type="text" placeholder="Products Name" required v-model="Productname" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
-                                        { 'border-red-500': Productname.length <= 0 },
-                                        { 'border-green-500': Productname.length >= 1 }]">
-                                      <p v-bind:hidden="Productname.length >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
-                                    </div>
-                                  </div>
+                            <div class="w-[100%] rounded-lg px-8 flex flex-col">
+                              <div class="-mx-3 md:flex mb-6 justify-between space-x-4">
+                                <div class="w-full">
+                                  <div class="flex justify-start"><span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Product Name</span></div>
+                                  <input type="text" placeholder="Products Name" required v-model="Productname" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
+                                    { 'border-red-500': Productname.length <= 0 },
+                                    { 'border-green-500': Productname.length >= 1 }]">
+                                  <p v-bind:hidden="Productname.length >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
                                 </div>
-
-                                <div class="w-[50%] rounded-lg px-8 flex flex-col">
-                                  <div class="-mx-3 md:flex mb-6 justify-between space-x-4">
-                                    <div class="w-full">
-                                      <div class="flex justify-start"><span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Price</span></div>
-                                      <input type="text" placeholder="Price" required v-model="Price" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
-                                        { 'border-red-500': Price.length <= 0 },{ 'border-green-500': Price.length >= 1 }]">
-                                      <p v-bind:hidden="Price.length >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div class="w-[50%] rounded-lg px-8 flex flex-col">
-                                  <div class="-mx-3 md:flex mb-6 justify-between space-x-4">
-                                    <div class="w-full">
-                                      <div class="flex justify-start"><span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Quantite</span></div>
-                                      <input type="number" placeholder="Quantite" required v-model="quantite" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
-                                        { 'border-red-500': quantite <= 0 },{ 'border-green-500': quantite >= 1 }]">
-                                      <p v-bind:hidden="quantite >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
-                                    </div>
-                                  </div>
-                                </div>
-
                               </div>
-                           
+                            </div>
+
+                            <div class="w-[50%] rounded-lg px-8 flex flex-col">
+                              <div class="-mx-3 md:flex mb-6 justify-between space-x-4">
+                                <div class="w-full">
+                                  <div class="flex justify-start"><span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Price</span></div>
+                                  <input type="text" placeholder="Price" required v-model="Price" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
+                                    { 'border-red-500': Price.length <= 0 },{ 'border-green-500': Price.length >= 1 }]">
+                                  <p v-bind:hidden="Price.length >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="w-[50%] rounded-lg px-8 flex flex-col">
+                              <div class="-mx-3 md:flex mb-6 justify-between space-x-4">
+                                <div class="w-full">
+                                  <div class="flex justify-start"><span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Quantite</span></div>
+                                  <input type="number" placeholder="Quantite" required v-model="quantite" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
+                                    { 'border-red-500': quantite <= 0 },{ 'border-green-500': quantite >= 1 }]">
+                                  <p v-bind:hidden="quantite >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
                         </template>
 
                         <template v-else-if="current === 'Categories'">
                           <div class="border border-gray-400 p-4 rounded-lg">
-                          <label for="countries" class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-white">Les Categories</label>
-                          <select id="countries" v-model="idProductCategory" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4']">
-                            <option hidden value="">Les Categories</option>
-                            <option v-for="category in ProductCategory" :key="category.idProductCategory" :value="category.idProductCategory">
-                                      {{ category.nameProductCategory }}
-                            </option>
-
-                          </select>
-                          
-                        </div>
+                            <label for="countries" class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-white">Les Categories</label>
+                            <select id="countries" v-model="idProductCategory" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4']">
+                              <option hidden value="">Les Categories</option>
+                              <option v-for="category in ProductCategory" :key="category.idProductCategory" :value="category.idProductCategory">{{ category.nameProductCategory }}
+                              </option>
+                            </select>
+                          </div>
                         </template>
 
                         <template v-else-if="current === 'Pictures'">
-                     
-
-                            <p class="bg-red-500 dark:bg-red-700 text-white">Files: {{ inputs.length }}</p>
-                                        
-                            
+                        
                             <div class="flex w-[100%]  overflow-y-scroll">
                               
-                              <div class="bg-red-200 w-[30%]">
-                                    
-                                  <P @click="addFile" class="cursor-pointer border text-2xl bg-gray-800 text-white">+</P>  
-                                          
-
-                                <div v-for="(input, index) in inputs" :key="index" class="flex mt-2">
-                                  <p class="mr-2 ml-1">{{ index+1 }}</p>  
-                                  <input type="file" @change="uploadFile($event, index)" class="" />
+                              <div class="border w-[30%]">
+                                <p class="bg-red-500 dark:bg-red-700 text-white">Les chemps : {{ inputs.length }}</p>
+                                <P @click="addFile" class="cursor-pointer border text-2xl bg-gray-800 text-white">+</P>  
+                                <div v-for="(input, index) in inputs" :key="index" class="flex border rounded-lg p-2 bg-gray-700 m-2">
+                                  <p class="mr-2 ml-1 text-white">{{ index+1 }}</p>  
+                                  <input type="file" @change="uploadFile($event, index)" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" />
                                 </div>
                               </div>
 
-                                  <!-- <div v-for="(file, index) in files" :key="index" class="flex-col"> -->
-                                    <div class="border grid w-[70%] grid-cols-3 gap-2 border-b">
-    <div v-for="(file, index) in files" :key="file.id" class="p-1">
-      <div class="flex justify-between p-0.5 border-x border-t rounded-lg mb-[-1]">
-        <p class="text-gray-300">{{ index + 1 }}</p>
-        <svg @click="removeFile(index)" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      </div>
-      <img :src="file.url" alt="Uploaded File" class="border-2 border-b-red-500 transition duration-300 ease-in-out hover:scale-110" />
-    </div>
-  </div>
+                              <div class="border grid w-[70%] grid-cols-3 gap-2 border-b">
+           
+                                
+                                <div v-for="(file, index) in files" :key="file.id" class="p-1">
+                                  <div class="flex justify-between p-0.5 border-x border-t rounded-lg mb-[-1]">
+                                    <p class="text-gray-300">{{ index + 1 }}</p>
+                                    <svg @click="removeFile(index)" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                  </div>
+                                  <img :src="file.url" alt="Uploaded File" class="border-2 border-b-red-500 transition duration-300 ease-in-out hover:scale-110" />
+                                </div>
+                              </div>    
 
-
-
-
-
-
-
-                                  
                             </div>
                         </template>
 
@@ -152,7 +135,7 @@
                       </div>
               </div>
           </div>
-        <!-- </form> -->
+        </form>
 
 
       <div class="flex flex-row  justify-start">
@@ -561,10 +544,10 @@ setup() {
               isFirst,
               isLast,
           } = useStepper([
-             'Pictures',
+            
               'Products',
               'Categories',
-             
+              'Pictures',
               'payment',
           ]);
 
@@ -685,7 +668,7 @@ setup() {
     
     addFile() {
       if(this.inputs.length !=this.files.length){
-        alert("inputs is empty");
+        alert("le chemp "+this.inputs.length + " et vide");
         console.log(this.inputs.length+"!="+this.files.length);
         return null;
       }
@@ -778,6 +761,7 @@ setup() {
           }
           axios.post(`http://localhost:8080/product/category/${idProductCategory}`,data) .then(response => {
             console.log(response.data);
+            console.log(response.data.idProducts)
             this.Canceled();
           })
           .catch(error => {
