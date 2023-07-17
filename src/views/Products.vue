@@ -70,9 +70,10 @@
                                 <p class="bg-red-500 dark:bg-red-700 text-white">Les chemps : {{ inputs.length }}</p>
                                 <P @click="addFile" class="cursor-pointer border text-2xl bg-gray-800 text-white">+</P>  
                                 <div v-for="(input, index) in inputs" :key="index" class="flex border rounded-lg p-2 bg-gray-700 m-2">
-                                  <p class="mr-2 ml-1 text-white">{{ index+1 }}</p>  
-                                  <input type="file" @change="uploadFile($event, index)" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" />
-                                </div>
+  <p class="mr-2 ml-1 text-white">{{ index+1 }}</p>  
+  <input type="file" name="file" @change="uploadFile($event, index)" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" />
+</div>
+
                               </div>
 
                               <div class="border grid w-[70%] grid-cols-3 gap-2 border-b">
@@ -168,99 +169,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
     <h1 class="text-2xl color-black font-bold dark:text-gray-300 italic text-left mb-2">{{ header_table }}</h1>
-
-      <!-- <transition name="slide">
-        <form  v-show="EditProducts"  @submit.prevent="submitProduct"  action=""  class="bg-gray-200 dark:bg-gray-800 rounded-lg border border-gray-500 mb-5" >
-   <div class="flex justify-end ">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" @click="doProducts(false)">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    </div>
-    <div class="w-full flex  mx-auto  rounded-lg grid-cols-12 gap-2 p-1 mb-5">
-      <div class="flex flex-wrap justify-center w-full rounded-lg border border-gray-500 dark:border-gray-700 sm:col-span-9 mb-auto">
-    
-        <div class="w-[100%] rounded-lg px-8  flex flex-col">
-          <div class="-mx-3 md:flex mb-6 justify-between space-x-4">
-            <div class="w-full">
-              <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Product Name</span></div>
-              <input type="text" placeholder="Products Name" required v-model="Productname" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
-                { 'border-red-500': Productname.length <= 0 },
-                { 'border-green-500': Productname.length >= 1 }]" >
-              <p v-bind:hidden="Productname.length >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
-            </div>
-          </div>
-        </div>
-  
-        <div class="w-[50%]  rounded-lg px-8  flex flex-col">
-          <div class="-mx-3 md:flex mb-6 justify-between space-x-4">
-            <div class="w-full">
-              <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Price</span></div>
-              <input type="text" placeholder="Price" required v-model="Price" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
-                { 'border-red-500': Price.length <= 0 },{ 'border-green-500': Price.length >= 1 }]" >
-              <p v-bind:hidden="Price.length >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
-            </div>
-          </div>
-        </div>
-  
-        <div class="w-[50%] rounded-lg px-8  flex flex-col">
-          <div class="-mx-3 md:flex mb-6 justify-between space-x-4">
-            <div class="w-full">
-              <div class="flex justify-start"> <span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Quantite</span></div>
-              <input type="number" placeholder="Quantite" required v-model="quantite" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
-                { 'border-red-500': quantite <= 0 },{ 'border-green-500': quantite >= 1 }]" >
-              <p v-bind:hidden="quantite >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      
-     
-      <div class="flex-initial w-[40%] h-[10%] col-span-2 rounded-lg border border-gray-400 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 p-2 sm:col-span-3">
-        <div class="bg-white dark:bg-gray-900 col-start-6 col-end-5 p-1 rounded-xl my-4 mr-auto shadow-md">
-          <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Product name:
-            <a class="font-semibold text-gray-800 dark:text-gray-100">{{Productname}}</a>
-          </div>
-          <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Price:
-            <a class="font-semibold text-gray-800 dark:text-gray-100">{{Price}}</a>
-          </div>
-          <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Quantite:
-            <a class="font-semibold text-gray-800 dark:text-gray-100">{{quantite}}</a>
-          </div>
-        </div>
-        
-        <div class="space-y-1">
-            <div class="flex w-full">
-              <button class="btn btn-primary group rounded-2xl h-12 w-full bg-green-500 dark:bg-green-600 font-bold text-lg text-white relative overflow-hidden" type="submit" @click="AddProducts" v-bind:disabled="Productname.length == 0">Submit
-              <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl"></div>
-              </button>
-            </div>
-          
-            <div class="flex w-full">
-            <button class="group rounded-2xl h-12 w-full bg-red-500 dark:bg-red-700 font-bold text-lg text-white dark:text-gray-200 relative overflow-hidden" @click="Canceled">
-              Cancel
-              <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 dark:group-hover:bg-gray-800/30 rounded-2xl">
-              </div>
-            </button>
-            </div>
-          </div>
-      </div>
-    </div>
-  </form>
-  </transition> -->
-
 
   <div class=" border-2 p-3 border-solid border-gray-500 rounded-xl">
     <div class="flex justify-between mb-2 mt-2">
@@ -682,20 +591,7 @@ setup() {
       this.inputs.splice(index, 1);
       console.log("Input/File: " + index + " removed");
     },
-    uploadFile(event, index) {
-      const file = event.target.files[0];
 
-      const reader = new FileReader();
-      reader.onload = () => {
-        const url = reader.result;
-
-        this.files.splice(index, 1, { id: Date.now(), url });
-        console.log(Date.now(), url);
-        console.log("Upload " + index + " files");
-      };
-
-      reader.readAsDataURL(file);
-    },
  
   // ============= UPDATE==============================================
       confirmUpdate(idProducts, Productname, idProductCategory, priceProducts, qteProducts) {
@@ -752,22 +648,91 @@ setup() {
                   this.Product = response.data;
                 }).catch(error => { console.error(error); });
               },
-              
-        submitProduct(idProductCategory){
-          const data={
-            nameProducts:this.Productname,
-            priceProducts:this.Price,
-            qteProducts:this.quantite
-          }
-          axios.post(`http://localhost:8080/product/category/${idProductCategory}`,data) .then(response => {
-            console.log(response.data);
-            console.log(response.data.idProducts)
-            this.Canceled();
-          })
-          .catch(error => {
-            console.error(error);
-          });
-        },
+
+
+
+
+              uploadFile(event, index) {
+  const file = event.target.files[0];
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    const url = reader.result;
+
+    this.files.splice(index, 1, { url });
+
+    // Check if all files are uploaded before calling submitPictures
+    const allFilesUploaded = this.files.every(file => file.url);
+    if (allFilesUploaded) {
+      this.submitPictures(idProducts); // Call submitPictures once all files are uploaded
+    }
+
+    console.clear("console was cleared");
+    console.log(this.files);
+    console.log(Date.now(), url);
+    console.log("Upload " + index + " files");
+  };
+
+  reader.readAsDataURL(file);
+},
+
+    submitProduct(idProductCategory) {
+  const data = {
+    nameProducts: this.Productname,
+    priceProducts: this.Price,
+    qteProducts: this.quantite
+  };
+
+  axios.post(`http://localhost:8080/product/category/${idProductCategory}`, data)
+    .then(response => {
+      console.log(response.data);
+      console.log(response.data.idProducts);
+      console.log("Before Pict");
+      this.submitPictures(response.data.idProducts);
+      console.log("After Pict");
+
+      this.Canceled();
+    })
+    .catch(error => {
+      console.error(error);
+    });
+},
+submitPictures(idProducts) {
+  if (this.files.length === 0) {
+    console.log('No files selected');
+    return;
+  }
+
+  const uploadPromises = this.files.map((file) => {
+    const formData = new FormData();
+    formData.append('file', file.url); // Use file.url instead of the whole file object
+
+    return axios.post(`http://localhost:8080/productpicture/product/${idProducts}`, formData);
+  });
+
+  Promise.all(uploadPromises)
+    .then((responses) => {
+      console.log('All files uploaded successfully!');
+      responses.forEach((response) => {
+        console.log(response.data);
+      });
+      this.getAll();
+    })
+    .catch((error) => {
+      console.log('Error:', error);
+    });
+},
+
+
+
+
+
+
+
+
+
+
+
 
         updateProduct(idProducts, ProductnameToUpdate,  ProductPricetToUpdate, ProductQteToUpdate,idProductCategory) {
             axios.put(`http://localhost:8080/product/${idProducts}/category/${idProductCategory}`, {
