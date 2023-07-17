@@ -69,10 +69,14 @@
                               <div class="border w-[30%]">
                                 <p class="bg-red-500 dark:bg-red-700 text-white">Les chemps : {{ inputs.length }}</p>
                                 <P @click="addFile" class="cursor-pointer border text-2xl bg-gray-800 text-white">+</P>  
-                                <div v-for="(input, index) in inputs" :key="index" class="flex border rounded-lg p-2 bg-gray-700 m-2">
-  <p class="mr-2 ml-1 text-white">{{ index+1 }}</p>  
-  <input type="file" name="file" @change="uploadFile($event, index)" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" />
-</div>
+                                <!-- <div v-for="(input, index) in inputs" :key="index" class="flex border rounded-lg p-2 bg-gray-700 m-2">
+                                  <p class="mr-2 ml-1 text-white">{{ index+1 }}</p>  
+                                  <input type="file" name="file" @change="onFileChange(index)" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" />
+                                </div> -->
+
+                                <div v-for="index in 2" :key="index">
+                                  <input type="file" name="file" :ref="'fileInput-' + index" @change="onFileChange(index)" />
+                                </div>
 
                               </div>
 
@@ -478,9 +482,10 @@ setup() {
 
           Product: [],
 
-          files: [], // Array to store uploaded files
+        
           inputs: [], // Array to store input elements
-       
+          pictureFiles: [],
+          files: [], // Array to store uploaded files
 
 
           header_table: 'Products',
@@ -687,41 +692,53 @@ setup() {
     .then(response => {
       console.log(response.data);
       console.log(response.data.idProducts);
-      console.log("Before Pict");
-      this.submitPictures(response.data.idProducts);
-      console.log("After Pict");
-
+      this.uploadPictures(response.data.idProducts);
       this.Canceled();
+      console.log("assign product into category sccefully");
     })
     .catch(error => {
       console.error(error);
     });
 },
-submitPictures(idProducts) {
-  if (this.files.length === 0) {
-    console.log('No files selected');
-    return;
-  }
 
-  const uploadPromises = this.files.map((file) => {
-    const formData = new FormData();
-    formData.append('file', file.url); // Use file.url instead of the whole file object
+onFileChange(index) {
+      const file = this.$refs['fileInput-' + index][0].files[0];
+      if (file) {
+        this.pictureFiles[index - 1] = file;
+        
+      }
+    },
+uploadPictures(idProducts) {
+      // if (this.pictureFiles.length === 0) {
+      //   console.log('No files selected');
+      //   return;
+      // }
+      this. files= this.pictureFiles.slice();
+        console.log("this.pictureFiles");
+        console.log(this.pictureFiles);
+        console.log("this.files");
+        console.log(this.files);
+      
 
-    return axios.post(`http://localhost:8080/productpicture/product/${idProducts}`, formData);
-  });
-
-  Promise.all(uploadPromises)
-    .then((responses) => {
-      console.log('All files uploaded successfully!');
-      responses.forEach((response) => {
-        console.log(response.data);
+      const uploadPromises = this.pictureFiles.map((file) => {
+        const formData = new FormData();
+        formData.append('file', file);
+        console.log("assign picture/s in product succesfully");
+        return axios.post(`http://localhost:8080/productpicture/product/${idProducts};`, formData);
       });
-      this.getAll();
-    })
-    .catch((error) => {
-      console.log('Error:', error);
-    });
-},
+
+      Promise.all(uploadPromises)
+        .then((responses) => {
+          console.log('All files uploaded successfully!');
+          responses.forEach((response) => {
+            console.log(response.data);
+          });
+          this.getAll();
+        })
+        .catch((error) => {
+          console.log('Error:', error);
+        });
+    },
 
 
 

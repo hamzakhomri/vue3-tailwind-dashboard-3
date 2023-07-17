@@ -36,7 +36,7 @@
 </div>-->
 
 
-<form @submit.prevent="uploadPictures(1)" class="bg-blue-500">
+<form @submit.prevent="uploadPictures(5)" class="bg-blue-500">
       <div v-for="index in 2" :key="index">
         <input type="file" name="file" :ref="'fileInput-' + index" @change="onFileChange(index)" />
       </div>
