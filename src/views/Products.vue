@@ -69,6 +69,8 @@
                               <div class="border w-[30%]">
                                 <p class="bg-red-500 dark:bg-red-700 text-white">Les chemps : {{ inputs.length }}</p>
                                 <P @click="addFile" class="cursor-pointer border text-2xl bg-gray-800 text-white">+</P>  
+                                       
+                     
                                 <!-- <div v-for="(input, index) in inputs" :key="index" class="flex border rounded-lg p-2 bg-gray-700 m-2">
                                   <p class="mr-2 ml-1 text-white">{{ index+1 }}</p>  
                                   <input type="file" name="file" @change="onFileChange(index)" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" />
@@ -713,11 +715,7 @@ uploadPictures(idProducts) {
       //   console.log('No files selected');
       //   return;
       // }
-      this. files= this.pictureFiles.slice();
-        console.log("this.pictureFiles");
-        console.log(this.pictureFiles);
-        console.log("this.files");
-        console.log(this.files);
+        this. files= this.pictureFiles.slice();
       
 
       const uploadPromises = this.pictureFiles.map((file) => {
