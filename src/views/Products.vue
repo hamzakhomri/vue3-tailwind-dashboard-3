@@ -73,11 +73,11 @@
                      
                                 <!-- <div v-for="(input, index) in inputs" :key="index" class="flex border rounded-lg p-2 bg-gray-700 m-2">
                                   <p class="mr-2 ml-1 text-white">{{ index+1 }}</p>  
-                                  <input type="file" name="file" @change="onFileChange(index)" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" />
+                                  <input type="file" name="file" @change="onReadPicture(index)" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" />
                                 </div> -->
 
-                                <div v-for="index in 2" :key="index">
-                                  <input type="file" name="file" :ref="'fileInput-' + index" @change="onFileChange(index)" />
+                                <div v-for="(input, index) in inputs" :key="index">
+                                  <input type="file" name="file" :ref="'fileInput-' + index" @change="onReadPicture(index)" />
                                 </div>
 
                               </div>
@@ -85,7 +85,7 @@
                               <div class="border grid w-[70%] grid-cols-3 gap-2 border-b">
            
                                 
-                                <div v-for="(file, index) in files" :key="file.id" class="p-1">
+                                <div v-for="(file, index) in pictureFiles" :key="file.id" class="p-1">
                                   <div class="flex justify-between p-0.5 border-x border-t rounded-lg mb-[-1]">
                                     <p class="text-gray-300">{{ index + 1 }}</p>
                                     <svg @click="removeFile(index)" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -122,7 +122,7 @@
                           <a class="font-semibold text-gray-800 dark:text-gray-100">{{idProductCategory}}</a>
                         </div>
                         <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Pictures:
-                          <a class="font-semibold text-gray-800 dark:text-gray-100">{{files.length}}</a>
+                          <a class="font-semibold text-gray-800 dark:text-gray-100">{{pictureFiles.length}}</a>
                         </div>
                       </div>
                       <div class="space-y-1">
@@ -582,24 +582,15 @@ setup() {
   methods: { 
 
     
-    addFile() {
-      if(this.inputs.length !=this.files.length){
-        alert("le chemp "+this.inputs.length + " et vide");
-        console.log(this.inputs.length+"!="+this.files.length);
-        return null;
-      }
-      else
-      {
-        this.inputs.push({});
-      }
-    },
-    removeFile(index) {
-      this.files.splice(index, 1);
-      this.inputs.splice(index, 1);
-      console.log("Input/File: " + index + " removed");
-    },
-
- 
+      addFile() {
+    
+          this.inputs.push({});
+        },
+      removeFile(index) {
+          this.pictureFiles.splice(index, 1);
+          this.inputs.splice(index, 1);
+          console.log("Input/File: " + index + " removed");
+        },
   // ============= UPDATE==============================================
       confirmUpdate(idProducts, Productname, idProductCategory, priceProducts, qteProducts) {
               this.ProductIdToUpdate = idProducts;
@@ -613,33 +604,32 @@ setup() {
               console.log("Finish confirmUpdate");
               
           },
-
       cancelUpdate(){
             this.DialogueUpdate=false;
           },
 // ============= DELETE ==============================================
-      confirmDelete(idProducts) {
-            this.productIdToDelete = idProducts;
-            this.DialogueDelete = true;
-          },
-      deleteProduct() {
-            console.log("Deleting category with ID:", this.productIdToDelete);
-            this.DialogueDelete = false;
-          },
-      cancelDelete() {
-            this.DialogueDelete = false;
-          },
-      Canceled(){
-            this.Productname="";
-            this.Price="";
-            this.quantite="";
-            this.idProductCategory="";
-            this.GetAll()
-          },
-      doProducts(EditProducts) {
-            this.EditProducts = EditProducts;
-            this.ProductName = "";
-          },
+        confirmDelete(idProducts) {
+              this.productIdToDelete = idProducts;
+              this.DialogueDelete = true;
+            },
+        deleteProduct() {
+              console.log("Deleting category with ID:", this.productIdToDelete);
+              this.DialogueDelete = false;
+            },
+        cancelDelete() {
+              this.DialogueDelete = false;
+            },
+        Canceled(){
+              this.Productname="";
+              this.Price="";
+              this.quantite="";
+              this.idProductCategory="";
+              this.GetAll()
+            },
+        doProducts(EditProducts) {
+              this.EditProducts = EditProducts;
+              this.ProductName = "";
+            },
 
   // ============= REQUETE ==============================================
         GetAllGategory(){
@@ -647,107 +637,100 @@ setup() {
             {
               this.ProductCategory = response.data;
             }).catch(error => { console.error(error); });
-          },
-              
+        },
         GetAll(){
                 axios.get('http://localhost:8080/product').then(response => 
                 {
                   this.Product = response.data;
                 }).catch(error => { console.error(error); });
-              },
+        },
+        uploadFile(event, index) {
+          this.pictureFiles = splice.files();
+          const file = event.target.files[0];
+
+          const reader = new FileReader();
+          reader.onload = () => {
+            const url = reader.result;
+
+            this.files.splice(index, 1, { url });
+
+            // Check if all files are uploaded before calling submitPictures
+            const allFilesUploaded = this.files.every(file => file.url);
+            if (allFilesUploaded) {
+              this.submitPictures(idProducts); // Call submitPictures once all files are uploaded
+            }
+
+            console.clear("console was cleared");
+            console.log(this.files);
+            console.log(Date.now(), url);
+            console.log("Upload " + index + " files");
+          };
+
+          reader.readAsDataURL(file);
+        },
+        submitProduct(idProductCategory) {
+          const data = {
+            nameProducts: this.Productname,
+            priceProducts: this.Price,
+            qteProducts: this.quantite
+          };
+
+          axios.post(`http://localhost:8080/product/category/${idProductCategory}`, data)
+            .then(response => {
+              console.log(response.data);
+              console.log(response.data.idProducts);
+              this.uploadPictures(response.data.idProducts);
+              this.Canceled();
+              console.log("assign product into category sccefully");
+            })
+            .catch(error => {
+              console.error(error);
+            });
+        },
 
 
+    onReadPicture(index) {
+            const fileInput = this.$refs[`fileInput-${index}`][0];
+            const file = fileInput.files[0];
+            if (file && fileInput) {
+              const reader = new FileReader();
 
+            reader.onload = (event) =>{
+              const imageUrl = event.target.result;
+              this.pictureFiles.push({ id: Date.now(), url: imageUrl });       
+              this.pictureFiles[index ] = file;
 
-              uploadFile(event, index) {
-  const file = event.target.files[0];
+            };
+               reader.readAsDataURL(file);
 
-  const reader = new FileReader();
-  reader.onload = () => {
-    const url = reader.result;
+               console.log(this.pictureFiles);
+            }
+            else{
+                console.log("NOP onReadPictured");
+            }
+        },
 
-    this.files.splice(index, 1, { url });
+        uploadPictures(idProducts) {
+              // this. files= this.pictureFiles.slice();
+            const uploadPromises = this.pictureFiles.map((file) => {
+              const formData = new FormData();
+              formData.append('file', file);
+              console.log("assign picture/s in product succesfully");
+              return axios.post(`http://localhost:8080/productpicture/product/${idProducts};`, formData);
+            });
 
-    // Check if all files are uploaded before calling submitPictures
-    const allFilesUploaded = this.files.every(file => file.url);
-    if (allFilesUploaded) {
-      this.submitPictures(idProducts); // Call submitPictures once all files are uploaded
-    }
-
-    console.clear("console was cleared");
-    console.log(this.files);
-    console.log(Date.now(), url);
-    console.log("Upload " + index + " files");
-  };
-
-  reader.readAsDataURL(file);
-},
-
-    submitProduct(idProductCategory) {
-  const data = {
-    nameProducts: this.Productname,
-    priceProducts: this.Price,
-    qteProducts: this.quantite
-  };
-
-  axios.post(`http://localhost:8080/product/category/${idProductCategory}`, data)
-    .then(response => {
-      console.log(response.data);
-      console.log(response.data.idProducts);
-      this.uploadPictures(response.data.idProducts);
-      this.Canceled();
-      console.log("assign product into category sccefully");
-    })
-    .catch(error => {
-      console.error(error);
-    });
-},
-
-onFileChange(index) {
-      const file = this.$refs['fileInput-' + index][0].files[0];
-      if (file) {
-        this.pictureFiles[index - 1] = file;
-        
-      }
-    },
-uploadPictures(idProducts) {
-      // if (this.pictureFiles.length === 0) {
-      //   console.log('No files selected');
-      //   return;
-      // }
-        this. files= this.pictureFiles.slice();
-      
-
-      const uploadPromises = this.pictureFiles.map((file) => {
-        const formData = new FormData();
-        formData.append('file', file);
-        console.log("assign picture/s in product succesfully");
-        return axios.post(`http://localhost:8080/productpicture/product/${idProducts};`, formData);
-      });
-
-      Promise.all(uploadPromises)
-        .then((responses) => {
-          console.log('All files uploaded successfully!');
-          responses.forEach((response) => {
-            console.log(response.data);
-          });
-          this.getAll();
-        })
-        .catch((error) => {
-          console.log('Error:', error);
-        });
-    },
-
-
-
-
-
-
-
-
-
-
-
+            Promise.all(uploadPromises)
+              .then((responses) => {
+                console.log('All files uploaded successfully!');
+                responses.forEach((response) => {
+                  console.log(response.data);
+                });
+                this.getAll();
+              })
+              .catch((error) => {
+                console.log('Error:', error);
+              });
+        },
 
         updateProduct(idProducts, ProductnameToUpdate,  ProductPricetToUpdate, ProductQteToUpdate,idProductCategory) {
             axios.put(`http://localhost:8080/product/${idProducts}/category/${idProductCategory}`, {
@@ -770,8 +753,7 @@ uploadPictures(idProducts) {
             .catch(error => {
               console.error(error);
             });
-          },
-
+        },
 
         deleteProduct(idProducts){
           axios.delete(`http://localhost:8080/product/${idProducts}`)
@@ -838,24 +820,4 @@ uploadPictures(idProducts) {
       }
 };
   </script>
-  
-  <style>
-
-  
-  .slide-enter-active {
-    transition: all 500ms;
-    opacity: 0;
-  }
-  .slide-enter-to {
-    opacity: 1;
-  }
-  
-  .slide-leave-active {
-    transition: all 500ms;
-    opacity: 1;
-  }
-  .slide-leave-to {
-    opacity: 0;
-  }
-  </style>
   
