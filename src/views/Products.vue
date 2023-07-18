@@ -692,22 +692,16 @@ setup() {
     onReadPicture(index) {
             const fileInput = this.$refs[`fileInput-${index}`][0];
             const file = fileInput.files[0];
-            if (file && fileInput) {
-              const reader = new FileReader();
+           
+            const reader = new FileReader();
 
             reader.onload = (event) =>{
               const imageUrl = event.target.result;
               this.pictureFiles.push({ id: Date.now(), url: imageUrl });       
-              this.pictureFiles[index ] = file;
+              
 
             };
-               reader.readAsDataURL(file);
-
-               console.log(this.pictureFiles);
-            }
-            else{
-                console.log("NOP onReadPictured");
-            }
+            reader.readAsDataURL(file);
         },
 
         uploadPictures(idProducts) {
@@ -715,7 +709,7 @@ setup() {
             const uploadPromises = this.pictureFiles.map((file) => {
               const formData = new FormData();
               formData.append('file', file);
-              console.log("assign picture/s in product succesfully");
+              console.log("assign picture/s in product : "+idProducts+" succesfully ");
               return axios.post(`http://localhost:8080/productpicture/product/${idProducts};`, formData);
             });
 
