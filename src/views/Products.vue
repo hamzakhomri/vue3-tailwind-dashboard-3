@@ -61,43 +61,30 @@
                             </select>
                           </div>
                         </template>
-
                         <template v-else-if="current === 'Pictures'">
-                        
-                            <div class="flex w-[100%]  overflow-y-scroll">
-                              
-                              <div class="border w-[30%]">
-                                <p class="bg-red-500 dark:bg-red-700 text-white">Les chemps : {{ inputs.length }}</p>
-                                <P @click="addFile" class="cursor-pointer border text-2xl bg-gray-800 text-white">+</P>  
-                                       
-                     
-                                <!-- <div v-for="(input, index) in inputs" :key="index" class="flex border rounded-lg p-2 bg-gray-700 m-2">
-                                  <p class="mr-2 ml-1 text-white">{{ index+1 }}</p>  
-                                  <input type="file" name="file" @change="onReadPicture(index)" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" />
-                                </div> -->
+  <div class="flex w-[100%] overflow-y-scroll">
+    <div class="border w-[30%]">
+      <p class="bg-red-500 dark:bg-red-700 text-white">Les champs : {{ inputs.length }}</p>
+      <p @click="addFile" class="cursor-pointer border text-2xl bg-gray-800 text-white">+</p>  
+      <div v-for="(input, index) in inputs" :key="index">
+        <input type="file" name="file" :ref="'fileInput-' + index" @change="onReadPicture(index)" />
+      </div>
+    </div>
 
-                                <div v-for="(input, index) in inputs" :key="index">
-                                  <input type="file" name="file" :ref="'fileInput-' + index" @change="onReadPicture(index)" />
-                                </div>
+    <div class="border grid w-[70%] grid-cols-3 gap-2 border-b">
+      <div v-for="(file, index) in pictureFiles" :key="file.id" class="p-1">
+        <div class="flex justify-between p-0.5 border-x border-t rounded-lg mb-[-1]">
+          <p class="text-gray-300">{{ index + 1 }}</p>
+          <svg @click="removeFile(index)" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <img :src="file.url" alt="Uploaded File" class="border-2 border-b-red-500 transition duration-300 ease-in-out hover:scale-110" />
+      </div>
+    </div>
+  </div>
+</template>
 
-                              </div>
-
-                              <div class="border grid w-[70%] grid-cols-3 gap-2 border-b">
-           
-                                
-                                <div v-for="(file, index) in pictureFiles" :key="file.id" class="p-1">
-                                  <div class="flex justify-between p-0.5 border-x border-t rounded-lg mb-[-1]">
-                                    <p class="text-gray-300">{{ index + 1 }}</p>
-                                    <svg @click="removeFile(index)" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                  </div>
-                                  <img :src="file.url" alt="Uploaded File" class="border-2 border-b-red-500 transition duration-300 ease-in-out hover:scale-110" />
-                                </div>
-                              </div>    
-
-                            </div>
-                        </template>
 
 
 
@@ -688,44 +675,39 @@ setup() {
             });
         },
 
+        onReadPicture(index) {
+    const fileInput = this.$refs[`fileInput-${index}`][0];
+    const file = fileInput.files[0];
 
-    onReadPicture(index) {
-            const fileInput = this.$refs[`fileInput-${index}`][0];
-            const file = fileInput.files[0];
-           
-            const reader = new FileReader();
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const imageUrl = event.target.result;
+        this.pictureFiles.push({ id: Date.now(), url: imageUrl, file: file }); // Store both the data URL and the File object
+      };
+      reader.readAsDataURL(file); // Read the data URL asynchronously
+    }
+  },
+  uploadPictures(idProducts) {
+    const uploadPromises = this.pictureFiles.map((picture) => {
+      const formData = new FormData();
+      formData.append('file', picture.file); // Use the File object for the formData
+      console.log("Assign picture to product successfully");
+      return axios.post(`http://localhost:8080/productpicture/product/${idProducts}`, formData);
+    });
 
-            reader.onload = (event) =>{
-              const imageUrl = event.target.result;
-              this.pictureFiles.push({ id: Date.now(), url: imageUrl });       
-              
-
-            };
-            reader.readAsDataURL(file);
-        },
-
-        uploadPictures(idProducts) {
-              // this. files= this.pictureFiles.slice();
-            const uploadPromises = this.pictureFiles.map((file) => {
-              const formData = new FormData();
-              formData.append('file', file);
-              console.log("assign picture/s in product : "+idProducts+" succesfully ");
-              return axios.post(`http://localhost:8080/productpicture/product/${idProducts};`, formData);
-            });
-
-            Promise.all(uploadPromises)
-              .then((responses) => {
-                console.log('All files uploaded successfully!');
-                responses.forEach((response) => {
-                  console.log(response.data);
-                });
-                this.getAll();
-              })
-              .catch((error) => {
-                console.log('Error:', error);
-              });
-        },
-
+    Promise.all(uploadPromises)
+      .then((responses) => {
+        console.log('All files uploaded successfully!');
+        responses.forEach((response) => {
+          console.log(response.data);
+        });
+        this.getAll();
+      })
+      .catch((error) => {
+        console.log('Error:', error);
+      });
+  },
         updateProduct(idProducts, ProductnameToUpdate,  ProductPricetToUpdate, ProductQteToUpdate,idProductCategory) {
             axios.put(`http://localhost:8080/product/${idProducts}/category/${idProductCategory}`, {
               nameProducts: ProductnameToUpdate,
