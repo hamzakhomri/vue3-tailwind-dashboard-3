@@ -67,7 +67,7 @@
                               <p class="bg-red-500 dark:bg-red-700 text-white">Les champs : {{ inputs.length }}</p>
                               <p @click="addFile" class="cursor-pointer border text-2xl bg-gray-800 text-white">+</p>  
                               <div v-for="(input, index) in inputs" :key="index">
-                                <input type="file" name="file" :ref="'fileInput-' + index" @change="onReadPicture(index)" />
+                                <input type="file" name="file" :ref="'fileInput-' + index" @change="onReadPicture(index)" accept=".jpg, .jpeg, .png, .svg, .webp" />
                               </div>
                             </div>
 
@@ -694,11 +694,8 @@ setup() {
         };
 
         // Display the information in console.log
-        console.log("File Extension:", fileExtension);
-        console.log("File Size (bytes):", fileSize);
-        console.log("Resolution:", resolution);
+        console.log("File Extension:", fileExtension + " // File Size (bytes):", fileSize + " // Resolution:", resolution);
 
-        // Store both the data URL, file extension, file size, and resolution
         if(fileSize< 990087)
           {  
             this.pictureFiles.push({
