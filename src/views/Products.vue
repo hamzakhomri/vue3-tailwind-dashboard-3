@@ -31,8 +31,9 @@
                                 <div class="w-full">
                                   <div class="flex justify-start"><span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Price</span></div>
                                   <input type="number" placeholder="Price" required v-model="Price" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
-                                    { 'border-red-500': Price.length <= 0 },{ 'border-green-500': Price.length >= 1 }]">
-                                  <p v-bind:hidden="Price.length >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
+                                    { 'border-red-500': Price <= 0 },
+                                    { 'border-green-500': Price >= 1 }]">
+                                  <p v-bind:hidden="Price >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
                                 </div>
                               </div>
                             </div>
@@ -42,7 +43,8 @@
                                 <div class="w-full">
                                   <div class="flex justify-start"><span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Quantite</span></div>
                                   <input type="number" placeholder="Quantite" required v-model="quantite" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
-                                    { 'border-red-500': quantite <= 0 },{ 'border-green-500': quantite >= 1 }]">
+                                    { 'border-red-500': quantite <= 0 },
+                                    { 'border-green-500': quantite >= 1 }]">
                                   <p v-bind:hidden="quantite >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
                                 </div>
                               </div>
@@ -63,15 +65,33 @@
                         </template>
                         <template v-else-if="current === 'Pictures'">
                           <div class="flex w-[100%] overflow-y-scroll">
-                            <div class="border w-[30%]">
+                            <div class="border w-[40%]">
                               <p class="bg-red-500 dark:bg-red-700 text-white">Les champs : {{ inputs.length }}</p>
                               <p @click="addFile" class="cursor-pointer border text-2xl bg-gray-800 text-white">+</p>  
-                              <div v-for="(input, index) in inputs" :key="index">
-                                <input type="file" name="file" :ref="'fileInput-' + index" @change="onReadPicture(index)" accept=".jpg, .jpeg, .png, .svg, .webp" />
-                              </div>
+                              
+                         
+
+                              
+                              <div v-for="(input, index) in inputs" :key="index" class="flex justify-betweens border-2 mt-1 mb-1  border-sky-500 rounded-lg ">
+                               <div class="flex border-solid  p-2">
+                                <p class=" text-gray-500 p-2 text-left "> {{index + 1}}</p>
+                                <input type="file" name="file" :ref="'fileInput-' + index" @change="onReadPicture(index)" accept=".jpg, .jpeg, .png, .svg, .webp"
+                                      class="mr-[2%] ml-[2%] w-[100%] block  text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"/>
+                                 
+                              </div> 
+                              <svg @click="removeFile(index)" xmlns="http://www.w3.org/2000/svg" class=" w-6 h-6 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg> 
+                            </div>
                             </div>
 
-                            <div class="border grid w-[70%] grid-cols-3 gap-2 border-b">
+                            <div class="w-[60%]  border border-b">
+                              <div>
+                                <p class="bg-red-500 dark:bg-red-700 text-white">Les Photos : {{ pictureFiles.length }}</p>
+
+                              </div>
+
+                              <div class="grid-cols-3 grid gap-2">
                               <div v-for="(file, index) in pictureFiles" :key="file.id" class="p-1">
                                 <div class="flex justify-between p-0.5 border-x border-t rounded-lg mb-[-1]">
                                   <p class="text-gray-300">{{ index + 1 }}</p>
@@ -81,6 +101,7 @@
                                 </div>
                                 <img :src="file.url" alt="Uploaded File" class="border-2 border-b-red-500 transition duration-300 ease-in-out hover:scale-110" />
                               </div>
+</div>
                             </div>
                           </div>
                         </template>
@@ -446,10 +467,10 @@ setup() {
               isFirst,
               isLast,
           } = useStepper([
-            
+           
               'Products',
               'Categories',
-              'Pictures',
+               'Pictures',
               'payment',
           ]);
 
@@ -570,8 +591,10 @@ setup() {
   methods: { 
     
       addFile() {
-    
-          this.inputs.push({});
+        if(this.pictureFiles.length == this.inputs.length)
+           { this.inputs.push({}); }
+        else{ alert("le champ " + this.inputs.length +" et vide")}           
+
         },
       removeFile(index) {
           this.pictureFiles.splice(index, 1);
@@ -674,54 +697,58 @@ setup() {
           });
       },
 
-      onReadPicture(index) {
-  const fileInput = this.$refs[`fileInput-${index}`][0];
-  const file = fileInput.files[0];
+      onReadPicture(index) 
+      {
+          const fileInput = this.$refs[`fileInput-${index}`][0];
+          const file = fileInput.files[0];
 
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const imageUrl = event.target.result;
-      const fileExtension = file.name.split('.').pop().toLowerCase();
-      const fileSize = file.size;
+          if (file) 
+          {
+            const reader = new FileReader();
+            reader.onload = (event) => 
+            {
+              const imageUrl = event.target.result;
+              const fileExtension = file.name.split('.').pop().toLowerCase();
+              const fileSize = file.size;
 
-      const image = new Image();
-      image.src = imageUrl;
-      image.onload = () => {
-        const resolution = {
-          width: image.width,
-          height: image.height
-        };
+              const image = new Image();
+              image.src = imageUrl;
+              image.onload = () => 
+              {
+                const resolution = {
+                  width: image.width,
+                  height: image.height
+                };
 
-        // Display the information in console.log
-        console.log("File Extension:", fileExtension + " // File Size (bytes):", fileSize + " // Resolution:", resolution);
-
-        if(fileSize< 990087)
-          {  
-            this.pictureFiles.push({
-              id: Date.now(),
-              url: imageUrl,
-              file: file,
-              extension: fileExtension,
-              size: fileSize,
-              resolution: resolution
-            });
+                console.log("File Extension:", fileExtension + " // File Size (bytes):", fileSize + " // Resolution:", resolution);
+            
+                if(fileSize< 990087)
+                  {  
+                    this.pictureFiles.push({
+                      id: Date.now(),
+                      url: imageUrl,
+                      file: file,
+                      extension: fileExtension,
+                      size: fileSize,
+                      resolution: resolution
+                    });
+                  }
+                  else
+                    {
+                      this.inputs.splice(index, 1); 
+                      alert("this picture "+ file.name +" over size");
+                    }
+              };
+            };
+            reader.readAsDataURL(file); // Read the data URL asynchronously
           }
-          else{
-              this.inputs.splice(index, 1); 
-              alert("this picture "+ file.name +" over size");
-            }
-      };
-    };
-    reader.readAsDataURL(file); // Read the data URL asynchronously
-  }
-},
+        },
       uploadPictures(idProducts) {
-          console.log(this.pictureFiles.url+"Uploaded !" + this.pictureFiles.size);
+      
         const uploadPromises = this.pictureFiles.map((picture) => {
           const formData = new FormData();
           formData.append('file', picture.file); // Use the File object for the formData
-          console.log("Assign picture to product successfully");
+          console.log(idProducts + " Uplod Succefully");
           return axios.post(`http://localhost:8080/productpicture/product/${idProducts}`, formData);
         });
 
