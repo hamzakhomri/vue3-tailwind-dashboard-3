@@ -302,6 +302,7 @@ export default {
 
   mounted() {
     this.GetAll()
+    console.log("Categories.vue");
   },
   methods: {
     confirmUpdate(categoryId,categoryname){
@@ -390,12 +391,15 @@ export default {
     GetAll(){
       axios.get('http://localhost:8080/productcategory').then(response => 
       {
+        console.log("Afficher les Catégories : " + parseInt(this.ProductCategory.length + 1));
+
         this.ProductCategory = response.data;
       }).catch(error => { console.error(error); });
     },
     updateProductCategory(idProductCategory,categoryNameToUpdate){
       axios.put(`http://localhost:8080/productcategory/${idProductCategory}`,{nameProductCategory:categoryNameToUpdate})
       .then(response => {
+        console.log("Modifire la categories : "+response.data.idProductCategory+" avec succés");
         this.GetAll()
         this.DialogueUpdate=false;
         })
@@ -406,6 +410,7 @@ export default {
     deleteProductCategory(idProductCategory) {
       axios.delete(`http://localhost:8080/productcategory/${idProductCategory}`)
         .then(response => {
+          console.log("Supprimer la categories : "+response.data.nameProductCategory+" avec succés");
           this.GetAll()
           this.DialogueDelete= false;
         })
@@ -420,7 +425,7 @@ export default {
       axios.post('http://localhost:8080/productcategory', data)
         .then(response => {
           console.log(response.data);
-          // Handle the response as needed
+          console.log("Ajouter la categories : "+response.data.nameProductCategory+" avec succés");
           this.CategoryName = "";
           this.GetAll()
         })
@@ -437,7 +442,6 @@ export default {
       this.GetAll()
     },
     doProducts(EditProducts) {
-      console.log('EditP');
       this.EditProducts = EditProducts;
       this.ProductName = "";
     }

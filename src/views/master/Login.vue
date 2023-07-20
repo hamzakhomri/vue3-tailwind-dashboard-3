@@ -35,6 +35,9 @@
   </template>
   
   <script>
+   mounted: {
+            console.log("Products.vue");
+      }
   </script>
   
   <style>

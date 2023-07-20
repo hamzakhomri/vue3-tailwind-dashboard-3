@@ -30,7 +30,7 @@
                               <div class="-mx-3 md:flex mb-6 justify-between space-x-4">
                                 <div class="w-full">
                                   <div class="flex justify-start"><span class="px-1 text-sm text-gray-600 dark:text-gray-300 text-left">Price</span></div>
-                                  <input type="text" placeholder="Price" required v-model="Price" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
+                                  <input type="number" placeholder="Price" required v-model="Price" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',
                                     { 'border-red-500': Price.length <= 0 },{ 'border-green-500': Price.length >= 1 }]">
                                   <p v-bind:hidden="Price.length >= 1" class="text-red text-xs italic text-red-600 dark:text-red-400">Please fill out this field.</p>
                                 </div>
@@ -62,28 +62,28 @@
                           </div>
                         </template>
                         <template v-else-if="current === 'Pictures'">
-  <div class="flex w-[100%] overflow-y-scroll">
-    <div class="border w-[30%]">
-      <p class="bg-red-500 dark:bg-red-700 text-white">Les champs : {{ inputs.length }}</p>
-      <p @click="addFile" class="cursor-pointer border text-2xl bg-gray-800 text-white">+</p>  
-      <div v-for="(input, index) in inputs" :key="index">
-        <input type="file" name="file" :ref="'fileInput-' + index" @change="onReadPicture(index)" />
-      </div>
-    </div>
+                          <div class="flex w-[100%] overflow-y-scroll">
+                            <div class="border w-[30%]">
+                              <p class="bg-red-500 dark:bg-red-700 text-white">Les champs : {{ inputs.length }}</p>
+                              <p @click="addFile" class="cursor-pointer border text-2xl bg-gray-800 text-white">+</p>  
+                              <div v-for="(input, index) in inputs" :key="index">
+                                <input type="file" name="file" :ref="'fileInput-' + index" @change="onReadPicture(index)" />
+                              </div>
+                            </div>
 
-    <div class="border grid w-[70%] grid-cols-3 gap-2 border-b">
-      <div v-for="(file, index) in pictureFiles" :key="file.id" class="p-1">
-        <div class="flex justify-between p-0.5 border-x border-t rounded-lg mb-[-1]">
-          <p class="text-gray-300">{{ index + 1 }}</p>
-          <svg @click="removeFile(index)" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-        </div>
-        <img :src="file.url" alt="Uploaded File" class="border-2 border-b-red-500 transition duration-300 ease-in-out hover:scale-110" />
-      </div>
-    </div>
-  </div>
-</template>
+                            <div class="border grid w-[70%] grid-cols-3 gap-2 border-b">
+                              <div v-for="(file, index) in pictureFiles" :key="file.id" class="p-1">
+                                <div class="flex justify-between p-0.5 border-x border-t rounded-lg mb-[-1]">
+                                  <p class="text-gray-300">{{ index + 1 }}</p>
+                                  <svg @click="removeFile(index)" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                  </svg>
+                                </div>
+                                <img :src="file.url" alt="Uploaded File" class="border-2 border-b-red-500 transition duration-300 ease-in-out hover:scale-110" />
+                              </div>
+                            </div>
+                          </div>
+                        </template>
 
 
 
@@ -563,11 +563,11 @@ setup() {
       },
 
   mounted() {
-            this.GetAll()
+            this.GetAllProducts()
             this.GetAllGategory()
+            console.log("Products.vue");
       },
   methods: { 
-
     
       addFile() {
     
@@ -595,203 +595,235 @@ setup() {
             this.DialogueUpdate=false;
           },
 // ============= DELETE ==============================================
-        confirmDelete(idProducts) {
-              this.productIdToDelete = idProducts;
-              this.DialogueDelete = true;
-            },
-        deleteProduct() {
-              console.log("Deleting category with ID:", this.productIdToDelete);
-              this.DialogueDelete = false;
-            },
-        cancelDelete() {
-              this.DialogueDelete = false;
-            },
-        Canceled(){
-              this.Productname="";
-              this.Price="";
-              this.quantite="";
-              this.idProductCategory="";
-              this.GetAll()
-            },
-        doProducts(EditProducts) {
-              this.EditProducts = EditProducts;
-              this.ProductName = "";
-            },
+      confirmDelete(idProducts) {
+            this.productIdToDelete = idProducts;
+            this.DialogueDelete = true;
+          },
+      deleteProduct() {
+            console.log("Deleting category with ID:", this.productIdToDelete);
+            this.DialogueDelete = false;
+          },
+      cancelDelete() {
+            this.DialogueDelete = false;
+          },
+      Canceled(){
+            this.Productname="";
+            this.Price="";
+            this.quantite="";
+            this.idProductCategory="";
+            this.GetAllProducts()
+          },
+      doProducts(EditProducts) {
+            this.EditProducts = EditProducts;
+            this.ProductName = "";
+          },
+// ============= REQUETE ==============================================
+      GetAllGategory(){
+          axios.get('http://localhost:8080/productcategory').then(response => 
+          {
+            this.ProductCategory = response.data;
+          }).catch(error => { console.error(error); });
+      },
+      GetAllProducts(){
+              axios.get('http://localhost:8080/product').then(response => 
+              {
+                this.Product = response.data;
+              }).catch(error => { console.error(error); });
+      },
+      uploadFile(event, index) {
+        this.pictureFiles = splice.files();
+        const file = event.target.files[0];
 
-  // ============= REQUETE ==============================================
-        GetAllGategory(){
-            axios.get('http://localhost:8080/productcategory').then(response => 
-            {
-              this.ProductCategory = response.data;
-            }).catch(error => { console.error(error); });
-        },
-        GetAll(){
-                axios.get('http://localhost:8080/product').then(response => 
-                {
-                  this.Product = response.data;
-                }).catch(error => { console.error(error); });
-        },
-        uploadFile(event, index) {
-          this.pictureFiles = splice.files();
-          const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = () => {
+          const url = reader.result;
 
-          const reader = new FileReader();
-          reader.onload = () => {
-            const url = reader.result;
+          this.files.splice(index, 1, { url });
 
-            this.files.splice(index, 1, { url });
+          // Check if all files are uploaded before calling submitPictures
+          const allFilesUploaded = this.files.every(file => file.url);
+          if (allFilesUploaded) {
+            this.submitPictures(idProducts); // Call submitPictures once all files are uploaded
+          }
 
-            // Check if all files are uploaded before calling submitPictures
-            const allFilesUploaded = this.files.every(file => file.url);
-            if (allFilesUploaded) {
-              this.submitPictures(idProducts); // Call submitPictures once all files are uploaded
-            }
+          console.clear("console was cleared");
+          console.log(this.files);
+          console.log(Date.now(), url);
+          console.log("Upload " + index + " files");
+        };
 
-            console.clear("console was cleared");
-            console.log(this.files);
-            console.log(Date.now(), url);
-            console.log("Upload " + index + " files");
-          };
+        reader.readAsDataURL(file);
+      },
+      submitProduct(idProductCategory) {
+        const data = {
+          nameProducts: this.Productname,
+          priceProducts: this.Price,
+          qteProducts: this.quantite
+        };
 
-          reader.readAsDataURL(file);
-        },
-        submitProduct(idProductCategory) {
-          const data = {
-            nameProducts: this.Productname,
-            priceProducts: this.Price,
-            qteProducts: this.quantite
-          };
-
-          axios.post(`http://localhost:8080/product/category/${idProductCategory}`, data)
-            .then(response => {
-              console.log(response.data);
-              console.log(response.data.idProducts);
-              this.uploadPictures(response.data.idProducts);
-              this.Canceled();
-              console.log("assign product into category sccefully");
-            })
-            .catch(error => {
-              console.error(error);
-            });
-        },
-
-        onReadPicture(index) {
-    const fileInput = this.$refs[`fileInput-${index}`][0];
-    const file = fileInput.files[0];
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const imageUrl = event.target.result;
-        this.pictureFiles.push({ id: Date.now(), url: imageUrl, file: file }); // Store both the data URL and the File object
-      };
-      reader.readAsDataURL(file); // Read the data URL asynchronously
-    }
-  },
-  uploadPictures(idProducts) {
-    const uploadPromises = this.pictureFiles.map((picture) => {
-      const formData = new FormData();
-      formData.append('file', picture.file); // Use the File object for the formData
-      console.log("Assign picture to product successfully");
-      return axios.post(`http://localhost:8080/productpicture/product/${idProducts}`, formData);
-    });
-
-    Promise.all(uploadPromises)
-      .then((responses) => {
-        console.log('All files uploaded successfully!');
-        responses.forEach((response) => {
-          console.log(response.data);
-        });
-        this.getAll();
-      })
-      .catch((error) => {
-        console.log('Error:', error);
-      });
-  },
-        updateProduct(idProducts, ProductnameToUpdate,  ProductPricetToUpdate, ProductQteToUpdate,idProductCategory) {
-            axios.put(`http://localhost:8080/product/${idProducts}/category/${idProductCategory}`, {
-              nameProducts: ProductnameToUpdate,
-              productCategory: {
-                idProductCategory: idProductCategory
-              },
-              priceProducts: ProductPricetToUpdate,
-              qteProducts: ProductQteToUpdate
-            })
-            .then(response => {
-              this.GetAll();
-              this.DialogueUpdate = false;
-              this.ProductIdToUpdate = null;
-              this.ProductnameToUpdate = '';
-              this.idProductCategory = '';
-              this.ProductPricetToUpdate = null;
-              this.ProductQteToUpdate = null;
-            })
-            .catch(error => {
-              console.error(error);
-            });
-        },
-
-        deleteProduct(idProducts){
-          axios.delete(`http://localhost:8080/product/${idProducts}`)
-              .then(response=>{
-                this.GetAll()
-                this.DialogueDelete=false;
-              }).catch(error=>{
-                console.error(error);
-              })
-        }, 
-  // ============= END REQUETE ==============================================
-  // ============= TRIER=====================================================
-        sortByNameProdcut() {
-          this.sortbynames = this.sortbynames === 'asc' ? 'desc' : 'asc';
-          this.Product.sort((a, b) => {
-            const nameA = a.nameProducts.toUpperCase();
-            const nameB = b.nameProducts.toUpperCase();
-
-            if (this.sortbynames === 'asc') {
-              if (nameA < nameB) return -1;
-              if (nameA > nameB) return 1;
-            } else {
-              if (nameA > nameB) return -1;
-              if (nameA < nameB) return 1;
-            }
-
-            return 0;
+        axios.post(`http://localhost:8080/product/category/${idProductCategory}`, data)
+          .then(response => {
+            console.log(response.data);
+            console.log(response.data.idProducts);
+            this.uploadPictures(response.data.idProducts);
+            this.Canceled();
+            console.log("assign product into category sccefully");
+          })
+          .catch(error => {
+            console.error(error);
           });
-        },
+      },
 
-        sortByqte() {
-          this.sortbyqtes = this.sortbyqtes === 'asc' ? 'desc' : 'asc';
-                this.Product.sort((a, b) => {
-                  if (this.sortbyqtes === 'asc') {
-                    return a.qteProducts - b.qteProducts;
-                  } else {
-                    return b.qteProducts - a.qteProducts;
-                  }
-                });
-        },
+      onReadPicture(index) {
+  const fileInput = this.$refs[`fileInput-${index}`][0];
+  const file = fileInput.files[0];
 
-        sortByPrice() {
-          this.sortbyPrices = this.sortbyPrices === 'asc' ? 'desc' : 'asc';
-                this.Product.sort((a, b) => {
-                  if (this.sortbyPrices === 'asc') {
-                    return a.priceProducts - b.priceProducts;
-                  } else {
-                    return b.priceProducts - a.priceProducts;
-                  }
-                });
-        },
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const imageUrl = event.target.result;
+      const fileExtension = file.name.split('.').pop().toLowerCase();
+      const fileSize = file.size;
 
-        sortByIdCategory() {
-                this.sortById = this.sortById === 'asc' ? 'desc' : 'asc';
-                this.Product.sort((a, b) => {
-                  if (this.sortById === 'asc') {
-                    return a.idProducts - b.idProducts;
-                  } else {
-                    return b.idProducts - a.idProducts;
-                  }
-                });
-        }
+      const image = new Image();
+      image.src = imageUrl;
+      image.onload = () => {
+        const resolution = {
+          width: image.width,
+          height: image.height
+        };
+
+        // Display the information in console.log
+        console.log("File Extension:", fileExtension);
+        console.log("File Size (bytes):", fileSize);
+        console.log("Resolution:", resolution);
+
+        // Store both the data URL, file extension, file size, and resolution
+        if(fileSize< 990087)
+          {  
+            this.pictureFiles.push({
+              id: Date.now(),
+              url: imageUrl,
+              file: file,
+              extension: fileExtension,
+              size: fileSize,
+              resolution: resolution
+            });
+          }
+          else{
+              this.inputs.splice(index, 1); 
+              alert("this picture "+ file.name +" over size");
+            }
+      };
+    };
+    reader.readAsDataURL(file); // Read the data URL asynchronously
+  }
+},
+      uploadPictures(idProducts) {
+          console.log(this.pictureFiles.url+"Uploaded !" + this.pictureFiles.size);
+        const uploadPromises = this.pictureFiles.map((picture) => {
+          const formData = new FormData();
+          formData.append('file', picture.file); // Use the File object for the formData
+          console.log("Assign picture to product successfully");
+          return axios.post(`http://localhost:8080/productpicture/product/${idProducts}`, formData);
+        });
+
+        Promise.all(uploadPromises)
+          .then((responses) => {
+            console.log('All files uploaded successfully!');
+            responses.forEach((response) => {
+              console.log(response.data);
+            });
+            this.getAll();
+          })
+          .catch((error) => {
+            console.log('Error:', error);
+          });
+      },
+      updateProduct(idProducts, ProductnameToUpdate,  ProductPricetToUpdate, ProductQteToUpdate,idProductCategory) {
+          axios.put(`http://localhost:8080/product/${idProducts}/category/${idProductCategory}`, {
+            nameProducts: ProductnameToUpdate,
+            productCategory: {
+              idProductCategory: idProductCategory
+            },
+            priceProducts: ProductPricetToUpdate,
+            qteProducts: ProductQteToUpdate
+          })
+          .then(response => {
+            this.GetAllProducts();
+            this.DialogueUpdate = false;
+            this.ProductIdToUpdate = null;
+            this.ProductnameToUpdate = '';
+            this.idProductCategory = '';
+            this.ProductPricetToUpdate = null;
+            this.ProductQteToUpdate = null;
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      },
+
+      deleteProduct(idProducts){
+        axios.delete(`http://localhost:8080/product/${idProducts}`)
+            .then(response=>{
+              this.GetAllProducts()
+              this.DialogueDelete=false;
+            }).catch(error=>{
+              console.error(error);
+            })
+      }, 
+// ============= END REQUETE ==============================================
+// ============= TRIER=====================================================
+      sortByNameProdcut() {
+        this.sortbynames = this.sortbynames === 'asc' ? 'desc' : 'asc';
+        this.Product.sort((a, b) => {
+          const nameA = a.nameProducts.toUpperCase();
+          const nameB = b.nameProducts.toUpperCase();
+
+          if (this.sortbynames === 'asc') {
+            if (nameA < nameB) return -1;
+            if (nameA > nameB) return 1;
+          } else {
+            if (nameA > nameB) return -1;
+            if (nameA < nameB) return 1;
+          }
+
+          return 0;
+        });
+      },
+
+      sortByqte() {
+        this.sortbyqtes = this.sortbyqtes === 'asc' ? 'desc' : 'asc';
+              this.Product.sort((a, b) => {
+                if (this.sortbyqtes === 'asc') {
+                  return a.qteProducts - b.qteProducts;
+                } else {
+                  return b.qteProducts - a.qteProducts;
+                }
+              });
+      },
+
+      sortByPrice() {
+        this.sortbyPrices = this.sortbyPrices === 'asc' ? 'desc' : 'asc';
+              this.Product.sort((a, b) => {
+                if (this.sortbyPrices === 'asc') {
+                  return a.priceProducts - b.priceProducts;
+                } else {
+                  return b.priceProducts - a.priceProducts;
+                }
+              });
+      },
+
+      sortByIdCategory() {
+              this.sortById = this.sortById === 'asc' ? 'desc' : 'asc';
+              this.Product.sort((a, b) => {
+                if (this.sortById === 'asc') {
+                  return a.idProducts - b.idProducts;
+                } else {
+                  return b.idProducts - a.idProducts;
+                }
+              });
+      }
   // ============= END TRIER============================================
       }
 };
