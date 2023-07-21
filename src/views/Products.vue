@@ -63,56 +63,45 @@
                             </select>
                           </div>
                         </template>
+
                         <template v-else-if="current === 'Pictures'">
                           <div class="flex w-[100%] overflow-y-scroll">
-                            <div class="border w-[40%]">
-                              <p class="bg-red-500 dark:bg-red-700 text-white">Les champs : {{ inputs.length }}</p>
-                              <p @click="addFile" class="cursor-pointer border text-2xl bg-gray-800 text-white">+</p>  
-                              
-                         
-
-                              
-                              <div v-for="(input, index) in inputs" :key="index" class="flex justify-betweens border-2 mt-1 mb-1  border-sky-500 rounded-lg ">
-                               <div class="flex border-solid  p-2">
-                                <p class=" text-gray-500 p-2 text-left "> {{index + 1}}</p>
-                                <input type="file" name="file" :ref="'fileInput-' + index" @change="onReadPicture(index)" accept=".jpg, .jpeg, .png, .svg, .webp"
-                                      class="mr-[2%] ml-[2%] w-[100%] block  text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"/>
-                                 
-                              </div> 
-                              <svg @click="removeFile(index)" xmlns="http://www.w3.org/2000/svg" class=" w-6 h-6 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            
+                            <div class="border w-[40%] ">
+                                <p class="bg-red-500 dark:bg-red-700 text-white">Les champs : {{ inputs.length }}</p>
+                                <p @click="addFile" class="cursor-pointer border text-2xl bg-gray-800 text-white">+</p>  
+                              <div v-for="(input, index) in inputs" :key="index" class="flex justify-betweens  border-2 mt-1 mb-1  border-sky-500 rounded-lg ">
+                                <div class="flex border-solid  p-2">
+                                  <p class=" text-gray-500 p-2 text-left "> {{index + 1}}</p>
+                                  <input type="file" name="file" :ref="'fileInput-' + index" @change="onReadPicture(index)" accept=".jpg, .jpeg, .png, .svg, .webp" class="mr-[2%] ml-[2%] w-[100%] block  text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"/>
+                                </div> 
+                                <svg @click="removeFile(index)" xmlns="http://www.w3.org/2000/svg" class=" w-6 h-6 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg> 
-                            </div>
+                              </div>
                             </div>
 
                             <div class="w-[60%]  border border-b">
-                              <div>
-                                <p class="bg-red-500 dark:bg-red-700 text-white">Les Photos : {{ pictureFiles.length }}</p>
-
-                              </div>
-
+                              <p class="bg-red-500 dark:bg-red-700 text-white">Les Photos : {{ pictureFiles.length }}</p>
                               <div class="grid-cols-3 grid gap-2">
-                              <div v-for="(file, index) in pictureFiles" :key="file.id" class="p-1">
-                                <div class="flex justify-between p-0.5 border-x border-t rounded-lg mb-[-1]">
-                                  <p class="text-gray-300">{{ index + 1 }}</p>
-                                  <svg @click="removeFile(index)" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                  </svg>
+                                <div v-for="(file, index) in pictureFiles" :key="file.id" class="p-1">
+                                  <div class="flex justify-between p-0.5 border-x border-t rounded-lg mb-[-1]">
+                                    <p class="text-gray-300">{{ index + 1 }}</p>
+                                    <svg @click="removeFile(index)" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                  </div>
+                                  <img :src="file.url" alt="Uploaded File" class="border-2 border-b-red-500 transition duration-300 ease-in-out hover:scale-110" />
                                 </div>
-                                <img :src="file.url" alt="Uploaded File" class="border-2 border-b-red-500 transition duration-300 ease-in-out hover:scale-110" />
                               </div>
-</div>
                             </div>
+
                           </div>
                         </template>
 
-
-
-
-
-                        <template v-else-if="current === 'payment'">
+                        <!-- <template v-else-if="current === 'payment'">
                           <h1>DD</h1>
-                        </template>
+                        </template> -->
               </div>
 
               <div class="flex-initial w-[30%]  col-span-2 rounded-lg border border-gray-400 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 p-2 sm:col-span-3">
@@ -471,7 +460,7 @@ setup() {
               'Products',
               'Categories',
                'Pictures',
-              'payment',
+              // 'payment',
           ]);
 
           return {
