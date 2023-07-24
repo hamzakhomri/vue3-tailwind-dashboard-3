@@ -360,7 +360,7 @@
         </th>
         <th scope="col" class="py-3 px-6">
           <div @click="sortByqte"  class="cursor-pointer flex items-center">
-            Quentite
+            Quantite
             <a >
               <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 w-3 h-3" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
                 <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"></path>
@@ -368,6 +368,18 @@
             </a>
           </div>
         </th>
+
+        <th scope="col" class="py-3 px-6">
+          <div class="cursor-pointer flex items-center">
+            Pictures
+            <a >
+              <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 w-3 h-3" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
+                <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"></path>
+              </svg>
+            </a>
+          </div>
+        </th>
+
         <th scope="col" class="py-3 px-6">
           <div class="cursor-pointer flex items-center">
             Date Creation
@@ -404,6 +416,11 @@
         <td class="py-4 px-6">
           {{ product.qteProducts }}
         </td>
+
+        <td class="py-4 px-6 text-yellow-500">
+          {{ product.countPicturesIdProducts }}
+        </td>
+
         <td class="py-4 px-6">
           {{ product.createdatProduct }}
         </td>
@@ -477,18 +494,17 @@ setup() {
           ProductCategory: [],
           idProductCategory: '',
 
-          picturelength : 0,
-
           Product: [],
 
         
           inputs: [], // Array to store input elements
           pictureFiles: [],
           files: [], // Array to store uploaded files
-
+          TgetIDPRoducts :[],
+          countPicturesIdProducts : 0,
 
           header_table: 'Products',
-          EditProducts: true,
+          EditProducts: false,
           Productname: '',
           Price:'',
           quantite:'',
@@ -573,8 +589,8 @@ setup() {
       },
 
   mounted() {
-            this.GetAllProducts()
-            this.GetAllGategory()
+            this.getAllProducts();
+            this.GetAllGategory();
             console.log("Products.vue");
       },
   methods: { 
@@ -636,12 +652,26 @@ setup() {
             this.ProductCategory = response.data;
           }).catch(error => { console.error(error); });
       },
-      GetAllProducts(){
-              axios.get('http://localhost:8080/product').then(response => 
-              {
-                this.Product = response.data;
-              }).catch(error => { console.error(error); });
-      },
+      getAllProducts() {
+      axios
+        .get('http://localhost:8080/product')
+        .then(response => {
+          this.Product = response.data;
+          console.clear();
+          console.log("GetAllProducts");
+          console.log(response.data);
+
+          // Fetch the count of pictures for each product
+          this.Product.forEach(product => {
+            this.countPicturesByProduct_IdProducts(product.idProducts);
+          });
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+
+
       uploadFile(event, index) {
         this.pictureFiles = splice.files();
         const file = event.target.files[0];
@@ -685,6 +715,21 @@ setup() {
             console.error(error);
           });
       },
+
+      countPicturesByProduct_IdProducts(idProducts) {
+      axios
+        .get(`http://localhost:8080/productpicture/CountPictures/${idProducts}`)
+        .then(response => {
+          // Update the countPicturesIdProducts property directly in the product object
+          const product = this.Product.find(p => p.idProducts === idProducts);
+          if (product) {
+            product.countPicturesIdProducts = response.data;
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
 
       onReadPicture(index) 
       {
@@ -731,9 +776,8 @@ setup() {
             };
             reader.readAsDataURL(file); // Read the data URL asynchronously
           }
-        },
+      },
       uploadPictures(idProducts) {
-      
         const uploadPromises = this.pictureFiles.map((picture) => {
           const formData = new FormData();
           formData.append('file', picture.file); // Use the File object for the formData
@@ -779,7 +823,6 @@ setup() {
       deleteProduct(idProducts){
         axios.delete(`http://localhost:8080/product/${idProducts}`)
             .then(response=>{
-              this.GetAllProducts()
               this.DialogueDelete=false;
             }).catch(error=>{
               console.error(error);
