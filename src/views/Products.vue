@@ -597,12 +597,18 @@ setup() {
   methods: { 
     ScrollToUpdate() {
         const scrollableDiv = this.$refs.scrollableDiv;
-        scrollableDiv.scrollTop = 200; // Scrolls to the bottom
+          scrollableDiv.scrollTo({
+        top: 180,
+        behavior: 'smooth' // Scrolls to the top smoothly
+      });
         this.EditProducts=false;
     },
     ScrollToUp() {
         const scrollableDiv = this.$refs.scrollableDiv;
-        scrollableDiv.scrollTop = 0; // Scrolls to the bottom
+        scrollableDiv.scrollTo({
+        top: 0,
+        behavior: 'smooth' // Scrolls to the top smoothly
+      });
         
     },
 
