@@ -130,7 +130,7 @@
       </div> 
       <!-- ===================   END SEARCH BAR    ========================== -->
       <div class="h-[calc(100vh-50px)] bg-gray-50 dark:bg-gray-800 p-[20px]">
-        <div class="border border-gray-300 dark:border-gray-700 rounded-md p-[20px] h-full overflow-auto">
+        <div class="border border-gray-300 dark:border-gray-700 rounded-md p-[20px] h-full ">
           <router-view to="/"></router-view>
         </div>
       </div>
