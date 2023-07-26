@@ -1,5 +1,22 @@
 <template>
   <div ref="scrollableDiv" class="overflow-y-scroll h-full">
+   
+   
+   
+    <div class="bg-blue-500">
+      <h1>Pictures</h1>
+      <div v-if="pictures.length">
+        <div v-for="picture in pictures" :key="picture.idProductPicture" class="my-4">
+          <img :src="picture.path" alt="Product Image">
+          <p>PATH : {{ picture.path }}</p>
+          <p>ID: {{ picture.idProductPicture }}</p>
+        </div>
+      </div>
+      <div v-else>
+        <p>No pictures available.</p>
+      </div>
+    </div>
+
 
     <div  v-show="EditProducts" class="border mb-4 p-4">
           <div class="flex justify-end">
@@ -158,11 +175,9 @@
                 <div class="flex flex-row align-middle">
                   <span class="mr-2">Suivant</span>
 
-
                   <svg class="w-5 ml-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L16.586 11H5a1 1 0 010-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                   </svg>
-
 
                 </div>
               </button>
@@ -288,17 +303,21 @@
                         {{ category.idProductCategory }}
                       </option>
                     </select>
+
                 
                     
                   </div>
             </div>
+            <p>{{this.pictures}}</p>
+      
             <div class="w-full relative space-y-2">
               <p>Selected Category: {{ idProductCategory }}</p>
               <button @click="updateProduct(ProductIdToUpdate, ProductnameToUpdate, ProductPricetToUpdate, ProductQteToUpdate,idProductCategory)" class="bg-[#1e3a8a] w-full h-10 hover:bg-blue-800 rounded text-white font-bold px-4 rounded-l"> Modifier </button>
                   <button @click="cancelUpdate" class="bg-[#b91c1c] hover:bg-red-600 rounded font-bold px-4 rounded-r w-full  h-10 text-white">Annuler</button>
-                </div>
+            </div>
           </div>
         </transition>
+      
         <!-- ===================   END UPDATE DELETE BAR    ========================== -->
         <!-- ===================   DIALOGUE DELETE BAR    ========================== -->
         <!-- <transition name="slide">
@@ -416,8 +435,8 @@
             {{ product.qteProducts }}
           </td>
 
-          <td class="py-4 px-6 text-yellow-500">
-            {{ product.countPicturesIdProducts }}
+          <td @click="GetPicturesByIdProducts(product.idProducts )" class="py-4 px-6 text-yellow-500 cursor-pointer">
+           Pictures : {{ product.countPicturesIdProducts }}
           </td>
 
           <td class="py-4 px-6">
@@ -439,16 +458,16 @@
 
           </td>
           <transition name="slide">
-        <div v-if="DialogueDelete && productIdToDelete===product.idProducts"  class="absolute top-0 left-0 w-full h-full bg-red-200 modal text-gray-500 py-4">
-          <div class="flex justify-center space-x-3">
-            <h3 class="text-red-500">Vous voulez vraiment Supprimer se categories {{ productIdToDelete }} :</h3>
-            <div class="modal-buttons space-x-3">
-              <button @click="deleteProduct(productIdToDelete)">Oui</button>
-              <button @click="cancelDelete">Non</button>
+            <div v-if="DialogueDelete && productIdToDelete===product.idProducts"  class="absolute top-0 left-0 w-full h-full bg-red-200 modal text-gray-500 py-4">
+              <div class="flex justify-center space-x-3">
+                <h3 class="text-red-500">Vous voulez vraiment Supprimer se categories {{ productIdToDelete }} :</h3>
+                <div class="modal-buttons space-x-3">
+                  <button @click="deleteProduct(productIdToDelete)">Oui</button>
+                  <button @click="cancelDelete">Non</button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        </transition>
+          </transition>
         </tr>
     
       </tbody>
@@ -497,7 +516,7 @@ setup() {
 
           Product: [],
 
-        
+          pictures:[],
           inputs: [], // Array to store input elements
           pictureFiles: [],
           files: [], // Array to store uploaded files
@@ -539,7 +558,6 @@ setup() {
       },
 
   computed: {
-      //========= Search
       Product() {
           if (this.searchProductId !== '') {
             return this.Product.filter(product =>
@@ -585,8 +603,7 @@ setup() {
         else{
               return this.Product;
             }
-      },
-      //========= End Search
+      }
     },
 
   mounted() {
@@ -595,23 +612,36 @@ setup() {
             console.log("Products.vue");
       },
   methods: { 
-    ScrollToUpdate() {
-        const scrollableDiv = this.$refs.scrollableDiv;
-          scrollableDiv.scrollTo({
-        top: 180,
-        behavior: 'smooth' // Scrolls to the top smoothly
-      });
-        this.EditProducts=false;
-    },
-    ScrollToUp() {
-        const scrollableDiv = this.$refs.scrollableDiv;
-        scrollableDiv.scrollTo({
-        top: 0,
-        behavior: 'smooth' // Scrolls to the top smoothly
-      });
-        
-    },
+      GetPicturesByIdProducts(idProducts) {
+        axios.get(`http://localhost:8080/productpicture/${idProducts}`)
+          .then(response => {
+            this.pictures = response.data;
+            console.log(this.pictures);
 
+            console.clear();
+            console.log('%cGetPicturesByIdProducts', 'color: green;');
+            console.log(response.data);
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      },
+      ScrollToUpdate() {
+          const scrollableDiv = this.$refs.scrollableDiv;
+            scrollableDiv.scrollTo({
+          top: 180,
+          behavior: 'smooth' // Scrolls to the top smoothly
+        });
+          this.EditProducts=false;
+      },
+      ScrollToUp() {
+          const scrollableDiv = this.$refs.scrollableDiv;
+          scrollableDiv.scrollTo({
+          top: 0,
+          behavior: 'smooth' // Scrolls to the top smoothly
+        });
+          
+      },
       addFile() {
         if(this.pictureFiles.length == this.inputs.length)
            {
@@ -629,15 +659,16 @@ setup() {
       },
   // ============= UPDATE==============================================
       confirmUpdate(idProducts, Productname, idProductCategory, priceProducts, qteProducts) {
-              this.ProductIdToUpdate = idProducts;
-              this.ProductnameToUpdate = Productname;
-              this.idProductCategory = idProductCategory;
-              this.ProductPricetToUpdate = priceProducts;
-              this.ProductQteToUpdate = qteProducts;
-              this.selectedCategory="";
-              this.ScrollToUpdate();
-              this.DialogueUpdate = true;
-              console.log("Finish confirmUpdate");
+        this.GetPicturesByIdProducts(idProducts);
+        this.ProductIdToUpdate = idProducts;
+        this.ProductnameToUpdate = Productname;
+        this.idProductCategory = idProductCategory;
+        this.ProductPricetToUpdate = priceProducts;
+        this.ProductQteToUpdate = qteProducts;
+        this.selectedCategory="";
+        this.ScrollToUpdate();
+        this.DialogueUpdate = true;
+        console.log("Finish confirmUpdate");
               
       },
       cancelUpdate(){
