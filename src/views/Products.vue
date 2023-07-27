@@ -5,16 +5,19 @@
    
     <div class="bg-blue-500">
       <h1>Pictures</h1>
+
       <div v-if="pictures.length">
-        <div v-for="picture in pictures" :key="picture.idProductPicture" class="my-4">
-          <img :src="picture.path" alt="Product Image">
-          <p>PATH : {{ picture.path }}</p>
-          <p>ID: {{ picture.idProductPicture }}</p>
-        </div>
+      <div v-for="picture in pictures" :key="picture.idProductPicture" class="my-4">
+        <!-- <img :src="getPictureUrl(picture.idProductPicture)" alt="Product Image"> -->
+        <p value ="sqk">{{getPictureUrl(picture.idProductPicture)}} </p>
+        <p> {{ picture.idProductPicture }} : {{ picture.path }}</p>
       </div>
+    </div>
+
       <div v-else>
         <p>No pictures available.</p>
       </div>
+      
     </div>
 
 
@@ -435,7 +438,7 @@
             {{ product.qteProducts }}
           </td>
 
-          <td @click="GetPicturesByIdProducts(product.idProducts )" class="py-4 px-6 text-yellow-500 cursor-pointer">
+          <td  class="py-4 px-6 text-yellow-500 cursor-pointer">
            Pictures : {{ product.countPicturesIdProducts }}
           </td>
 
@@ -607,25 +610,46 @@ setup() {
     },
 
   mounted() {
+          this.fetchPicturesByProductId(2); 
             this.getAllProducts();
             this.GetAllGategory();
             console.log("Products.vue");
       },
   methods: { 
-      GetPicturesByIdProducts(idProducts) {
-        axios.get(`http://localhost:8080/productpicture/${idProducts}`)
-          .then(response => {
-            this.pictures = response.data;
-            console.log(this.pictures);
+  //   GetPicturesByIdProducts(idProducts) {
+  //   axios.get(`http://localhost:8080/productpicture/${idProducts}`)
+  //     .then(response => {
+  //       this.pictures = response.data.map(picture => ({
+  //         ...picture,
+  //         path: picture.path.replace(/\\/g, '/'), // Manually replace backslashes with forward slashes
+  //       }));
+  //       console.log(this.pictures);
 
-            console.clear();
-            console.log('%cGetPicturesByIdProducts', 'color: green;');
-            console.log(response.data);
-          })
-          .catch(error => {
-            console.error(error);
-          });
-      },
+  //       console.clear();
+  //       console.log('%cGetPicturesByIdProducts', 'color: green;');
+  //       console.log(response.data);
+  //     })
+  //     .catch(error => {
+  //       console.error(error);
+  //     });
+  // },
+  fetchPicturesByProductId(idProducts) {
+      axios.get(`http://localhost:8080/productpicture/${idProducts}`)
+        .then(response => {
+          this.pictures = response.data;
+          console.clear();
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching product pictures:', error);
+        });
+    },
+    getPictureUrl(idProductpicture) {
+      // Assuming your pictures are served from a static folder named 'PicturesProducts' on the same server
+            return `http://localhost:8080/productpicture/${idProductpicture}`.replace(/\\/g, '//');
+    },
+
+
       ScrollToUpdate() {
           const scrollableDiv = this.$refs.scrollableDiv;
             scrollableDiv.scrollTo({
@@ -659,7 +683,7 @@ setup() {
       },
   // ============= UPDATE==============================================
       confirmUpdate(idProducts, Productname, idProductCategory, priceProducts, qteProducts) {
-        this.GetPicturesByIdProducts(idProducts);
+        // this.GetPicturesByIdProducts(idProducts);
         this.ProductIdToUpdate = idProducts;
         this.ProductnameToUpdate = Productname;
         this.idProductCategory = idProductCategory;
