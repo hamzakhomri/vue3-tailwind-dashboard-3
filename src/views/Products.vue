@@ -2,23 +2,8 @@
   <div ref="scrollableDiv" class="overflow-y-scroll h-full">
    
    
-   
-    <div class="bg-blue-500">
-      <h1>Pictures</h1>
 
-      <div v-if="pictures.length">
-      <div v-for="picture in pictures" :key="picture.idProductPicture" class="my-4">
-        <!-- <img :src="getPictureUrl(picture.idProductPicture)" alt="Product Image"> -->
-        <p value ="sqk">{{getPictureUrl(picture.idProductPicture)}} </p>
-        <p> {{ picture.idProductPicture }} : {{ picture.path }}</p>
-      </div>
-    </div>
-
-      <div v-else>
-        <p>No pictures available.</p>
-      </div>
       
-    </div>
 
 
     <div  v-show="EditProducts" class="border mb-4 p-4">
@@ -306,12 +291,39 @@
                         {{ category.idProductCategory }}
                       </option>
                     </select>
-
-                
-                    
                   </div>
-            </div>
-            <p>{{this.pictures}}</p>
+      
+            </div>           
+            
+
+
+
+            
+   <div v-if="productPictures.length" class=" ">
+      <div class="grid grid-cols-3 gap-4">
+        <div v-for="picture in productPictures" :key="picture.idProductpicture" class="p-4 bg-slate-400">
+          <img :src="getPictureUrl(picture.idProductPicture)" alt="Product Picture" class="w-full h-auto rounded" /> 
+          
+          <div class="flex justify-between bg-yellow-500 pl-5)">
+            <p >{{ picture.idProductPicture }} </p>
+          
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-[15%] w-[15%]  text-red-500 border-2 rounded-full border-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+	            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+	        </svg>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div v-else>
+      <p class="text-center text-gray-500 mt-4">No pictures available.</p>
+    </div>
+
+
+
+
+
       
             <div class="w-full relative space-y-2">
               <p>Selected Category: {{ idProductCategory }}</p>
@@ -320,6 +332,7 @@
             </div>
           </div>
         </transition>
+        
       
         <!-- ===================   END UPDATE DELETE BAR    ========================== -->
         <!-- ===================   DIALOGUE DELETE BAR    ========================== -->
@@ -519,7 +532,7 @@ setup() {
 
           Product: [],
 
-          pictures:[],
+          pictures:[],      productPictures: [],
           inputs: [], // Array to store input elements
           pictureFiles: [],
           files: [], // Array to store uploaded files
@@ -610,46 +623,26 @@ setup() {
     },
 
   mounted() {
-          this.fetchPicturesByProductId(2); 
             this.getAllProducts();
             this.GetAllGategory();
+             this.fetchProductPictures();
             console.log("Products.vue");
       },
   methods: { 
-  //   GetPicturesByIdProducts(idProducts) {
-  //   axios.get(`http://localhost:8080/productpicture/${idProducts}`)
-  //     .then(response => {
-  //       this.pictures = response.data.map(picture => ({
-  //         ...picture,
-  //         path: picture.path.replace(/\\/g, '/'), // Manually replace backslashes with forward slashes
-  //       }));
-  //       console.log(this.pictures);
-
-  //       console.clear();
-  //       console.log('%cGetPicturesByIdProducts', 'color: green;');
-  //       console.log(response.data);
-  //     })
-  //     .catch(error => {
-  //       console.error(error);
-  //     });
-  // },
-  fetchPicturesByProductId(idProducts) {
+    fetchProductPictures(idProducts) {
       axios.get(`http://localhost:8080/productpicture/${idProducts}`)
         .then(response => {
-          this.pictures = response.data;
+          this.productPictures = response.data;
           console.clear();
-          console.log(response.data);
+          console.log(response.data)
         })
         .catch(error => {
-          console.error('Error fetching product pictures:', error);
+          console.error(error);
         });
     },
     getPictureUrl(idProductpicture) {
-      // Assuming your pictures are served from a static folder named 'PicturesProducts' on the same server
-            return `http://localhost:8080/productpicture/${idProductpicture}`.replace(/\\/g, '//');
+      return `http://localhost:8080/productpicture/byid/${idProductpicture}`;
     },
-
-
       ScrollToUpdate() {
           const scrollableDiv = this.$refs.scrollableDiv;
             scrollableDiv.scrollTo({
@@ -690,6 +683,7 @@ setup() {
         this.ProductPricetToUpdate = priceProducts;
         this.ProductQteToUpdate = qteProducts;
         this.selectedCategory="";
+        this.fetchProductPictures(idProducts);
         this.ScrollToUpdate();
         this.DialogueUpdate = true;
         console.log("Finish confirmUpdate");
