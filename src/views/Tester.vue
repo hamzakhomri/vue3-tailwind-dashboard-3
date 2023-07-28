@@ -1,6 +1,7 @@
 <template>
-  <div>
-    <h1 class="bg-red-300">Length: {{ myData.length }}</h1>
+
+  <!-- <div> -->
+    <!-- <h1 class="bg-red-300">Length: {{ myData.length }}</h1> -->
     
 
 
@@ -35,7 +36,7 @@
     </div>
 </div>-->
 
-
+<!-- 
 <form @submit.prevent="uploadPictures(5)" class="bg-blue-500">
       <div v-for="index in 2" :key="index">
         <input type="file" name="file" :ref="'fileInput-' + index" @change="onFileChange(index)" />
@@ -43,25 +44,33 @@
       <button type="submit">Upload</button>
     </form>
 
+  </div> -->
+  <div class="bg-yellow-700">
+    <h2>Product Pictures</h2>
+
+    <div v-for="picture in productPictures" :key="picture.idProductpicture">
+      <span>{{ picture.idProductPicture }} : {{ picture.path }}</span>
+      <img :src="getPictureUrl(picture.idProductPicture)" alt="Product Picture" /> 
+    </div>
+
   </div>
-  
 </template>
 
 <script setup>
 import { ref, reactive, watch } from 'vue'
 import gsap from 'gsap'
 
-const number = ref(0)
-const tweened = reactive({
-  number: 0
-})
+// const number = ref(0)
+// const tweened = reactive({
+//   number: 0
+// })
 
-watch(
-  number,
-  (n) => {
-    gsap.to(tweened, { duration: 0.75, number: Number(n) || 0 })
-  }
-)
+// watch(
+//   number,
+//   (n) => {
+//     gsap.to(tweened, { duration: 0.75, number: Number(n) || 0 })
+//   }
+// )
 </script>
 
 <script>
@@ -71,115 +80,147 @@ export default {
   props: {},
   data() {
     return {
-      files: [], // Array to store uploaded files
-      inputs: [], // Array to store input elements
-      myData: [],
-      imageUrl: [],
-      pictureFiles: [],
-      picturePreviews: []
+      productPictures: [],
+      // files: [], 
+      // inputs: [], 
+      // myData: [],
+      // imageUrl: [],
+      // pictureFiles: [],
+      // picturePreviews: []
 
 
     };
   },
   mounted() {
-    this.getAll();
+    // this.getAll();
+    this.fetchProductPictures(3);
   },
   methods: {
+      // Replace the URL with your Spring Boot backend endpoint
+    //   fetchProductPictures() {
+    //   // Replace the URL with your Spring Boot backend endpoint
+    //   fetch('http://localhost:8080/productpicture').then(response => response.json())
+    //     .then(data => {
+    //       console.clear();
+    //       this.productPictures = data;
+    //       console.log(data.path)
+    //     })
+    //     .catch(error => {
+    //       console.error('Error fetching data:', error);
+    //     });
+    // },
 
-        uploadPictures(idProducts) {
-      if (this.pictureFiles.length === 0) {
-        console.log('No files selected');
-        return;
-      }
 
-      const uploadPromises = this.pictureFiles.map((file) => {
-        const formData = new FormData();
-        formData.append('file', file);
-
-        return axios.post(`http://localhost:8080/productpicture/product/${idProducts};`, formData);
-      });
-
-      Promise.all(uploadPromises)
-        .then((responses) => {
-          console.log('All files uploaded successfully!');
-          responses.forEach((response) => {
-            console.log(response.data);
-          });
-          this.getAll();
+    fetchProductPictures(idProducts) {
+      axios.get(`http://localhost:8080/productpicture/${idProducts}`)
+        .then(response => {
+          this.productPictures = response.data;
+          console.clear();
+          console.log(response.data)
         })
-        .catch((error) => {
-          console.log('Error:', error);
-        });
-    },
-
-
-    addFile() {
-      this.inputs.push({}); // Add an empty object to the inputs array
-    },
-
-    
-
-    uploadFile(event, index) {
-      const file = event.target.files[0];
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        const url = reader.result;
-
-        // Update the corresponding file object in the files array
-        this.files.splice(index, 1, { id: Date.now(), url });
-      };
-
-      reader.readAsDataURL(file);
-    },
-
-
-
-
-
-
-
-
-
-    
-    onFileChange(index) {
-      const file = this.$refs['fileInput-' + index][0].files[0];
-      if (file) {
-        this.pictureFiles[index - 1] = file;
-        
-      }
-    },
-
-    confirmDelete(pictureId) {
-      if (confirm('Are you sure you want to delete this picture?')) {
-        this.deletePicture(pictureId);
-      }
-    },
-    deletePicture(pictureId) {
-      axios.delete(`http://localhost:8080/productpicture/${pictureId}`)
-        .then((response) => {
-          console.log('Picture deleted successfully!');
-          this.myData = this.myData.filter((productpicture) => productpicture.idProductPicture !== pictureId);
-        })
-        .catch((error) => {
-          console.error('Failed to delete picture:', error);
-        });
-    },
-    getAll() {
-axios.get('http://localhost:8080/productpicture')
-        .then((response) => {
-          this.myData = response.data;
-        })
-        .catch((error) => {
+        .catch(error => {
           console.error(error);
         });
     },
-    getPicturePath(id) {
-      if (id) {
-        return `http://localhost:8080/productpicture/${id}/preview`;
-      }
-      return '';
-    },
+    getPictureUrl(idProductpicture) {
+      return `http://localhost:8080/productpicture/byid/${idProductpicture}`;
+    }
+
+
+//         uploadPictures(idProducts) {
+//       if (this.pictureFiles.length === 0) {
+//         console.log('No files selected');
+//         return;
+//       }
+
+//       const uploadPromises = this.pictureFiles.map((file) => {
+//         const formData = new FormData();
+//         formData.append('file', file);
+
+//         return axios.post(`http://localhost:8080/productpicture/product/${idProducts};`, formData);
+//       });
+
+//       Promise.all(uploadPromises)
+//         .then((responses) => {
+//           console.log('All files uploaded successfully!');
+//           responses.forEach((response) => {
+//             console.log(response.data);
+//           });
+//           this.getAll();
+//         })
+//         .catch((error) => {
+//           console.log('Error:', error);
+//         });
+//     },
+
+
+//     addFile() {
+//       this.inputs.push({}); // Add an empty object to the inputs array
+//     },
+
+    
+
+//     uploadFile(event, index) {
+//       const file = event.target.files[0];
+
+//       const reader = new FileReader();
+//       reader.onload = () => {
+//         const url = reader.result;
+
+//         // Update the corresponding file object in the files array
+//         this.files.splice(index, 1, { id: Date.now(), url });
+//       };
+
+//       reader.readAsDataURL(file);
+//     },
+
+
+
+
+
+
+
+
+
+    
+//     onFileChange(index) {
+//       const file = this.$refs['fileInput-' + index][0].files[0];
+//       if (file) {
+//         this.pictureFiles[index - 1] = file;
+        
+//       }
+//     },
+
+//     confirmDelete(pictureId) {
+//       if (confirm('Are you sure you want to delete this picture?')) {
+//         this.deletePicture(pictureId);
+//       }
+//     },
+//     deletePicture(pictureId) {
+//       axios.delete(`http://localhost:8080/productpicture/${pictureId}`)
+//         .then((response) => {
+//           console.log('Picture deleted successfully!');
+//           this.myData = this.myData.filter((productpicture) => productpicture.idProductPicture !== pictureId);
+//         })
+//         .catch((error) => {
+//           console.error('Failed to delete picture:', error);
+//         });
+//     },
+//     getAll() {
+// axios.get('http://localhost:8080/productpicture')
+//         .then((response) => {
+//           this.myData = response.data;
+//         })
+//         .catch((error) => {
+//           console.error(error);
+//         });
+//     },
+//     getPicturePath(id) {
+//       if (id) {
+//         return `http://localhost:8080/productpicture/${id}/preview`;
+//       }
+//       return '';
+//     },
   }
 };
 </script>
