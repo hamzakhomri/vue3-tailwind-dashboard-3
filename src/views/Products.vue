@@ -62,7 +62,7 @@
                           <template v-else-if="current === 'Categories'">
                             <div class="border border-gray-400 p-4 rounded-lg">
                               <label for="countries" class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-white">Les Categories</label>
-                              <select id="countries" v-model="idProductCategory" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4']">
+                              <select required id="countries" v-model="idProductCategory" :class="['border-2','appearance-none','block','w-full','bg-white','dark:bg-gray-900','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4']">
                                 <option hidden value="">Les Categories</option>
                                 <option v-for="category in ProductCategory" :key="category.idProductCategory" :value="category.idProductCategory">{{ category.nameProductCategory }}
                                 </option>
@@ -79,7 +79,7 @@
                                 <div v-for="(input, index) in inputs" :key="index" class="flex justify-betweens  border-2 mt-1 mb-1  border-sky-500 rounded-lg ">
                                   <div class="flex border-solid  p-2">
                                     <p class=" text-gray-500 p-2 text-left "> {{index + 1}}</p>
-                                    <input type="file" name="file" :ref="'fileInput-' + index" @change="onReadPicture(index)" accept=".jpg, .jpeg, .png, .svg, .webp" class="mr-[2%] ml-[2%] w-[100%] block  text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"/>
+                                    <input required type="file" name="file" :ref="'fileInput-' + index" @change="onReadPicture(index)" accept=".jpg, .jpeg, .png, .svg, .webp" class="mr-[2%] ml-[2%] w-[100%] block  text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"/>
                                   </div> 
                                   <svg @click="removeFile(index)" xmlns="http://www.w3.org/2000/svg" class=" w-6 h-6 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -136,7 +136,7 @@
                           </div>
 
                           <div class="flex w-full">
-                            <button class="group rounded-2xl h-12 w-full bg-red-500 dark:bg-red-700 font-bold text-lg text-white dark:text-gray-200 relative overflow-hidden" @click="Canceled">
+                            <button  @click="Canceled" type="button" class="group rounded-2xl h-12 w-full bg-red-500 dark:bg-red-700 font-bold text-lg text-white dark:text-gray-200 relative overflow-hidden">
                               Cancel
                               <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 dark:group-hover:bg-gray-800/30 rounded-2xl">
                               </div>
@@ -307,7 +307,7 @@
           <div class="flex justify-between bg-yellow-500 pl-5)">
             <p >{{ picture.idProductPicture }} </p>
           
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-[15%] w-[15%]  text-red-500 border-2 rounded-full border-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg @click="deletePicture(picture.idProductPicture)" xmlns="http://www.w3.org/2000/svg" class="cursor-pointer h-[15%] w-[15%]  text-red-500 border-2 rounded-full border-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 	            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
 	        </svg>
           </div>
@@ -326,7 +326,6 @@
 
       
             <div class="w-full relative space-y-2">
-              <p>Selected Category: {{ idProductCategory }}</p>
               <button @click="updateProduct(ProductIdToUpdate, ProductnameToUpdate, ProductPricetToUpdate, ProductQteToUpdate,idProductCategory)" class="bg-[#1e3a8a] w-full h-10 hover:bg-blue-800 rounded text-white font-bold px-4 rounded-l"> Modifier </button>
                   <button @click="cancelUpdate" class="bg-[#b91c1c] hover:bg-red-600 rounded font-bold px-4 rounded-r w-full  h-10 text-white">Annuler</button>
             </div>
@@ -502,73 +501,81 @@ import { useStepper } from '@vueuse/core';
   
 export default {
 setup() {
-          const {
-              current,
-              goToNext,
-              goToPrevious,
-              isFirst,
-              isLast,
-          } = useStepper([
-           
-              'Products',
-              'Categories',
-               'Pictures',
-              // 'payment',
-          ]);
+  const {
+      current,
+      goToNext,
+      goToPrevious,
+      isFirst,
+      isLast,
+    } = useStepper([
+      'Products',
+      'Categories',
+      'Pictures',
+      // 'payment',
+    ]);
+    const goToFirstStep = () => {
+      while (!isFirst.value) {
+        goToPrevious();
+      }
+    };
 
-          return {
-              current,
-              goToNext,
-              goToPrevious,
-              isFirst,
-              isLast,
-          };
-},
+    return {
+      current,
+      goToNext,
+      goToPrevious,
+      isFirst,
+      isLast,
+      goToFirstStep,
+    };
+  },
   // 
   data() {
         return {
-          ProductCategory: [],
           idProductCategory: '',
-
-          Product: [],
-
-          pictures:[],      productPictures: [],
-          inputs: [], // Array to store input elements
-          pictureFiles: [],
+          
           files: [], // Array to store uploaded files
-          TgetIDPRoducts :[],
+          inputs: [], // Array to store input elements
+          pictures:[],    
+          Product: [],
+          pictureFiles: [],  
+          ProductCategory: [],
+          productPictures: [],
+          
           countPicturesIdProducts : 0,
 
-          header_table: 'Products',
-          EditProducts: false,
-          Productname: '',
           Price:'',
           quantite:'',
+          Productname: '',
+          EditProducts: false,
+          header_table: 'Products',
+
     
           DialogueDelete: false,
           productIdToDelete: null,
     
           DialogueUpdate:false,
+          idProductCategory:null,
+          ProductQteToUpdate:null,
           ProductIdToUpdate: null,
           ProductnameToUpdate:null,
           ProductPricetToUpdate:null,
-          ProductQteToUpdate:null,
-
-          idProductCategory:null,
-          CategoryId:'',
-          selectedCategory:2,
           
-          sortbyPrices:'asc',
+          CategoryId:'',
+          selectedCategory:'',
+          
           sortById: 'asc',
           sortbyqtes:'asc',
           sortbynames:'asc',
-      
+          sortbyPrices:'asc',
+
           searchProductId:'',
-          searchProductname: '',
-          searchProductPrice:'',
           searchProductQte:'',
-          searchDateModification:'',
+          searchProductPrice:'',
+          searchProductname: '',
           searchDateCreation: '',
+
+          searchDateModification:'',
+
 
         };
       },
@@ -625,24 +632,37 @@ setup() {
   mounted() {
             this.getAllProducts();
             this.GetAllGategory();
-             this.fetchProductPictures();
             console.log("Products.vue");
       },
   methods: { 
-    fetchProductPictures(idProducts) {
-      axios.get(`http://localhost:8080/productpicture/${idProducts}`)
-        .then(response => {
-          this.productPictures = response.data;
-          console.clear();
-          console.log(response.data)
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    },
-    getPictureUrl(idProductpicture) {
-      return `http://localhost:8080/productpicture/byid/${idProductpicture}`;
-    },
+
+      deletePicture(idProductpicture){
+          const confirmaToDelete = window.confirm('Vous voulez vraiment Supprimer cette photo ?');
+          if(confirmaToDelete)
+          {
+            axios.delete(`http://localhost:8080/productpicture/${idProductpicture}`).then(response => {
+              console.log(idProductpicture+" Deleted");
+              console.log(response.data);
+            })
+            .catch(error => {
+              console.error(error);
+            });
+          }
+      },
+    
+      fetchProductPictures(idProducts) {
+        axios.get(`http://localhost:8080/productpicture/${idProducts}`)
+          .then(response => {
+            this.productPictures = response.data;
+            console.log(response.data)
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      },
+      getPictureUrl(idProductpicture) {
+        return `http://localhost:8080/productpicture/byid/${idProductpicture}`;
+      },
       ScrollToUpdate() {
           const scrollableDiv = this.$refs.scrollableDiv;
             scrollableDiv.scrollTo({
@@ -660,10 +680,12 @@ setup() {
           
       },
       addFile() {
+
         if(this.pictureFiles.length == this.inputs.length)
-           {
-             this.inputs.push({}); 
+           { 
+            this.inputs.push({}); 
             }
+
         else{
            alert("le champ " + this.inputs.length +" et vide")
           }
@@ -705,10 +727,17 @@ setup() {
             this.DialogueDelete = false;
       },
       Canceled(){
-            this.Productname="";
-            this.Price="";
-            this.quantite="";
-            this.idProductCategory="";
+        this.Product=[];
+        this.pictures=[];
+        this.productPictures=[];
+        this.inputs=[];
+        this.pictureFiles=[];
+        this.files=[];
+        this.Productname="";
+        this.Price="";
+        this.quantite="";
+        this.idProductCategory="";
+        this.goToFirstStep();
       },
       doProducts(EditProducts) {
             this.EditProducts = EditProducts;
@@ -762,25 +791,31 @@ setup() {
         reader.readAsDataURL(file);
       },
       submitProduct(idProductCategory) {
-        const data = {
-          nameProducts: this.Productname,
-          priceProducts: this.Price,
-          qteProducts: this.quantite
-        };
+        if(this.pictureFiles.length>0){
 
-        axios.post(`http://localhost:8080/product/category/${idProductCategory}`, data)
-          .then(response => {
-            console.log(response.data);
-            console.log(response.data.idProducts);
-            this.uploadPictures(response.data.idProducts);
-            this.Canceled();
-           this.getAllProducts();
-            console.log("assign product into category sccefully");
-          })
-          .catch(error => {
-            console.error(error);
-          }); 
-          
+          const data = {
+            nameProducts: this.Productname,
+            priceProducts: this.Price,
+            qteProducts: this.quantite
+          };
+              axios.post(`http://localhost:8080/product/category/${idProductCategory}`, data).then(response => {
+                  console.log(response.data);
+                  console.log(response.data.idProducts);
+                  this.uploadPictures(response.data.idProducts);
+                  this.Canceled();
+                  this.getAllProducts();
+                  console.log("assign product into category sccefully");
+                  this.goToFirstStep();
+                })
+                .catch(error => {
+                  console.error(error);
+                }); 
+            }
+            else{
+                console.log(this.pictureFiles.length)
+                alert("nop")
+              }
+       
       },
       countPicturesByProduct_IdProducts(idProducts) {
       axios
@@ -936,7 +971,6 @@ setup() {
                 }
               });
       },
-
       sortByIdCategory() {
               this.sortById = this.sortById === 'asc' ? 'desc' : 'asc';
               this.Product.sort((a, b) => {
