@@ -542,6 +542,7 @@ setup() {
           productPictures: [],
           
           countPicturesIdProducts : 0,
+          IdProductToSHowPicture : 0,
 
           Price:'',
           quantite:'',
@@ -632,7 +633,7 @@ setup() {
   mounted() {
             this.getAllProducts();
             this.GetAllGategory();
-            console.log("Products.vue");
+   
       },
   methods: { 
 
@@ -642,7 +643,7 @@ setup() {
           {
             axios.delete(`http://localhost:8080/productpicture/${idProductpicture}`).then(response => {
               console.log(idProductpicture+" Deleted");
-              console.log(response.data);
+              this.fetchProductPictures(this.IdProductToSHowPicture);
             })
             .catch(error => {
               console.error(error);
@@ -654,6 +655,7 @@ setup() {
         axios.get(`http://localhost:8080/productpicture/${idProducts}`)
           .then(response => {
             this.productPictures = response.data;
+            this.IdProductToSHowPicture=idProducts;
             console.log(response.data)
           })
           .catch(error => {
