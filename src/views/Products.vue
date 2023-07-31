@@ -292,42 +292,39 @@
                       </option>
                     </select>
                   </div>
-      
             </div>           
-            
-
-
-
-            
-   <div v-if="productPictures.length" class=" ">
-      <div class="grid grid-cols-3 gap-4">
-        <div v-for="picture in productPictures" :key="picture.idProductpicture" class="p-4 bg-slate-400">
-          <img :src="getPictureUrl(picture.idProductPicture)" alt="Product Picture" class="w-full h-auto rounded" /> 
           
-          <div class="flex justify-between bg-yellow-500 pl-5)">
-            <p >{{ picture.idProductPicture }} </p>
-          
-          <svg @click="deletePicture(picture.idProductPicture)" xmlns="http://www.w3.org/2000/svg" class="cursor-pointer h-[15%] w-[15%]  text-red-500 border-2 rounded-full border-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-	            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-	        </svg>
-          </div>
+            <div v-if="productPictures.length" class="">
+              <div class="bg-gray-800 p-3 border rounded-2xl grid grid-cols-3 gap-4">
+                
+                <div class="relative" v-for="picture in productPictures" :key="picture.idProductpicture" >
+                  <div class="bg  border-2 rounded-t-3xl border-sky-700 transition duration-300 ease-in-out transform hover:scale-105">
+                    <img class="w-[full] rounded-t-3xl" :src="getPictureUrl(picture.idProductPicture)" alt="Product Picture" />
+                    <div class="mt-1 p-1 flex justify-between">
+                      <p class="text-gray-200">{{ picture.idProductPicture }}</p>
+                      <p class="cursor-pointer hover:text-red-400 font-bold underline dark:text-red-600 decoration-red-600 text-gray-600" @click="deletePicture(picture.idProductPicture)">Supprimer</p>
+                    </div>
+                  </div>
+                </div>
 
-        </div>
-      </div>
-    </div>
+              </div>
+            </div>
 
-    <div v-else>
-      <p class="text-center text-gray-500 mt-4">No pictures available.</p>
-    </div>
+            <div v-else>
+              <p class="text-center text-gray-500 mt-4">No pictures available.</p>
+            </div>
 
 
+      <!-- <svg @click="deletePicture(picture.idProductPicture)" xmlns="http://www.w3.org/2000/svg" class="cursor-pointer h-[15%] w-[15%]  text-red-500 border-2 rounded-full border-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg> -->
 
 
 
       
             <div class="w-full relative space-y-2">
-              <button @click="updateProduct(ProductIdToUpdate, ProductnameToUpdate, ProductPricetToUpdate, ProductQteToUpdate,idProductCategory)" class="bg-[#1e3a8a] w-full h-10 hover:bg-blue-800 rounded text-white font-bold px-4 rounded-l"> Modifier </button>
-                  <button @click="cancelUpdate" class="bg-[#b91c1c] hover:bg-red-600 rounded font-bold px-4 rounded-r w-full  h-10 text-white">Annuler</button>
+              <button class="mt-2 bg-[#1e3a8a] w-full h-10 hover:bg-blue-800 rounded text-white font-bold px-4 rounded-l" @click="updateProduct(ProductIdToUpdate, ProductnameToUpdate, ProductPricetToUpdate, ProductQteToUpdate,idProductCategory)" > Modifier </button>
+              <button @click="cancelUpdate" class="bg-[#b91c1c] hover:bg-red-600 rounded font-bold px-4 rounded-r w-full  h-10 text-white">Annuler</button>
             </div>
           </div>
         </transition>
@@ -650,7 +647,6 @@ setup() {
             });
           }
       },
-    
       fetchProductPictures(idProducts) {
         axios.get(`http://localhost:8080/productpicture/${idProducts}`)
           .then(response => {
@@ -770,6 +766,7 @@ setup() {
         });
       },
       uploadFile(event, index) {
+        
         this.pictureFiles = splice.files();
         const file = event.target.files[0];
 
@@ -832,52 +829,56 @@ setup() {
           console.error(error);
         });
       },
-      onReadPicture(index) 
-      {
-          const fileInput = this.$refs[`fileInput-${index}`][0];
-          const file = fileInput.files[0];
+      onReadPicture(index) {
+  const fileInput = this.$refs[`fileInput-${index}`][0];
+  const file = fileInput.files[0];
 
-          if (file) 
-          {
-            const reader = new FileReader();
-            reader.onload = (event) => 
-            {
-              const imageUrl = event.target.result;
-              const fileExtension = file.name.split('.').pop().toLowerCase();
-              const fileSize = file.size;
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const imageUrl = event.target.result;
+      const fileExtension = file.name.split('.').pop().toLowerCase();
+      const fileSize = file.size;
 
-              const image = new Image();
-              image.src = imageUrl;
-              image.onload = () => 
-              {
-                const resolution = {
-                  width: image.width,
-                  height: image.height
-                };
+      // Check if the image URL (data URL) already exists in the pictureFiles array
+      const pictureExists = this.pictureFiles.some((picture) => picture.url === imageUrl);
 
-                console.log("File Extension:", fileExtension + " // File Size (bytes):", fileSize + " // Resolution:", resolution);
-            
-                if(fileSize< 990087)
-                  {  
-                    this.pictureFiles.push({
-                      id: Date.now(),
-                      url: imageUrl,
-                      file: file,
-                      extension: fileExtension,
-                      size: fileSize,
-                      resolution: resolution
-                    });
-                  }
-                  else
-                    {
-                      this.inputs.splice(index, 1); 
-                      alert("this picture "+ file.name +" over size");
-                    }
-              };
-            };
-            reader.readAsDataURL(file); // Read the data URL asynchronously
+      if (pictureExists) {
+        // Handle the case where the picture already exists
+        alert("This picture already exists!");
+        this.inputs.splice(index, 1);
+        this.pictureFiles.splice(index,1);
+      } else {
+        const image = new Image();
+        image.src = imageUrl;
+        image.onload = () => {
+          const resolution = {
+            width: image.width,
+            height: image.height
+          };
+          console.log("imageUrl: " + imageUrl);
+          console.log("File Extension:", fileExtension + " // File Size (bytes):", fileSize + " // Resolution:", resolution);
+
+          if (fileSize < 990087) {
+            this.pictureFiles.push({
+              id: Date.now(),
+              url: imageUrl,
+              file: file,
+              extension: fileExtension,
+              size: fileSize,
+              resolution: resolution
+            });
+          } else {
+            this.inputs.splice(index, 1);
+            alert("This picture " + file.name + " exceeds the maximum size.");
           }
-      },
+        };
+      }
+    };
+    reader.readAsDataURL(file); // Read the data URL asynchronously
+  }
+},
+
       uploadPictures(idProducts) {
         const uploadPromises = this.pictureFiles.map((picture) => {
           const formData = new FormData();
