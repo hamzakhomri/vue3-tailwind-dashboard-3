@@ -845,7 +845,7 @@ setup() {
 
       if (pictureExists) {
         // Handle the case where the picture already exists
-        alert("This picture already exists!");
+        alert("Cette "+pictureExists+" déja exist");
         this.inputs.splice(index, 1);
         this.pictureFiles.splice(index,1);
       } else {
