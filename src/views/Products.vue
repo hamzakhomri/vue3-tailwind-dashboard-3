@@ -830,85 +830,102 @@ setup() {
         });
       },
       onReadPicture(index) {
-  const fileInput = this.$refs[`fileInput-${index}`][0];
-  const file = fileInput.files[0];
+          const fileInput = this.$refs[`fileInput-${index}`][0];
+          const file = fileInput.files[0];
 
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const imageUrl = event.target.result;
-      const fileExtension = file.name.split('.').pop().toLowerCase();
-      const fileSize = file.size;
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              const imageUrl = event.target.result;
+              const fileExtension = file.name.split('.').pop().toLowerCase();
+              const fileSize = file.size;
 
-      // Check if the image URL (data URL) already exists in the pictureFiles array
-      const pictureExists = this.pictureFiles.some((picture) => picture.url === imageUrl);
+              // Check if the image URL (data URL) already exists in the pictureFiles array
+              const pictureExists = this.pictureFiles.some((picture) => picture.url === imageUrl);
 
-      if (pictureExists) {
-        // Handle the case where the picture already exists
-        alert("This picture already exists");
-        this.inputs.splice(index, 1);
-        this.pictureFiles.splice(index, 1);
-      } else {
-        const image = new Image();
-        image.src = imageUrl;
-        image.onload = () => {
-          const resolution = {
-            width: image.width,
-            height: image.height
+              if (pictureExists) {
+                // Handle the case where the picture already exists
+                alert("This picture already exists");
+                this.inputs.splice(index, 1);
+                this.pictureFiles.splice(index, 1);
+              } else {
+                const image = new Image();
+                image.src = imageUrl;
+                image.onload = () => {
+                  const resolution = {
+                    width: image.width,
+                    height: image.height
+                  };
+
+                  console.log("imageUrl: " + imageUrl);
+                  console.log("File Extension:", fileExtension + " // File Size (bytes):", fileSize + " // Resolution:", resolution);
+
+                  if (fileSize < 990087) {
+                    // Create a canvas to add the watermark
+                    const canvas = document.createElement("canvas");
+                    canvas.width = image.width;
+                    canvas.height = image.height;
+
+                    const ctx = canvas.getContext("2d");
+                    ctx.drawImage(image, 0, 0);
+
+                    // Position the watermark in the middle of the image
+                    const watermarkText = "Www.hamza.com";
+                    ctx.font = "70px Arial";
+                    ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+
+                    const textWidth = ctx.measureText(watermarkText).width;
+                    const x = (canvas.width - textWidth) / 2;
+                    const y = canvas.height / 2;
+
+                    ctx.fillText(watermarkText, x, y);
+
+                    // Get the watermarked image as a data URL
+                    const watermarkedImageUrl = canvas.toDataURL("image/png");
+
+                    // Add the watermarked image to the pictureFiles array
+                    this.pictureFiles.push({
+                      id: Date.now(),
+                      url: watermarkedImageUrl, // Use the watermarked image URL
+                      originalUrl: imageUrl, // Keep the original image URL (without watermark)
+                      file: file,
+                      extension: fileExtension,
+                      size: fileSize,
+                      resolution: resolution
+                    });
+                  } else {
+                    this.inputs.splice(index, 1);
+                    alert("This picture " + file.name + " exceeds the maximum size.");
+                  }
+                };
+              }
+            };
+            reader.readAsDataURL(file); // Read the data URL asynchronously
+          }
+      },
+      uploadPictures(idProducts) {
+          const uploadPromises = this.pictureFiles.map((picture) => {
+          const formData = new FormData();
+          // If the image is already watermarked, use the watermarked URL, else use the original URL
+          const imageUrl = picture.watermarkedUrl || picture.url;
+
+          // Convert the data URL back to a Blob object to create a new File for the formData
+          const dataURItoBlob = (dataURI) => {
+            const byteString = atob(dataURI.split(',')[1]);
+            const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+            const ab = new ArrayBuffer(byteString.length);
+            const ia = new Uint8Array(ab);
+            for (let i = 0; i < byteString.length; i++) {
+              ia[i] = byteString.charCodeAt(i);
+            }
+            return new Blob([ab], { type: mimeString });
           };
 
-          console.log("imageUrl: " + imageUrl);
-          console.log("File Extension:", fileExtension + " // File Size (bytes):", fileSize + " // Resolution:", resolution);
+          const file = new File([dataURItoBlob(imageUrl)], picture.file.name, { type: picture.file.type });
 
-          if (fileSize < 990087) {
-            // Create a canvas to add the watermark
-            const canvas = document.createElement("canvas");
-            canvas.width = image.width;
-            canvas.height = image.height;
-
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(image, 0, 0);
-
-            // Position the watermark in the middle of the image
-            const watermarkText = "Www.hamza.com";
-            ctx.font = "70px Arial";
-            ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-
-            const textWidth = ctx.measureText(watermarkText).width;
-            const x = (canvas.width - textWidth) / 2;
-            const y = canvas.height / 2;
-
-            ctx.fillText(watermarkText, x, y);
-
-            // Get the watermarked image as a data URL
-            const watermarkedImageUrl = canvas.toDataURL("image/png");
-
-            // Add the watermarked image to the pictureFiles array
-            this.pictureFiles.push({
-              id: Date.now(),
-              url: watermarkedImageUrl, // Use the watermarked image URL
-              originalUrl: imageUrl, // Keep the original image URL (without watermark)
-              file: file,
-              extension: fileExtension,
-              size: fileSize,
-              resolution: resolution
-            });
-          } else {
-            this.inputs.splice(index, 1);
-            alert("This picture " + file.name + " exceeds the maximum size.");
-          }
-        };
-      }
-    };
-    reader.readAsDataURL(file); // Read the data URL asynchronously
-  }
-},
-
-      uploadPictures(idProducts) {
-        const uploadPromises = this.pictureFiles.map((picture) => {
-          const formData = new FormData();
-          formData.append('file', picture.file); // Use the File object for the formData
+          formData.append('file', file); // Use the File object for the formData
           console.log(idProducts + " Uplod Succefully");
+
           return axios.post(`http://localhost:8080/productpicture/product/${idProducts}`, formData);
         });
 
@@ -917,13 +934,14 @@ setup() {
             console.log('All files uploaded successfully!');
             responses.forEach((response) => {
               console.log(response.data);
-            });Z
+            });
             this.getAllProducts();
           })
           .catch((error) => {
             console.log('Error:', error);
           });
       },
+
       updateProduct(idProducts, ProductnameToUpdate,  ProductPricetToUpdate, ProductQteToUpdate,idProductCategory) {
           axios.put(`http://localhost:8080/product/${idProducts}/category/${idProductCategory}`, {
             nameProducts: ProductnameToUpdate,
