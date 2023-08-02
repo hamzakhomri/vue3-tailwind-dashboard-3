@@ -845,9 +845,9 @@ setup() {
 
       if (pictureExists) {
         // Handle the case where the picture already exists
-        alert("Cette "+pictureExists+" déja exist");
+        alert("This picture already exists");
         this.inputs.splice(index, 1);
-        this.pictureFiles.splice(index,1);
+        this.pictureFiles.splice(index, 1);
       } else {
         const image = new Image();
         image.src = imageUrl;
@@ -856,13 +856,38 @@ setup() {
             width: image.width,
             height: image.height
           };
+
           console.log("imageUrl: " + imageUrl);
           console.log("File Extension:", fileExtension + " // File Size (bytes):", fileSize + " // Resolution:", resolution);
 
           if (fileSize < 990087) {
+            // Create a canvas to add the watermark
+            const canvas = document.createElement("canvas");
+            canvas.width = image.width;
+            canvas.height = image.height;
+
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(image, 0, 0);
+
+            // Position the watermark in the middle of the image
+            const watermarkText = "Www.hamza.com";
+            ctx.font = "70px Arial";
+            ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+
+            const textWidth = ctx.measureText(watermarkText).width;
+            const x = (canvas.width - textWidth) / 2;
+            const y = canvas.height / 2;
+
+            ctx.fillText(watermarkText, x, y);
+
+            // Get the watermarked image as a data URL
+            const watermarkedImageUrl = canvas.toDataURL("image/png");
+
+            // Add the watermarked image to the pictureFiles array
             this.pictureFiles.push({
               id: Date.now(),
-              url: imageUrl,
+              url: watermarkedImageUrl, // Use the watermarked image URL
+              originalUrl: imageUrl, // Keep the original image URL (without watermark)
               file: file,
               extension: fileExtension,
               size: fileSize,
@@ -963,7 +988,6 @@ setup() {
                 }
               });
       },
-
       sortByPrice() {
         this.sortbyPrices = this.sortbyPrices === 'asc' ? 'desc' : 'asc';
               this.Product.sort((a, b) => {

@@ -45,7 +45,7 @@
     </form>
 
   </div> -->
-  <div class="bg-yellow-700">
+  <!-- <div class="bg-yellow-700">
     <h2>Product Pictures</h2>
 
     <div v-for="picture in productPictures" :key="picture.idProductpicture">
@@ -53,6 +53,10 @@
       <img :src="getPictureUrl(picture.idProductPicture)" alt="Product Picture" /> 
     </div>
 
+  </div> -->
+  <div>
+    <input type="file" @change="handleFileChange" />
+    <img v-if="imageUrl" :src="imageUrl" alt="Uploaded Image" />
   </div>
 </template>
 
@@ -80,22 +84,62 @@ export default {
   props: {},
   data() {
     return {
-      productPictures: [],
+      // productPictures: [],
       // files: [], 
       // inputs: [], 
       // myData: [],
       // imageUrl: [],
       // pictureFiles: [],
       // picturePreviews: []
+      imageUrl: null,
 
 
     };
   },
   mounted() {
     // this.getAll();
-    this.fetchProductPictures(3);
+    // this.fetchProductPictures(3);
   },
   methods: {
+
+    handleFileChange(event) {
+  const file = event.target.files[0];
+  const reader = new FileReader();
+
+  reader.onload = (event) => {
+    const image = new Image();
+    image.src = event.target.result;
+
+    image.onload = () => {
+      const canvas = document.createElement("canvas");
+      const maxWidth = 800; // Set the maximum width for the watermark
+      const scale = Math.min(maxWidth / image.width, 1);
+      canvas.width = image.width * scale;
+      canvas.height = image.height * scale;
+
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+      // Position the watermark in the middle of the image
+      const watermarkText = "Www.hamza.com";
+      ctx.font = "70px Arial";
+      ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+
+      // Calculate the position to center the watermark
+      const textWidth = ctx.measureText(watermarkText).width;
+      const x = (canvas.width - textWidth) / 2;
+      const y = canvas.height / 2;
+
+      ctx.fillText(watermarkText, x, y);
+      this.imageUrl = canvas.toDataURL("image/png");
+    };
+  };
+
+  if (file) {
+    reader.readAsDataURL(file);
+  }
+},
+
       // Replace the URL with your Spring Boot backend endpoint
     //   fetchProductPictures() {
     //   // Replace the URL with your Spring Boot backend endpoint
@@ -111,20 +155,20 @@ export default {
     // },
 
 
-    fetchProductPictures(idProducts) {
-      axios.get(`http://localhost:8080/productpicture/${idProducts}`)
-        .then(response => {
-          this.productPictures = response.data;
-          console.clear();
-          console.log(response.data)
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    },
-    getPictureUrl(idProductpicture) {
-      return `http://localhost:8080/productpicture/byid/${idProductpicture}`;
-    }
+    // fetchProductPictures(idProducts) {
+    //   axios.get(`http://localhost:8080/productpicture/${idProducts}`)
+    //     .then(response => {
+    //       this.productPictures = response.data;
+    //       console.clear();
+    //       console.log(response.data)
+    //     })
+    //     .catch(error => {
+    //       console.error(error);
+    //     });
+    // },
+    // getPictureUrl(idProductpicture) {
+    //   return `http://localhost:8080/productpicture/byid/${idProductpicture}`;
+    // }
 
 
 //         uploadPictures(idProducts) {
