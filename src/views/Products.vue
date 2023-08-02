@@ -75,7 +75,7 @@
                               
                               <div class="border w-[40%] ">
                                   <p class="bg-red-500 dark:bg-red-700 text-white">Les champs : {{ inputs.length }}</p>
-                                  <p @click="addFile" class="cursor-pointer border text-2xl bg-gray-800 text-white">+</p>  
+                                  <p @click="addFileToInsert" class="cursor-pointer border text-2xl bg-gray-800 text-white">+</p>  
                                 <div v-for="(input, index) in inputs" :key="index" class="flex justify-betweens  border-2 mt-1 mb-1  border-sky-500 rounded-lg ">
                                   <div class="flex border-solid  p-2">
                                     <p class=" text-gray-500 p-2 text-left "> {{index + 1}}</p>
@@ -288,7 +288,7 @@
                     <select id="countries" v-model="idProductCategory" :class="['border-2','appearance-none','block','w-full','bg-gray-50','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',{'border-red-500': selectedCategory.length <= 0 },{ 'border-green-500': selectedCategory.length >= 1 }]">
                       <option selected hidden value="">{{ idProductCategory }}</option>
                       <option v-for="category in ProductCategory" :key="category.idProductCategory" :value="category.idProductCategory">
-                        {{ category.idProductCategory }}
+                        {{ category.nameProductCategory}}
                       </option>
                     </select>
                   </div>
@@ -438,7 +438,7 @@
             {{ product.nameProducts }}
           </td>
           <td class="py-4 px-6">
-            {{ product.productCategory.idProductCategory }} : {{ product.productCategory.nameProductCategory }}
+            {{ product.productCategory.nameProductCategory }}
           </td> 
           <td class="py-4 px-6">
             {{ product.priceProducts }}
@@ -677,7 +677,7 @@ setup() {
         });
           
       },
-      addFile() {
+      addFileToInsert() {
 
         if(this.pictureFiles.length == this.inputs.length)
            { 
