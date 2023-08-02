@@ -904,28 +904,10 @@ setup() {
           }
       },
       uploadPictures(idProducts) {
-          const uploadPromises = this.pictureFiles.map((picture) => {
+        const uploadPromises = this.pictureFiles.map((picture) => {
           const formData = new FormData();
-          // If the image is already watermarked, use the watermarked URL, else use the original URL
-          const imageUrl = picture.watermarkedUrl || picture.url;
-
-          // Convert the data URL back to a Blob object to create a new File for the formData
-          const dataURItoBlob = (dataURI) => {
-            const byteString = atob(dataURI.split(',')[1]);
-            const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-            const ab = new ArrayBuffer(byteString.length);
-            const ia = new Uint8Array(ab);
-            for (let i = 0; i < byteString.length; i++) {
-              ia[i] = byteString.charCodeAt(i);
-            }
-            return new Blob([ab], { type: mimeString });
-          };
-
-          const file = new File([dataURItoBlob(imageUrl)], picture.file.name, { type: picture.file.type });
-
-          formData.append('file', file); // Use the File object for the formData
+          formData.append('file', picture.file); // Use the File object for the formData
           console.log(idProducts + " Uplod Succefully");
-
           return axios.post(`http://localhost:8080/productpicture/product/${idProducts}`, formData);
         });
 
