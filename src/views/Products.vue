@@ -76,14 +76,18 @@
                               <div class="border w-[40%] ">
                                   <p class="bg-red-500 dark:bg-red-700 text-white">Les champs : {{ inputs.length }}</p>
                                   <p @click="addFileToInsert" class="cursor-pointer border text-2xl bg-gray-800 text-white">+</p>  
-                                <div v-for="(input, index) in inputs" :key="index" class="flex justify-betweens  border-2 mt-1 mb-1  border-sky-500 rounded-lg ">
-                                  <div class="flex border-solid  p-2">
-                                    <p class=" text-gray-500 p-2 text-left "> {{index + 1}}</p>
-                                    <input required type="file" name="file" :ref="'fileInput-' + index" @change="onReadPicture(index)" accept=".jpg, .jpeg, .png, .svg, .webp" class="mr-[2%] ml-[2%] w-[100%] block  text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"/>
-                                  </div> 
-                                  <svg @click="removeFile(index)" xmlns="http://www.w3.org/2000/svg" class=" w-6 h-6 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                  </svg> 
+                                <div class="flex flex-col-reverse">
+                                  <div v-for="(input, index) in inputs" :key="index" class="flex justify-betweens  border-2 mt-1 mb-1  border-sky-500 rounded-lg ">
+                                  
+                                    <div class="flex border-solid p-2">
+                                        <p class=" text-gray-500 p-2 text-left "> {{index + 1}}</p>
+                                        <input required type="file" name="file" :ref="'fileInput-' + index" @change="onReadPicture(index)" accept=".jpg, .jpeg, .png, .svg, .webp" class="mr-[2%] ml-[2%] w-[100%] block  text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"/>
+                                      </div> 
+                                      <svg @click="removeFile(index)" xmlns="http://www.w3.org/2000/svg" class=" w-6 h-6 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                      </svg> 
+                                    </div> 
+
                                 </div>
                               </div>
 
@@ -573,7 +577,6 @@ setup() {
           searchDateCreation: '',
 
           searchDateModification:'',
-
 
         };
       },
