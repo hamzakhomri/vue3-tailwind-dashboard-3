@@ -101,7 +101,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                       </svg>
                                     </div>
-                                    <img :src="file.url" alt="Uploaded File" class="border-2 border-b-red-500 transition duration-300 ease-in-out hover:scale-110" />
+                                    <img :src="file.url" alt="Uploaded File" class="border-2 border-b-red-500 transition duration-300 ease-in-out hover:scale-125" />
                                   </div>
                                 </div>
                               </div>
@@ -151,7 +151,7 @@
             </div>
           </form>
 
-
+          <!-- NAVIGATION BETWEEN INSERTION -->
         <div class="flex flex-row  justify-start">
             
               <button @click="goToPrevious()" :disabled="isFirst" type="button" class=" w-[35%] bg-gray-500 text-white rounded-l-md border-r border-gray-100 py-2 hover:bg-gray-400 hover:text-white px-3">
@@ -299,14 +299,28 @@
             </div>           
           
             <div v-if="productPictures.length" class="">
-              <div class="bg-gray-800 p-3 border rounded-2xl grid grid-cols-3 gap-4">
-                
-                <div class="relative" v-for="picture in productPictures" :key="picture.idProductpicture" >
-                  <div class="bg  border-2 rounded-t-3xl border-sky-700 transition duration-300 ease-in-out transform hover:scale-105">
-                    <img class="w-[full] rounded-t-3xl" :src="getPictureUrl(picture.idProductPicture)" alt="Product Picture" />
-                    <div class="mt-1 p-1 flex justify-between">
-                      <p class="text-gray-200">{{ picture.idProductPicture }}</p>
-                      <p class="cursor-pointer hover:text-red-400 font-bold underline dark:text-red-600 decoration-red-600 text-gray-600" @click="deletePicture(picture.idProductPicture)">Supprimer</p>
+              
+              <div class="flex">
+
+                <div class="mr-2 rounded-2xl flex-auto w-[30%] P-2 border border-yellow-300 bg-slate-800">
+                  <p @click="addFileToUpdate" class=" p-2w-[100%] cursor-pointer text-2xl text-white border-b-2 border-sclate-500">+</p>  
+                  <div class=" p-1">
+                    <input required type="file" name="file" :ref="'fileInput-' + index" @change="onReadPicture(index)" accept=".jpg, .jpeg, .png, .svg, .webp" class="mb-1 p-2 bg-gray-800 rounded-md  w-[100%] block text-sm text-gray-100 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"/>
+                    <input required type="file" name="file" :ref="'fileInput-' + index" @change="onReadPicture(index)" accept=".jpg, .jpeg, .png, .svg, .webp" class="mb-1 p-2 bg-gray-800 rounded-md  w-[100%] block text-sm text-gray-100 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"/>
+                    <input required type="file" name="file" :ref="'fileInput-' + index" @change="onReadPicture(index)" accept=".jpg, .jpeg, .png, .svg, .webp" class="mb-1 p-2 bg-gray-800 rounded-md  w-[100%] block text-sm text-gray-100 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"/>
+                  
+                  </div>
+                  
+                </div>
+
+                <div class="flex-initial w-[80%] bg-gray-800 p-3 border rounded-2xl grid grid-cols-3 gap-4"> 
+                  <div class="relative" v-for="picture in productPictures" :key="picture.idProductpicture" >
+                    <div class="bg  border-2 rounded-t-3xl border-sky-700 transition duration-300 ease-in-out transform hover:scale-105">
+                      <img class="w-[full] rounded-t-3xl" :src="getPictureUrl(picture.idProductPicture)" alt="Product Picture" />
+                      <div class="mt-1 p-1 flex justify-between">
+                        <p class="text-gray-200">{{ picture.idProductPicture }}</p>
+                        <p class="cursor-pointer hover:text-red-400 font-bold underline dark:text-red-600 decoration-red-600 text-gray-600" @click="deletePicture(picture.idProductPicture)">Supprimer</p>
+                      </div>
                     </div>
                   </div>
                 </div>
