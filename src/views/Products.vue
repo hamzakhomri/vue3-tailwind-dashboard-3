@@ -298,39 +298,52 @@
                   </div>
             </div>           
           
-            <div v-if="productPictures.length" class="">
-              
-              <div class="flex">
+            <div v-if="productPictures.length" class="bg-gray-800">
 
-                <div class="mr-2 rounded-2xl flex-auto w-[30%] P-2 border border-yellow-300 bg-slate-800">
-                  <p @click="addFileToUpdate" class=" p-2w-[100%] cursor-pointer text-2xl text-white border-b-2 border-sclate-500">+</p>  
-                  <div v-for="(input,index) in inputsUpdate" :key="index" class=" p-1">
-                    <div class="flex">
-                      <p class="">{{ index }}</p>
-                      <input required type="file" name="file" :ref="'fileInput-' + index" @change="onReadPictureToUpdate(index)" accept=".jpg, .jpeg, .png, .svg, .webp" class="mb-1 p-2 bg-gray-800 rounded-md  w-[100%] block text-sm text-gray-100 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"/>                  
-                      <p class="cursor-pointer"	 @click="removeFileUpdate(index)">X</p>
-                    </div>
-                  </div>
-
-                  </div>
-
-                <div class="flex-initial w-[80%] bg-gray-800 p-3 border rounded-2xl grid grid-cols-3 gap-4"> 
-                  <div v-for="(file,index) in pictureFilesUpdate" :key="file.id">
-                    <p>{{ index }}</p>
-                    <img :src="file.url" alt="Uploaded File" class="border-2 border-b-red-500 transition duration-300 ease-in-out hover:scale-125" />
-                  </div>
-                  
-                  <div class="relative" v-for="picture in productPictures" :key="picture.idProductpicture" >
-                    <div class="bg  border-2 rounded-t-3xl border-sky-700 transition duration-300 ease-in-out transform hover:scale-105">
+              <div class="flex-initial w-full bg-gray-800 p-3 border rounded-2xl grid grid-cols-4 gap-4">
+                <div class="relative" v-for="picture in productPictures" :key="picture.idProductpicture" >
+                    <div class="bg  border-2 rounded-t-3xl border-sky-700 transition duration-300 ease-in-out transform hover:scale-125">
                       <img class="w-[full] rounded-t-3xl" :src="getPictureUrl(picture.idProductPicture)" alt="Product Picture" />
-                      <div class="mt-1 p-1 flex justify-between">
+                      <div class="bg-gray-800 mt-1 p-1 flex justify-between">
                         <p class="text-gray-200">{{ picture.idProductPicture }}</p>
                         <p class="cursor-pointer hover:text-red-400 font-bold underline dark:text-red-600 decoration-red-600 text-gray-600" @click="deletePicture(picture.idProductPicture)">Supprimer</p>
                       </div>
                     </div>
                   </div>
+              </div>
+              
+              <div class="flex mt-2">
+                <div class="mr-2 rounded-2xl flex-auto w-[30%] P-2 border border-yellow-300 bg-slate-800">
+                  <p class=" p-2 w-[100%] cursor-pointer text-white border-b-2 border-sclate-500" @click="addFileToUpdate" >Ajouter Une nouvelle photo(s)</p>  
+                 <div class="flex flex-col-reverse">
+                  <div v-for="(input,index) in inputsUpdate" :key="index" class=" p-1 ">
+                    
+                    
+                      <div class="flex">
+                        <p class="">{{ index }}</p>
+                      
+                        <input required type="file" name="file" :ref="'fileInput-' + index" @change="onReadPictureToUpdate(index)" accept=".jpg, .jpeg, .png, .svg, .webp" class="mb-1 p-2 bg-gray-800 rounded-md  w-[100%] block text-sm text-gray-100 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"/>                  
+                        <p class="cursor-pointer"	 @click="removeFileUpdate(index)">X</p>
+                      </div></div>
+                  </div>
                 </div>
 
+                <div class="flex-initial w-[80%] bg-gray-800 p-3 border rounded-2xl grid grid-cols-3 gap-4"> 
+                <div v-if="pictureFilesUpdate.length">
+                  <div v-for="(file,index) in pictureFilesUpdate" :key="file.id">
+                    <p>{{ index }}</p>
+                    <p class="cursor-pointer"	 @click="removeFileUpdate(index)">X</p>
+                    <img :src="file.url" alt="Uploaded File" class="border-2 border-b-red-500 transition duration-300 ease-in-out hover:scale-125" />
+                  </div>
+                </div>
+                <div v-else>
+                  <div class="flex items-center justify-center w-[100%] h-48 bg-gray-300 rounded sm:w-96 dark:bg-gray-700">
+                      <svg class="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                          <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"/>
+                      </svg>
+                  </div>
+                </div>
+                </div>
               </div>
             </div>
 
@@ -709,6 +722,7 @@ setup() {
       },
       removeFileUpdate(index){
         this.inputsUpdate.splice(index,1);
+        this.pictureFilesUpdate.splice(index,1);
       },
       addFileToInsert() {
         if(this.pictureFilesInsert.length == this.inputsInsert.length)
