@@ -81,7 +81,7 @@
                                   
                                     <div class="flex border-solid p-2">
                                         <p class=" text-gray-500 p-2 text-left "> {{index + 1}}</p>
-                                        <input required type="file" name="file" :ref="'fileInput-' + index" @change="onReadPicture(index)" accept=".jpg, .jpeg, .png, .svg, .webp" class="mr-[2%] ml-[2%] w-[100%] block  text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"/>
+                                        <input required type="file" name="file" :ref="'fileInput-' + index" @change="onReadPictureToInsert(index)" accept=".jpg, .jpeg, .png, .svg, .webp" class="mr-[2%] ml-[2%] w-[100%] block  text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"/>
                                       </div> 
                                       <svg @click="removeFileInsert(index)" xmlns="http://www.w3.org/2000/svg" class=" w-6 h-6 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -305,12 +305,21 @@
                 <div class="mr-2 rounded-2xl flex-auto w-[30%] P-2 border border-yellow-300 bg-slate-800">
                   <p @click="addFileToUpdate" class=" p-2w-[100%] cursor-pointer text-2xl text-white border-b-2 border-sclate-500">+</p>  
                   <div v-for="(input,index) in inputsUpdate" :key="index" class=" p-1">
-                    <input required type="file" name="file" :ref="'fileInput-' + index" accept=".jpg, .jpeg, .png, .svg, .webp" class="mb-1 p-2 bg-gray-800 rounded-md  w-[100%] block text-sm text-gray-100 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"/>                  
+                    <div class="flex">
+                      <p class="">{{ index }}</p>
+                      <input required type="file" name="file" :ref="'fileInput-' + index" @change="onReadPictureToUpdate(index)" accept=".jpg, .jpeg, .png, .svg, .webp" class="mb-1 p-2 bg-gray-800 rounded-md  w-[100%] block text-sm text-gray-100 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"/>                  
+                      <p class="cursor-pointer"	 @click="removeFileUpdate(index)">X</p>
+                    </div>
                   </div>
 
                   </div>
 
                 <div class="flex-initial w-[80%] bg-gray-800 p-3 border rounded-2xl grid grid-cols-3 gap-4"> 
+                  <div v-for="(file,index) in pictureFilesUpdate" :key="file.id">
+                    <p>{{ index }}</p>
+                    <img :src="file.url" alt="Uploaded File" class="border-2 border-b-red-500 transition duration-300 ease-in-out hover:scale-125" />
+                  </div>
+                  
                   <div class="relative" v-for="picture in productPictures" :key="picture.idProductpicture" >
                     <div class="bg  border-2 rounded-t-3xl border-sky-700 transition duration-300 ease-in-out transform hover:scale-105">
                       <img class="w-[full] rounded-t-3xl" :src="getPictureUrl(picture.idProductPicture)" alt="Product Picture" />
@@ -698,7 +707,9 @@ setup() {
       addFileToUpdate(){
          this.inputsUpdate.push({});
       },
-
+      removeFileUpdate(index){
+        this.inputsUpdate.splice(index,1);
+      },
       addFileToInsert() {
         if(this.pictureFilesInsert.length == this.inputsInsert.length)
            { 
@@ -850,7 +861,7 @@ setup() {
           console.error(error);
         });
       },
-      onReadPicture(index) {
+      onReadPictureToInsert(index) {
           const fileInput = this.$refs[`fileInput-${index}`][0];
           const file = fileInput.files[0];
 
@@ -924,6 +935,7 @@ setup() {
             reader.readAsDataURL(file); // Read the data URL asynchronously
           }
       },
+      
       uploadPictures(idProducts) {
         const uploadPromises = this.pictureFilesInsert.map((picture) => {
           const formData = new FormData();
@@ -1028,8 +1040,85 @@ setup() {
                   return b.idProducts - a.idProducts;
                 }
               });
-      }
+      },
   // ============= END TRIER============================================
-      }
+      
+  onReadPictureToUpdate(index) {
+          const fileInput = this.$refs[`fileInput-${index}`][0];
+          const file = fileInput.files[0];
+
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              const imageUrl = event.target.result;
+              const fileExtension = file.name.split('.').pop().toLowerCase();
+              const fileSize = file.size;
+
+              // Check if the image URL (data URL) already exists in the pictureFilesInsert array
+              const pictureExists = this.pictureFilesInsert.some((picture) => picture.url === imageUrl);
+
+              if (pictureExists) {
+                // Handle the case where the picture already exists
+                alert("This picture already exists");
+                this.inputsUpdate.splice(index, 1);
+                this.pictureFilesUpdate.splice(index, 1);
+              } else {
+                const image = new Image();
+                image.src = imageUrl;
+                image.onload = () => {
+                  const resolution = {
+                    width: image.width,
+                    height: image.height
+                  };
+
+                  console.log("imageUrl: " + imageUrl);
+                  console.log("File Extension:", fileExtension + " // File Size (bytes):", fileSize + " // Resolution:", resolution);
+
+                  if (fileSize < 990087) {
+                    // Create a canvas to add the watermark
+                    const canvas = document.createElement("canvas");
+                    canvas.width = image.width;
+                    canvas.height = image.height;
+
+                    const ctx = canvas.getContext("2d");
+                    ctx.drawImage(image, 0, 0);
+
+                    // Position the watermark in the middle of the image
+                    const watermarkText = "Www.hamza.com";
+                    ctx.font = "70px Arial";
+                    ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+
+                    const textWidth = ctx.measureText(watermarkText).width;
+                    const x = (canvas.width - textWidth) / 2;
+                    const y = canvas.height / 2;
+
+                    ctx.fillText(watermarkText, x, y);
+
+                    // Get the watermarked image as a data URL
+                    const watermarkedImageUrl = canvas.toDataURL("image/png");
+
+                    // Add the watermarked image to the pictureFilesInsert array
+                    this.pictureFilesUpdate.push({
+                      id: Date.now(),
+                      url: watermarkedImageUrl, // Use the watermarked image URL
+                      originalUrl: imageUrl, // Keep the original image URL (without watermark)
+                      file: file,
+                      extension: fileExtension,
+                      size: fileSize,
+                      resolution: resolution
+                    });
+                  } else {
+                    this.inputsUpdate.splice(index, 1);
+                    alert("This picture " + file.name + " exceeds the maximum size.");
+                  }
+                };
+              }
+            };
+            reader.readAsDataURL(file); // Read the data URL asynchronously
+          }
+      },
+
+
+}
 };
   </script>
