@@ -74,16 +74,16 @@
                             <div class="flex  w-[100%] overflow-y-scroll">
                               
                               <div class="border w-[40%] ">
-                                  <p class="bg-red-500 dark:bg-red-700 text-white">Les champs : {{ inputs.length }}</p>
+                                  <p class="bg-red-500 dark:bg-red-700 text-white">Les champs : {{ inputsInsert.length }}</p>
                                   <p @click="addFileToInsert" class="cursor-pointer border text-2xl bg-gray-800 text-white">+</p>  
                                 <div class="flex flex-col-reverse">
-                                  <div v-for="(input, index) in inputs" :key="index" class="flex justify-betweens  border-2 mt-1 mb-1  border-sky-500 rounded-lg ">
+                                  <div v-for="(input, index) in inputsInsert" :key="index" class="flex justify-betweens  border-2 mt-1 mb-1  border-sky-500 rounded-lg ">
                                   
                                     <div class="flex border-solid p-2">
                                         <p class=" text-gray-500 p-2 text-left "> {{index + 1}}</p>
                                         <input required type="file" name="file" :ref="'fileInput-' + index" @change="onReadPicture(index)" accept=".jpg, .jpeg, .png, .svg, .webp" class="mr-[2%] ml-[2%] w-[100%] block  text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"/>
                                       </div> 
-                                      <svg @click="removeFile(index)" xmlns="http://www.w3.org/2000/svg" class=" w-6 h-6 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      <svg @click="removeFileInsert(index)" xmlns="http://www.w3.org/2000/svg" class=" w-6 h-6 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                       </svg> 
                                     </div> 
@@ -92,12 +92,12 @@
                               </div>
 
                               <div class="w-[60%]  border border-b">
-                                <p class="bg-red-500 dark:bg-red-700 text-white">Les Photos : {{ pictureFiles.length }}</p>
+                                <p class="bg-red-500 dark:bg-red-700 text-white">Les Photos : {{ pictureFilesInsert.length }}</p>
                                 <div class="grid-cols-3 grid gap-2">
-                                  <div v-for="(file, index) in pictureFiles" :key="file.id" class="p-1">
+                                  <div v-for="(file, index) in pictureFilesInsert" :key="file.id" class="p-1">
                                     <div class="flex justify-between p-0.5 border-x border-t rounded-lg mb-[-1]">
                                       <p class="text-gray-300">{{ index + 1 }}</p>
-                                      <svg @click="removeFile(index)" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      <svg @click="removeFileInsert(index)" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                       </svg>
                                     </div>
@@ -129,7 +129,7 @@
                             <a class="font-semibold text-gray-800 dark:text-gray-100">{{idProductCategory}}</a>
                           </div>
                           <div class="text-gray-500 font-light mb-1 text-left ml-2 p-1">Pictures:
-                            <a class="font-semibold text-gray-800 dark:text-gray-100">{{pictureFiles.length}}</a>
+                            <a class="font-semibold text-gray-800 dark:text-gray-100">{{pictureFilesInsert.length}}</a>
                           </div>
                         </div>
                         <div class="space-y-1">
@@ -304,14 +304,11 @@
 
                 <div class="mr-2 rounded-2xl flex-auto w-[30%] P-2 border border-yellow-300 bg-slate-800">
                   <p @click="addFileToUpdate" class=" p-2w-[100%] cursor-pointer text-2xl text-white border-b-2 border-sclate-500">+</p>  
-                  <div class=" p-1">
-                    <input required type="file" name="file" :ref="'fileInput-' + index" @change="onReadPicture(index)" accept=".jpg, .jpeg, .png, .svg, .webp" class="mb-1 p-2 bg-gray-800 rounded-md  w-[100%] block text-sm text-gray-100 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"/>
-                    <input required type="file" name="file" :ref="'fileInput-' + index" @change="onReadPicture(index)" accept=".jpg, .jpeg, .png, .svg, .webp" class="mb-1 p-2 bg-gray-800 rounded-md  w-[100%] block text-sm text-gray-100 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"/>
-                    <input required type="file" name="file" :ref="'fileInput-' + index" @change="onReadPicture(index)" accept=".jpg, .jpeg, .png, .svg, .webp" class="mb-1 p-2 bg-gray-800 rounded-md  w-[100%] block text-sm text-gray-100 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"/>
-                  
+                  <div v-for="(input,index) in inputsUpdate" :key="index" class=" p-1">
+                    <input required type="file" name="file" :ref="'fileInput-' + index" accept=".jpg, .jpeg, .png, .svg, .webp" class="mb-1 p-2 bg-gray-800 rounded-md  w-[100%] block text-sm text-gray-100 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"/>                  
                   </div>
-                  
-                </div>
+
+                  </div>
 
                 <div class="flex-initial w-[80%] bg-gray-800 p-3 border rounded-2xl grid grid-cols-3 gap-4"> 
                   <div class="relative" v-for="picture in productPictures" :key="picture.idProductpicture" >
@@ -549,10 +546,14 @@ setup() {
           idProductCategory: '',
           
           files: [], // Array to store uploaded files
-          inputs: [], // Array to store input elements
+          inputsInsert: [], // Array to store input elements
+          pictureFilesInsert: [],  
+
+          inputsUpdate:[],
+          pictureFilesUpdate:[],
+
           pictures:[],    
           Product: [],
-          pictureFiles: [],  
           ProductCategory: [],
           productPictures: [],
           
@@ -694,21 +695,24 @@ setup() {
         });
           
       },
-      addFileToInsert() {
+      addFileToUpdate(){
+         this.inputsUpdate.push({});
+      },
 
-        if(this.pictureFiles.length == this.inputs.length)
+      addFileToInsert() {
+        if(this.pictureFilesInsert.length == this.inputsInsert.length)
            { 
-            this.inputs.push({}); 
+            this.inputsInsert.push({}); 
             }
 
         else{
-           alert("le champ " + this.inputs.length +" et vide")
+           alert("le champ " + this.inputsInsert.length +" et vide")
           }
 
       },
-      removeFile(index) {
-          this.pictureFiles.splice(index, 1);
-          this.inputs.splice(index, 1);
+      removeFileInsert(index) {
+          this.pictureFilesInsert.splice(index, 1);
+          this.inputsInsert.splice(index, 1);
           console.log("Input/File: " + index + " removed");
       },
   // ============= UPDATE==============================================
@@ -745,8 +749,8 @@ setup() {
         this.Product=[];
         this.pictures=[];
         this.productPictures=[];
-        this.inputs=[];
-        this.pictureFiles=[];
+        this.inputsInsert=[];
+        this.pictureFilesInsert=[];
         this.files=[];
         this.Productname="";
         this.Price="";
@@ -784,7 +788,7 @@ setup() {
       },
       uploadFile(event, index) {
         
-        this.pictureFiles = splice.files();
+        this.pictureFilesInsert = splice.files();
         const file = event.target.files[0];
 
         const reader = new FileReader();
@@ -807,7 +811,7 @@ setup() {
         reader.readAsDataURL(file);
       },
       submitProduct(idProductCategory) {
-        if(this.pictureFiles.length>0){
+        if(this.pictureFilesInsert.length>0){
 
           const data = {
             nameProducts: this.Productname,
@@ -828,7 +832,7 @@ setup() {
                 }); 
             }
             else{
-                console.log(this.pictureFiles.length)
+                console.log(this.pictureFilesInsert.length)
                 alert("nop")
               }
        
@@ -857,14 +861,14 @@ setup() {
               const fileExtension = file.name.split('.').pop().toLowerCase();
               const fileSize = file.size;
 
-              // Check if the image URL (data URL) already exists in the pictureFiles array
-              const pictureExists = this.pictureFiles.some((picture) => picture.url === imageUrl);
+              // Check if the image URL (data URL) already exists in the pictureFilesInsert array
+              const pictureExists = this.pictureFilesInsert.some((picture) => picture.url === imageUrl);
 
               if (pictureExists) {
                 // Handle the case where the picture already exists
                 alert("This picture already exists");
-                this.inputs.splice(index, 1);
-                this.pictureFiles.splice(index, 1);
+                this.inputsInsert.splice(index, 1);
+                this.pictureFilesInsert.splice(index, 1);
               } else {
                 const image = new Image();
                 image.src = imageUrl;
@@ -900,8 +904,8 @@ setup() {
                     // Get the watermarked image as a data URL
                     const watermarkedImageUrl = canvas.toDataURL("image/png");
 
-                    // Add the watermarked image to the pictureFiles array
-                    this.pictureFiles.push({
+                    // Add the watermarked image to the pictureFilesInsert array
+                    this.pictureFilesInsert.push({
                       id: Date.now(),
                       url: watermarkedImageUrl, // Use the watermarked image URL
                       originalUrl: imageUrl, // Keep the original image URL (without watermark)
@@ -911,7 +915,7 @@ setup() {
                       resolution: resolution
                     });
                   } else {
-                    this.inputs.splice(index, 1);
+                    this.inputsInsert.splice(index, 1);
                     alert("This picture " + file.name + " exceeds the maximum size.");
                   }
                 };
@@ -921,7 +925,7 @@ setup() {
           }
       },
       uploadPictures(idProducts) {
-        const uploadPromises = this.pictureFiles.map((picture) => {
+        const uploadPromises = this.pictureFilesInsert.map((picture) => {
           const formData = new FormData();
           formData.append('file', picture.file); // Use the File object for the formData
           console.log(idProducts + " Uplod Succefully");
