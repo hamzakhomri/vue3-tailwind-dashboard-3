@@ -81,7 +81,10 @@
                                   
                                     <div class="flex border-solid p-2">
                                         <p class=" text-gray-500 p-2 text-left "> {{index + 1}}</p>
-                                        <input required type="file" name="file" :ref="'fileInput-' + index" @change="onReadPictureToInsert(index)" accept=".jpg, .jpeg, .png, .svg, .webp" class="mr-[2%] ml-[2%] w-[100%] block  text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"/>
+                                        <input required type="file" name="file" :ref="'fileInput-' + index" @change="onReadPictureToInsert(index)" accept=".jpg, .jpeg, .png, .svg, .webp" 
+                                          class="mr-[2%] ml-[2%] w-[100%] block  text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"
+                                        />
+                       
                                       </div> 
                                       <svg @click="removeFileInsert(index)" xmlns="http://www.w3.org/2000/svg" class=" w-6 h-6 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -93,7 +96,7 @@
 
                               <div class="w-[60%]  border border-b">
                                 <p class="bg-red-500 dark:bg-red-700 text-white">Les Photos : {{ pictureFilesInsert.length }}</p>
-                                <div class="grid-cols-3 grid gap-2">
+                                <div v-if="pictureFilesInsert.length" class="grid-cols-3 grid gap-2">
                                   <div v-for="(file, index) in pictureFilesInsert" :key="file.id" class="p-1">
                                     <div class="flex justify-between p-0.5 border-x border-t rounded-lg mb-[-1]">
                                       <p class="text-gray-300">{{ index + 1 }}</p>
@@ -101,9 +104,18 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                       </svg>
                                     </div>
-                                    <img :src="file.url" alt="Uploaded File" class="border-2 border-b-red-500 transition duration-300 ease-in-out hover:scale-125" />
+                                    <img :src="file.url" alt="Uploaded File" class="border-2 border-b-red-500 " />
                                   </div>
                                 </div>
+
+                                <div v-else class="p-2 flex justify-center content-center">
+                                  <div class="flex items-center justify-center w-[50%] h-48 bg-gray-300 rounded sm:w-96 dark:bg-gray-700">
+                                      <svg class="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                                          <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"/>
+                                      </svg>
+                                  </div>
+                                </div>
+
                               </div>
 
                             </div>
@@ -301,48 +313,55 @@
             <div v-if="productPictures.length" class="bg-gray-800">
 
               <div class="flex-initial w-full bg-gray-800 p-3 border rounded-2xl grid grid-cols-4 gap-4">
-                <div class="relative" v-for="picture in productPictures" :key="picture.idProductpicture" >
-                    <div class="bg  border-2 rounded-t-3xl border-sky-700 transition duration-300 ease-in-out transform hover:scale-125">
-                      <img class="w-[full] rounded-t-3xl" :src="getPictureUrl(picture.idProductPicture)" alt="Product Picture" />
-                      <div class="bg-gray-800 mt-1 p-1 flex justify-between">
-                        <p class="text-gray-200">{{ picture.idProductPicture }}</p>
-                        <p class="cursor-pointer hover:text-red-400 font-bold underline dark:text-red-600 decoration-red-600 text-gray-600" @click="deletePicture(picture.idProductPicture)">Supprimer</p>
-                      </div>
+                <div v-for="picture in productPictures" :key="picture.idProductpicture" class="relative transition duration-300 ease-in-out transform hover:scale-125">
+                  <div class="bg border-2 rounded-t-3xl border-sky-700 transition duration-300 ease-in-out transform hover:scale-125">
+                    <img class="w-full rounded-t-3xl" :src="getPictureUrl(picture.idProductPicture)" alt="Product Picture" />
+                    <div class="bg-gray-800 mt-1 p-1 flex justify-between">
+                      <p class="text-gray-200">{{ picture.idProductPicture }}</p>
+                      <p @click="deletePicture(picture.idProductPicture)"  class="cursor-pointer hover:text-red-400 font-bold underline dark:text-red-600 text-gray-600">
+                        Supprimer
+                      </p>
                     </div>
                   </div>
+                </div>
               </div>
               
               <div class="flex mt-2">
                 <div class="mr-2 rounded-2xl flex-auto w-[30%] P-2 border border-yellow-300 bg-slate-800">
                   <p class=" p-2 w-[100%] cursor-pointer text-white border-b-2 border-sclate-500" @click="addFileToUpdate" >Ajouter Une nouvelle photo(s)</p>  
-                 <div class="flex flex-col-reverse">
-                  <div v-for="(input,index) in inputsUpdate" :key="index" class=" p-1 ">
-                    
-                    
-                      <div class="flex">
-                        <p class="">{{ index }}</p>
-                      
-                        <input required type="file" name="file" :ref="'fileInput-' + index" @change="onReadPictureToUpdate(index)" accept=".jpg, .jpeg, .png, .svg, .webp" class="mb-1 p-2 bg-gray-800 rounded-md  w-[100%] block text-sm text-gray-100 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"/>                  
-                        <p class="cursor-pointer"	 @click="removeFileUpdate(index)">X</p>
-                      </div></div>
+                 <div class="flex flex-col-reverse ">
+                    <div v-for="(input,index) in inputsUpdate" :key="index" class="p-1">
+                      <div class="flex items-center">
+                        <p>{{ index + 1 }}</p>
+                        <input required type="file" name="file" :ref="'fileInput-' + index" @change="onReadPictureToUpdate(index)"  accept=".jpg, .jpeg, .png, .svg, .webp" class="mb-1 p-2 bg-gray-800 rounded-md w-[100%] block text-sm text-gray-100 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"/>
+                        <p class="cursor-pointer" @click="removeFileUpdate(index)">X</p>
+                      </div>
+                      <p v-if="input.size" class="text-gray-500">{{ input.size.toFixed(2) }} KB</p>
+
+                    </div>
                   </div>
                 </div>
 
-                <div class="flex-initial w-[80%] bg-gray-800 p-3 border rounded-2xl grid grid-cols-3 gap-4"> 
-                <div v-if="pictureFilesUpdate.length">
-                  <div v-for="(file,index) in pictureFilesUpdate" :key="file.id">
-                    <p>{{ index }}</p>
-                    <p class="cursor-pointer"	 @click="removeFileUpdate(index)">X</p>
-                    <img :src="file.url" alt="Uploaded File" class="border-2 border-b-red-500 transition duration-300 ease-in-out hover:scale-125" />
+                <div class="flex-initial w-[80%] p-3 border rounded-2xl"> 
+                  <div v-if="pictureFilesUpdate.length" class=" grid grid-cols-3 ">
+                    <div v-for="(file,index) in pictureFilesUpdate" :key="file.id" class="p-2 border rounded-xl bg-gray-800 transition duration-300 ease-in-out hover:scale-125">
+                      <div class="flex justify-between">
+                        <p>{{ index+1 }}</p>
+                        <svg @click="removeFileUpdate(index)" xmlns="http://www.w3.org/2000/svg" class=" w-6 h-6 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg> 
+                      </div>
+                      <img :src="file.url" alt="Uploaded File" class="border-2 border-b-red-500 " />
+                    </div>
                   </div>
-                </div>
-                <div v-else>
-                  <div class="flex items-center justify-center w-[100%] h-48 bg-gray-300 rounded sm:w-96 dark:bg-gray-700">
-                      <svg class="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
-                          <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"/>
-                      </svg>
+
+                  <div v-else >
+                    <div class="flex items-center justify-center w-[100%] h-48 bg-gray-300 rounded sm:w-96 dark:bg-gray-700">
+                        <svg class="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                            <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"/>
+                        </svg>
+                    </div>
                   </div>
-                </div>
                 </div>
               </div>
             </div>
@@ -593,6 +612,7 @@ setup() {
           productIdToDelete: null,
     
           DialogueUpdate:false,
+          picturesizeUpdate:null,
           idProductCategory:null,
           ProductQteToUpdate:null,
           ProductIdToUpdate: null,
@@ -751,6 +771,7 @@ setup() {
         this.selectedCategory="";
         this.fetchProductPictures(idProducts);
         this.ScrollToUpdate();
+
         this.DialogueUpdate = true;
         console.log("Finish confirmUpdate");
               
@@ -846,7 +867,7 @@ setup() {
               axios.post(`http://localhost:8080/product/category/${idProductCategory}`, data).then(response => {
                   console.log(response.data);
                   console.log(response.data.idProducts);
-                  this.uploadPictures(response.data.idProducts);
+                  this.uploadPicturesInsert(response.data.idProducts);
                   this.Canceled();
                   this.getAllProducts();
                   console.log("assign product into category sccefully");
@@ -903,7 +924,7 @@ setup() {
                     height: image.height
                   };
 
-                  console.log("imageUrl: " + imageUrl);
+                  
                   console.log("File Extension:", fileExtension + " // File Size (bytes):", fileSize + " // Resolution:", resolution);
 
                   if (fileSize < 990087) {
@@ -928,7 +949,7 @@ setup() {
 
                     // Get the watermarked image as a data URL
                     const watermarkedImageUrl = canvas.toDataURL("image/png");
-
+      
                     // Add the watermarked image to the pictureFilesInsert array
                     this.pictureFilesInsert.push({
                       id: Date.now(),
@@ -939,6 +960,8 @@ setup() {
                       size: fileSize,
                       resolution: resolution
                     });
+        
+
                   } else {
                     this.inputsInsert.splice(index, 1);
                     alert("This picture " + file.name + " exceeds the maximum size.");
@@ -950,8 +973,28 @@ setup() {
           }
       },
       
-      uploadPictures(idProducts) {
+      uploadPicturesInsert(idProducts) {
         const uploadPromises = this.pictureFilesInsert.map((picture) => {
+          const formData = new FormData();
+          formData.append('file', picture.file); // Use the File object for the formData
+          console.log(idProducts + " Uplod Succefully");
+          return axios.post(`http://localhost:8080/productpicture/product/${idProducts}`, formData);
+        });
+
+        Promise.all(uploadPromises)
+          .then((responses) => {
+            console.log('All files uploaded successfully!');
+            responses.forEach((response) => {
+              console.log(response.data);
+            });
+            this.getAllProducts();
+          })
+          .catch((error) => {
+            console.log('Error:', error);
+          });
+      },
+      uploadPicturesUpdate(idProducts) {
+        const uploadPromises = this.pictureFilesUpdate.map((picture) => {
           const formData = new FormData();
           formData.append('file', picture.file); // Use the File object for the formData
           console.log(idProducts + " Uplod Succefully");
@@ -972,15 +1015,16 @@ setup() {
       },
 
       updateProduct(idProducts, ProductnameToUpdate,  ProductPricetToUpdate, ProductQteToUpdate,idProductCategory) {
-          axios.put(`http://localhost:8080/product/${idProducts}/category/${idProductCategory}`, {
+        axios.put(`http://localhost:8080/product/${idProducts}/category/${idProductCategory}`, {
             nameProducts: ProductnameToUpdate,
             productCategory: {
               idProductCategory: idProductCategory
             },
-            priceProducts: ProductPricetToUpdate,
+            priceProducts: ProductPricetToUpdate,   
             qteProducts: ProductQteToUpdate
           })
           .then(response => {
+
             this.DialogueUpdate = false;
             this.ProductIdToUpdate = null;
             this.ProductnameToUpdate = '';
@@ -988,6 +1032,11 @@ setup() {
             this.ProductPricetToUpdate = null;
             this.ProductQteToUpdate = null;
             this.getAllProducts();
+            this.uploadPicturesUpdate(idProducts);
+            this.inputsUpdate=[];
+            this.pictureFilesUpdate=[];
+            
+            console.log("product : "+idProducts+" was modify succefuly");
           })
           .catch(error => {
             console.error(error);
@@ -1066,7 +1115,7 @@ setup() {
             reader.onload = (event) => {
               const imageUrl = event.target.result;
               const fileExtension = file.name.split('.').pop().toLowerCase();
-              const fileSize = file.size;
+              const fileSize = file.size / 1024; // Convert from bytes to kilobytes
 
               // Check if the image URL (data URL) already exists in the pictureFilesInsert array
               const pictureExists = this.pictureFilesInsert.some((picture) => picture.url === imageUrl);
@@ -1085,8 +1134,8 @@ setup() {
                     height: image.height
                   };
 
-                  console.log("imageUrl: " + imageUrl);
-                  console.log("File Extension:", fileExtension + " // File Size (bytes):", fileSize + " // Resolution:", resolution);
+                  console.log("fileSize: " + fileSize);
+                  // console.log("File Extension:", fileExtension + " // File Size (bytes):", fileSize + " // Resolution:", resolution);
 
                   if (fileSize < 990087) {
                     // Create a canvas to add the watermark
@@ -1121,6 +1170,7 @@ setup() {
                       size: fileSize,
                       resolution: resolution
                     });
+                    console.log("size :"+this.fileSize);
                   } else {
                     this.inputsUpdate.splice(index, 1);
                     alert("This picture " + file.name + " exceeds the maximum size.");
@@ -1136,3 +1186,8 @@ setup() {
 }
 };
   </script>
+  <style scoped>
+  .relative:hover {
+    z-index: 1;
+  }
+</style>
