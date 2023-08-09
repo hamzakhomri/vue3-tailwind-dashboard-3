@@ -934,7 +934,8 @@ setup() {
               const fileSize = file.size;
 
               // Check if the image URL (data URL) already exists in the pictureFilesInsert array
-              const pictureExists = this.pictureFilesInsert.some((picture) => picture.url === imageUrl);
+              const pictureExists = this.pictureFilesInsert.some((picture) => picture.file.name === file.name);
+              console.log("pictureExists: "+pictureExists);
 
               if (pictureExists) {
                 // Handle the case where the picture already exists
@@ -1132,81 +1133,73 @@ setup() {
       },
   // ============= END TRIER============================================
       
-      onReadPictureToUpdate(index) {
-          const fileInput = this.$refs[`fileInput-${index}`][0];
-          const file = fileInput.files[0];
+  onReadPictureToUpdate(index) {
+  const fileInput = this.$refs[`fileInput-${index}`][0];
+  const file = fileInput.files[0];
 
-          if (file) {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-              const imageUrl = event.target.result;
-              const fileExtension = file.name.split('.').pop().toLowerCase();
-              const fileSize = file.size / 1024; // Convert from bytes to kilobytes
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const imageUrl = event.target.result;
+      const fileExtension = file.name.split('.').pop().toLowerCase();
+      const fileSize = file.size / 1024; // Convert from bytes to kilobytes
 
-              // Check if the image URL (data URL) already exists in the pictureFilesInsert array
-              const pictureExists = this.pictureFilesInsert.some((picture) => picture.url === imageUrl);
+      const pictureExists = this.pictureFilesUpdate.some((picture) => picture.file.name === file.name);
 
-              if (pictureExists) {
-                // Handle the case where the picture already exists
-                alert("This picture already exists");
-                this.inputsUpdate.splice(index, 1);
-                this.pictureFilesUpdate.splice(index, 1);
-              } else {
-                const image = new Image();
-                image.src = imageUrl;
-                image.onload = () => {
-                  const resolution = {
-                    width: image.width,
-                    height: image.height
-                  };
+  
+      if (pictureExists) {
+        alert("This picture already exists");
+        this.inputsUpdate.splice(index, 1);
+        this.pictureFilesUpdate.splice(index, 1);
+      } else {
+        const image = new Image();
+        image.src = imageUrl;
+        image.onload = () => {
+          const resolution = {
+            width: image.width,
+            height: image.height
+          };
 
-                  console.log("fileSize: " + fileSize);
-                  // console.log("File Extension:", fileExtension + " // File Size (bytes):", fileSize + " // Resolution:", resolution);
+          if (fileSize < 990087) {
+            const canvas = document.createElement("canvas");
+            canvas.width = image.width;
+            canvas.height = image.height;
 
-                  if (fileSize < 990087) {
-                    // Create a canvas to add the watermark
-                    const canvas = document.createElement("canvas");
-                    canvas.width = image.width;
-                    canvas.height = image.height;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(image, 0, 0);
 
-                    const ctx = canvas.getContext("2d");
-                    ctx.drawImage(image, 0, 0);
+            const watermarkText = "Www.hamza.com";
+            ctx.font = "70px Arial";
+            ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
 
-                    // Position the watermark in the middle of the image
-                    const watermarkText = "Www.hamza.com";
-                    ctx.font = "70px Arial";
-                    ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+            const textWidth = ctx.measureText(watermarkText).width;
+            const x = (canvas.width - textWidth) / 2;
+            const y = canvas.height / 2;
 
-                    const textWidth = ctx.measureText(watermarkText).width;
-                    const x = (canvas.width - textWidth) / 2;
-                    const y = canvas.height / 2;
+            ctx.fillText(watermarkText, x, y);
 
-                    ctx.fillText(watermarkText, x, y);
+            const watermarkedImageUrl = canvas.toDataURL("image/png");
 
-                    // Get the watermarked image as a data URL
-                    const watermarkedImageUrl = canvas.toDataURL("image/png");
-
-                    // Add the watermarked image to the pictureFilesInsert array
-                    this.pictureFilesUpdate.push({
-                      id: Date.now(),
-                      url: watermarkedImageUrl, // Use the watermarked image URL
-                      originalUrl: imageUrl, // Keep the original image URL (without watermark)
-                      file: file,
-                      extension: fileExtension,
-                      size: fileSize,
-                      resolution: resolution
-                    });
-                    console.log("size :"+this.fileSize);
-                  } else {
-                    this.inputsUpdate.splice(index, 1);
-                    alert("This picture " + file.name + " exceeds the maximum size.");
-                  }
-                };
-              }
-            };
-            reader.readAsDataURL(file); // Read the data URL asynchronously
+            this.pictureFilesUpdate.push({
+              id: Date.now(),
+              url: watermarkedImageUrl,
+              originalUrl: imageUrl,
+              file: file,
+              extension: fileExtension,
+              size: fileSize,
+              resolution: resolution
+            });
+            console.log("name !"+file.name);
+          } else {
+            this.inputsUpdate.splice(index, 1);
+            alert("This picture " + file.name + " exceeds the maximum size.");
           }
-      },
+        };
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+},
 
 
 }
