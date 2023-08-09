@@ -314,31 +314,47 @@
 
               <div class=" flex-initial w-full bg-gray-800 p-3 border rounded-2xl grid grid-cols-4 gap-4">
                 <div v-for="picture in productPictures" :key="picture.idProductpicture" class="relative transition duration-300 ease-in-out transform hover:scale-125">
-                  <div class="bg border-2 rounded-t-3xl border-sky-700 transition duration-300 ease-in-out transform hover:scale-125">
+                  <div class="bg border-2 rounded-t-3xl border-sky-700 transition duration-300 ease-in-out transform hover:scale-110">
                     <img class="w-full rounded-t-3xl" :src="getPictureUrl(picture.idProductPicture)" alt="Product Picture" />
                     <div class="bg-gray-800 mt-1 p-1 flex justify-between">
                       <p class="text-gray-200">{{ picture.idProductPicture }}</p>
-                      <p @click="deletePicture(picture.idProductPicture)"  class="cursor-pointer hover:text-red-400 font-bold underline dark:text-red-600 text-gray-600">
-                        Supprimer
-                      </p>
+                        <button @click="deletePicture(picture.idProductPicture)"  class="inline-flex items-center justify-center w-8 h-8 mr-2 text-pink-100 transition-colors duration-150 bg-red-500 rounded-full focus:shadow-outline hover:bg-red-600">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+                          </svg>
+                        </button>
                     </div>
                   </div>
                 </div>
               </div>
+              
               <div class="mt-2 border rounded-2xl border-red-200">
                 <p class="text-white">Ajoutes Des Photos</p>
                 <div class="flex m p-2">
                   
-                  <div class="mr-2 rounded-2xl flex-auto w-[30%] P-2 border border-yellow-300 bg-slate-800">
-                    <p class=" p-2 w-[100%] cursor-pointer text-white border-b-2 border-sclate-500" @click="addFileToUpdate" >Ajouter Une nouvelle photo(s)</p>  
+                  <div class="mr-2 rounded-2xl flex-auto w-[30%] P-2 border border-gray-500 bg-slate-800">
+                    <div class=" p-b-2 p-t-2 border-b rounded-2xl border-gray-500 flex items-center cursor-pointer justify-evenly hover:bg-gray-900" @click="addFileToUpdate">
+                      <p>Ajouter une photo</p>
+                      <svg class="w-10 h-10" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3.75H6.912a2.25 2.25 0 00-2.15 1.588L2.35 13.177a2.25 2.25 0 00-.1.661V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 00-2.15-1.588H15M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859M12 3v8.25m0 0l-3-3m3 3l3-3" />
+                      </svg>
+                    </div>
+
                   <div class="flex flex-col-reverse ">
                       <div v-for="(input,index) in inputsUpdate" :key="index" class="p-1">
                         <div class="flex items-center">
                           <p>{{ index + 1 }}</p>
-                          <input required type="file" name="file" :ref="'fileInput-' + index" @change="onReadPictureToUpdate(index)"  accept=".jpg, .jpeg, .png, .svg, .webp" class="mb-1 p-2 bg-gray-800 rounded-md w-[100%] block text-sm text-gray-100 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"/>
-                          <p class="cursor-pointer" @click="removeFileUpdate(index)">X</p>
+                          <input required type="file" name="file" :ref="'fileInput-' + index" @change="onReadPictureToUpdate(index)"  accept=".jpg, .jpeg, .png, .svg, .webp" class="cursor-pointer mb-1 p-2 bg-gray-800 rounded-md w-[100%] block text-sm text-gray-100 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"/>
+                          <svg @click="removeFileUpdate(index)" xmlns="http://www.w3.org/2000/svg" class=" w-6 h-6 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg> 
                         </div>
-                        <p v-if="input.size" class="text-gray-500">{{ input.size.toFixed(2) }} KB</p>
+                        
+                        <div class="w-full bg-neutral-200 dark:bg-neutral-600">
+                          <div class="bg-primary p-0.5 text-center text-xs font-medium leading-none text-primary-100" style="width: 25%">
+                            25%
+                          </div>
+                        </div>
 
                       </div>
                     </div>
@@ -357,9 +373,10 @@
                       </div>
                     </div>
 
-                    <div v-else >
+                    <div v-else class="p-2 flex content-center justify-center">
                       <div class="flex items-center content-center justify-center w-[90%] h-48 bg-gray-300 rounded-2xl  dark:bg-gray-700">
-                          <svg class="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                          
+                        <svg class=" w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
                               <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"/>
                           </svg>
                       </div>
@@ -519,15 +536,20 @@
           </td>
     
           <td class="py-4 px-6 text-right">
-            <button @click="confirmDelete(product.idProducts)">Delete</button>
+            <button @click="confirmDelete(product.idProducts)" class="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+                Supprimer
+              </button>
           </td>
           <td class="py-4 px-6 text-right">
-            <button @click="confirmUpdate(product.idProducts, product.nameProducts, product.productCategory.idProductCategory, product.priceProducts, product.qteProducts)">
-              Modifier
-            </button>
-
-
-
+              <button @click="confirmUpdate(product.idProducts, product.nameProducts, product.productCategory.idProductCategory, product.priceProducts, product.qteProducts)" class="inline-flex items-center px-4 py-2 bg-green-400 hover:bg-green-500 text-gray-800 text-sm font-medium rounded-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+                </svg>
+                Modifie
+              </button>
           </td>
           <transition name="slide">
             <div v-if="DialogueDelete && productIdToDelete===product.idProducts"  class="absolute top-0 left-0 w-full h-full bg-red-200 modal text-gray-500 py-4">
