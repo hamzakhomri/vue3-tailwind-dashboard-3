@@ -1132,74 +1132,73 @@ setup() {
               });
       },
   // ============= END TRIER============================================
-      
-  onReadPictureToUpdate(index) {
-  const fileInput = this.$refs[`fileInput-${index}`][0];
-  const file = fileInput.files[0];
+      onReadPictureToUpdate(index) {
+        const fileInput = this.$refs[`fileInput-${index}`][0];
+        const file = fileInput.files[0];
 
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const imageUrl = event.target.result;
-      const fileExtension = file.name.split('.').pop().toLowerCase();
-      const fileSize = file.size / 1024; // Convert from bytes to kilobytes
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            const imageUrl = event.target.result;
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+            const fileSize = file.size / 1024; // Convert from bytes to kilobytes
 
-      const pictureExists = this.pictureFilesUpdate.some((picture) => picture.file.name === file.name);
+            const pictureExists = this.pictureFilesUpdate.some((picture) => picture.file.name === file.name);
 
-  
-      if (pictureExists) {
-        alert("This picture already exists");
-        this.inputsUpdate.splice(index, 1);
-        this.pictureFilesUpdate.splice(index, 1);
-      } else {
-        const image = new Image();
-        image.src = imageUrl;
-        image.onload = () => {
-          const resolution = {
-            width: image.width,
-            height: image.height
+        
+            if (pictureExists) {
+              alert("This picture already exists");
+              this.inputsUpdate.splice(index, 1);
+              this.pictureFilesUpdate.splice(index, 1);
+            } else {
+              const image = new Image();
+              image.src = imageUrl;
+              image.onload = () => {
+                const resolution = {
+                  width: image.width,
+                  height: image.height
+                };
+
+                if (fileSize < 990087) {
+                  const canvas = document.createElement("canvas");
+                  canvas.width = image.width;
+                  canvas.height = image.height;
+
+                  const ctx = canvas.getContext("2d");
+                  ctx.drawImage(image, 0, 0);
+
+                  const watermarkText = "Www.hamza.com";
+                  ctx.font = "70px Arial";
+                  ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+
+                  const textWidth = ctx.measureText(watermarkText).width;
+                  const x = (canvas.width - textWidth) / 2;
+                  const y = canvas.height / 2;
+
+                  ctx.fillText(watermarkText, x, y);
+
+                  const watermarkedImageUrl = canvas.toDataURL("image/png");
+
+                  this.pictureFilesUpdate.push({
+                    id: Date.now(),
+                    url: watermarkedImageUrl,
+                    originalUrl: imageUrl,
+                    file: file,
+                    extension: fileExtension,
+                    size: fileSize,
+                    resolution: resolution
+                  });
+                  console.log("name !"+file.name);
+                } else {
+                  this.inputsUpdate.splice(index, 1);
+                  alert("This picture " + file.name + " exceeds the maximum size.");
+                }
+              };
+            }
           };
-
-          if (fileSize < 990087) {
-            const canvas = document.createElement("canvas");
-            canvas.width = image.width;
-            canvas.height = image.height;
-
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(image, 0, 0);
-
-            const watermarkText = "Www.hamza.com";
-            ctx.font = "70px Arial";
-            ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-
-            const textWidth = ctx.measureText(watermarkText).width;
-            const x = (canvas.width - textWidth) / 2;
-            const y = canvas.height / 2;
-
-            ctx.fillText(watermarkText, x, y);
-
-            const watermarkedImageUrl = canvas.toDataURL("image/png");
-
-            this.pictureFilesUpdate.push({
-              id: Date.now(),
-              url: watermarkedImageUrl,
-              originalUrl: imageUrl,
-              file: file,
-              extension: fileExtension,
-              size: fileSize,
-              resolution: resolution
-            });
-            console.log("name !"+file.name);
-          } else {
-            this.inputsUpdate.splice(index, 1);
-            alert("This picture " + file.name + " exceeds the maximum size.");
-          }
-        };
-      }
-    };
-    reader.readAsDataURL(file);
-  }
-},
+          reader.readAsDataURL(file);
+        }
+      },
 
 
 }
