@@ -231,6 +231,7 @@
 </template>
 <script>
 import axios from 'axios';
+import { showAlert } from "../services/Category";
 
 export default {
   data() {
@@ -305,20 +306,18 @@ export default {
     console.log("Categories.vue");
   },
   methods: {
+    callAlert() {
+      showAlert(); // Call the imported function
+    },
+
     confirmUpdate(categoryId,categoryname){
       this.categoryNameToUpdate=categoryname;
       this.categoryIdToUpdate=categoryId;
       this.DialogueUpdate=true;
     },
-    // updateCategory(){
-    //   this.DialogueUpdate=false;
-    // },
     cancelUpdate(){
       this.DialogueUpdate=false;
     },
-
-
-    
     confirmDelete(categoryId) {
       this.categoryIdToDelete = categoryId;
       this.DialogueDelete = true;
@@ -330,10 +329,6 @@ export default {
     cancelDelete() {
       this.DialogueDelete = false;
     },
-
-
-
-
     sortbymodifiedProductCategory(){
       this.sortByDate = this.sortByDate === 'asc' ? 'desc' : 'asc';
       this.ProductCategory.sort((a, b) => 

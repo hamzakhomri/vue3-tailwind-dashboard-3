@@ -1,11 +1,5 @@
 <template>
   <div ref="scrollableDiv" class="overflow-y-scroll h-full">
-   
-   
-
-      
-
-
     <div  v-show="EditProducts" class="border mb-4 p-4">
           <div class="flex justify-end">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" @click="doProducts(false)">
@@ -287,32 +281,34 @@
         <!-- ===================   END SEARCH BAR    ========================== -->
         <!-- ===================   DIALOGUE UPDATE BAR    ========================== -->
         <transition name="slide">
-          <div v-if="DialogueUpdate"  class=" modal text-gray-500 p-2 border-2 border-solid border-red-300 rounded bg-red-400">
+          <div v-if="DialogueUpdate"  class=" modal text-gray-500 p-2 border-2 border-solid border-red-300 rounded">
             <label class="flex justify-start">Modifier</label>
-            <div class="flex justify-center space-x-3 mb-3 mr-2">
-                  <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-                <div class="relative w-full flex space-x-2">
             
-                    <input disabled v-model="ProductIdToUpdate" required :class="['w-20 ,cursor-not-allowed','appearance-none','block','bg-white','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4']" type="number" placeholder="ID"> 
-                    <input v-model="ProductnameToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                
+            <div class="flex p-2">
+              
+              <div class="border rounded-2xl h-[40%] p-2 w-[40%] flex flex-col  space-x-3 mb-3 mr-2">
+                <div class="space-y-2">
+                  <div class="flex space-x-2">
+                     <input disabled v-model="ProductIdToUpdate" required :class="['w-20 ,cursor-not-allowed','appearance-none','block','bg-white','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4']" type="number" placeholder="ID"> 
+                      <input v-model="ProductnameToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                  </div>
+                   
                     <input v-model="ProductPricetToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                     <input v-model="ProductQteToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
           
       
                     
-                    <select id="countries" v-model="idProductCategory" :class="['border-2','appearance-none','block','w-full','bg-gray-50','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4',{'border-red-500': selectedCategory.length <= 0 },{ 'border-green-500': selectedCategory.length >= 1 }]">
+                    <select id="countries" v-model="idProductCategory" :class="['border-2','appearance-none','block','w-full','bg-gray-50','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4']">
                       <option selected hidden value="">{{ idProductCategory }}</option>
                       <option v-for="category in ProductCategory" :key="category.idProductCategory" :value="category.idProductCategory">
                         {{ category.nameProductCategory}}
                       </option>
                     </select>
                   </div>
-            </div>           
-          
-            <div v-if="productPictures.length" class="p-2 bg-gray-800">
+              </div> 
 
-              <div class=" flex-initial w-full bg-gray-800 p-3 border rounded-2xl grid grid-cols-4 gap-4">
+
+              <div class=" flex-initial w-full  p-3 border rounded-2xl grid grid-cols-3 gap-4">
                 <div v-for="picture in productPictures" :key="picture.idProductpicture" class="relative transition duration-300 ease-in-out transform hover:scale-125">
                   <div class="bg border-2 rounded-t-3xl border-sky-700 transition duration-300 ease-in-out transform hover:scale-110">
                     <img class="w-full rounded-t-3xl" :src="getPictureUrl(picture.idProductPicture)" alt="Product Picture" />
@@ -327,8 +323,16 @@
                   </div>
                 </div>
               </div>
+            </div>
+            
+               
+
+          
+            <div v-if="productPictures.length" class="border rounded-2xl p-2 bg-gray-800">
+
+          
               
-              <div class="mt-2 border rounded-2xl border-red-200">
+              <div class="mt-2 ">
                 <p class="text-white">Ajoutes Des Photos</p>
                 <div class="flex m p-2">
                   
@@ -391,14 +395,6 @@
               <p class="text-center text-gray-500 mt-4">No pictures available.</p>
             </div>
 
-
-      <!-- <svg @click="deletePicture(picture.idProductPicture)" xmlns="http://www.w3.org/2000/svg" class="cursor-pointer h-[15%] w-[15%]  text-red-500 border-2 rounded-full border-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                    </svg> -->
-
-
-
-      
             <div class="w-full relative space-y-2">
               <button class="mt-2 bg-[#1e3a8a] w-full h-10 hover:bg-blue-800 rounded text-white font-bold px-4 rounded-l" @click="updateProduct(ProductIdToUpdate, ProductnameToUpdate, ProductPricetToUpdate, ProductQteToUpdate,idProductCategory)" > Modifier </button>
               <button @click="cancelUpdate" class="bg-[#b91c1c] hover:bg-red-600 rounded font-bold px-4 rounded-r w-full  h-10 text-white">Annuler</button>
@@ -719,8 +715,6 @@ setup() {
    
       },
   methods: { 
-
-  
       ScrollToUpdate() {
           const scrollableDiv = this.$refs.scrollableDiv;
             scrollableDiv.scrollTo({
@@ -760,7 +754,6 @@ setup() {
           this.inputsInsert.splice(index, 1);
           console.log("Input/File: " + index + " removed");
       },
-  // ============= UPDATE==============================================
       confirmUpdate(idProducts, Productname, idProductCategory, priceProducts, qteProducts) {
         // this.GetPicturesByIdProducts(idProducts);
         this.ProductIdToUpdate = idProducts;
@@ -779,7 +772,6 @@ setup() {
       cancelUpdate(){
             this.DialogueUpdate=false;
       },
-// ============= DELETE ==============================================
       confirmDelete(idProducts) {
             this.productIdToDelete = idProducts;
             this.DialogueDelete = true;
@@ -808,8 +800,6 @@ setup() {
             this.EditProducts = EditProducts;
             this.ProductName = "";
       },
-// ============= REQUETE ==============================================
-
       uploadFile(event, index) {
         
         this.pictureFilesInsert = splice.files();
@@ -834,7 +824,6 @@ setup() {
 
         reader.readAsDataURL(file);
       },
-  
       onReadPictureToInsert(index) {
           const fileInput = this.$refs[`fileInput-${index}`][0];
           const file = fileInput.files[0];
@@ -912,58 +901,6 @@ setup() {
             reader.readAsDataURL(file); // Read the data URL asynchronously
           }
       },
-      
-
-// ============= END REQUETE ==============================================
-// ============= TRIER=====================================================
-      sortByNameProdcut() {
-        this.sortbynames = this.sortbynames === 'asc' ? 'desc' : 'asc';
-        this.Product.sort((a, b) => {
-          const nameA = a.nameProducts.toUpperCase();
-          const nameB = b.nameProducts.toUpperCase();
-
-          if (this.sortbynames === 'asc') {
-            if (nameA < nameB) return -1;
-            if (nameA > nameB) return 1;
-          } else {
-            if (nameA > nameB) return -1;
-            if (nameA < nameB) return 1;
-          }
-
-          return 0;
-        });
-      },
-      sortByqte() {
-        this.sortbyqtes = this.sortbyqtes === 'asc' ? 'desc' : 'asc';
-              this.Product.sort((a, b) => {
-                if (this.sortbyqtes === 'asc') {
-                  return a.qteProducts - b.qteProducts;
-                } else {
-                  return b.qteProducts - a.qteProducts;
-                }
-              });
-      },
-      sortByPrice() {
-        this.sortbyPrices = this.sortbyPrices === 'asc' ? 'desc' : 'asc';
-              this.Product.sort((a, b) => {
-                if (this.sortbyPrices === 'asc') {
-                  return a.priceProducts - b.priceProducts;
-                } else {
-                  return b.priceProducts - a.priceProducts;
-                }
-              });
-      },
-      sortByIdCategory() {
-              this.sortById = this.sortById === 'asc' ? 'desc' : 'asc';
-              this.Product.sort((a, b) => {
-                if (this.sortById === 'asc') {
-                  return a.idProducts - b.idProducts;
-                } else {
-                  return b.idProducts - a.idProducts;
-                }
-              });
-      },
-  // ============= END TRIER============================================
       onReadPictureToUpdate(index) {
         const fileInput = this.$refs[`fileInput-${index}`][0];
         const file = fileInput.files[0];
@@ -1031,11 +968,56 @@ setup() {
           reader.readAsDataURL(file);
         }
       },
+// ============= TRIER=====================================================
+      sortByNameProdcut() {
+        this.sortbynames = this.sortbynames === 'asc' ? 'desc' : 'asc';
+        this.Product.sort((a, b) => {
+          const nameA = a.nameProducts.toUpperCase();
+          const nameB = b.nameProducts.toUpperCase();
 
+          if (this.sortbynames === 'asc') {
+            if (nameA < nameB) return -1;
+            if (nameA > nameB) return 1;
+          } else {
+            if (nameA > nameB) return -1;
+            if (nameA < nameB) return 1;
+          }
 
-
-
-
+          return 0;
+        });
+      },
+      sortByqte() {
+        this.sortbyqtes = this.sortbyqtes === 'asc' ? 'desc' : 'asc';
+              this.Product.sort((a, b) => {
+                if (this.sortbyqtes === 'asc') {
+                  return a.qteProducts - b.qteProducts;
+                } else {
+                  return b.qteProducts - a.qteProducts;
+                }
+              });
+      },
+      sortByPrice() {
+        this.sortbyPrices = this.sortbyPrices === 'asc' ? 'desc' : 'asc';
+              this.Product.sort((a, b) => {
+                if (this.sortbyPrices === 'asc') {
+                  return a.priceProducts - b.priceProducts;
+                } else {
+                  return b.priceProducts - a.priceProducts;
+                }
+              });
+      },
+      sortByIdCategory() {
+              this.sortById = this.sortById === 'asc' ? 'desc' : 'asc';
+              this.Product.sort((a, b) => {
+                if (this.sortById === 'asc') {
+                  return a.idProducts - b.idProducts;
+                } else {
+                  return b.idProducts - a.idProducts;
+                }
+              });
+      },
+  // ============= END TRIER============================================
+     
       //====================REQUEST======================
       uploadPicturesInsert(idProducts) {
         const uploadPromises = this.pictureFilesInsert.map((picture) => {
@@ -1077,7 +1059,6 @@ setup() {
             console.log('Error:', error);
           });
       },
-
       updateProduct(idProducts, ProductnameToUpdate,  ProductPricetToUpdate, ProductQteToUpdate,idProductCategory) {
         axios.put(`http://localhost:8080/product/${idProducts}/category/${idProductCategory}`, {
             nameProducts: ProductnameToUpdate,
@@ -1144,7 +1125,6 @@ setup() {
       getPictureUrl(idProductpicture) {
         return `http://localhost:8080/productpicture/byid/${idProductpicture}`;
       },
-
       GetAllGategory(){
         axios.get('http://localhost:8080/productcategory').then(response => 
         {
@@ -1168,7 +1148,6 @@ setup() {
           console.error(error);
         });
       },
-
       submitProduct(idProductCategory) {
         if(this.pictureFilesInsert.length>0){
 
