@@ -720,33 +720,7 @@ setup() {
       },
   methods: { 
 
-      deletePicture(idProductpicture){
-          const confirmaToDelete = window.confirm('Vous voulez vraiment Supprimer cette photo ?');
-          if(confirmaToDelete)
-          {
-            axios.delete(`http://localhost:8080/productpicture/${idProductpicture}`).then(response => {
-              console.log(idProductpicture+" Deleted");
-              this.fetchProductPictures(this.IdProductToSHowPicture);
-            })
-            .catch(error => {
-              console.error(error);
-            });
-          }
-      },
-      fetchProductPictures(idProducts) {
-        axios.get(`http://localhost:8080/productpicture/${idProducts}`)
-          .then(response => {
-            this.productPictures = response.data;
-            this.IdProductToSHowPicture=idProducts;
-            console.log(response.data)
-          })
-          .catch(error => {
-            console.error(error);
-          });
-      },
-      getPictureUrl(idProductpicture) {
-        return `http://localhost:8080/productpicture/byid/${idProductpicture}`;
-      },
+  
       ScrollToUpdate() {
           const scrollableDiv = this.$refs.scrollableDiv;
             scrollableDiv.scrollTo({
@@ -835,29 +809,7 @@ setup() {
             this.ProductName = "";
       },
 // ============= REQUETE ==============================================
-      GetAllGategory(){
-          axios.get('http://localhost:8080/productcategory').then(response => 
-          {
-            this.ProductCategory = response.data;
-          }).catch(error => { console.error(error); });
-      },
-      getAllProducts() {
-      axios
-        .get('http://localhost:8080/product')
-        .then(response => {
-          this.Product = response.data;
-          console.log("GetAllProducts");
-          console.log(response.data);
 
-          // Fetch the count of pictures for each product
-          this.Product.forEach(product => {
-            this.countPicturesByProduct_IdProducts(product.idProducts);
-          });
-        })
-        .catch(error => {
-          console.error(error);
-        });
-      },
       uploadFile(event, index) {
         
         this.pictureFilesInsert = splice.files();
@@ -882,46 +834,7 @@ setup() {
 
         reader.readAsDataURL(file);
       },
-      submitProduct(idProductCategory) {
-        if(this.pictureFilesInsert.length>0){
-
-          const data = {
-            nameProducts: this.Productname,
-            priceProducts: this.Price,
-            qteProducts: this.quantite
-          };
-              axios.post(`http://localhost:8080/product/category/${idProductCategory}`, data).then(response => {
-                  console.log(response.data);
-                  console.log(response.data.idProducts);
-                  this.uploadPicturesInsert(response.data.idProducts);
-                  this.Canceled();
-                  this.getAllProducts();
-                  console.log("assign product into category sccefully");
-                  this.goToFirstStep();
-                })
-                .catch(error => {
-                  console.error(error);
-                }); 
-            }
-            else{
-                console.log(this.pictureFilesInsert.length)
-                alert("nop")
-              }
-       
-      },
-      countPicturesByProduct_IdProducts(idProducts) {
-      axios
-        .get(`http://localhost:8080/productpicture/CountPictures/${idProducts}`)
-        .then(response => {
-          const product = this.Product.find(p => p.idProducts === idProducts);
-          if (product) {
-            product.countPicturesIdProducts = response.data;
-          }
-        })
-        .catch(error => {
-          console.error(error);
-        });
-      },
+  
       onReadPictureToInsert(index) {
           const fileInput = this.$refs[`fileInput-${index}`][0];
           const file = fileInput.files[0];
@@ -1000,88 +913,7 @@ setup() {
           }
       },
       
-      uploadPicturesInsert(idProducts) {
-        const uploadPromises = this.pictureFilesInsert.map((picture) => {
-          const formData = new FormData();
-          formData.append('file', picture.file); // Use the File object for the formData
-          console.log(idProducts + " Uplod Succefully");
-          return axios.post(`http://localhost:8080/productpicture/product/${idProducts}`, formData);
-        });
 
-        Promise.all(uploadPromises)
-          .then((responses) => {
-            console.log('All files uploaded successfully!');
-            responses.forEach((response) => {
-              console.log(response.data);
-            });
-            this.getAllProducts();
-          })
-          .catch((error) => {
-            console.log('Error:', error);
-          });
-      },
-      uploadPicturesUpdate(idProducts) {
-        const uploadPromises = this.pictureFilesUpdate.map((picture) => {
-          const formData = new FormData();
-          formData.append('file', picture.file); // Use the File object for the formData
-          console.log(idProducts + " Uplod Succefully");
-          return axios.post(`http://localhost:8080/productpicture/product/${idProducts}`, formData);
-        });
-
-        Promise.all(uploadPromises)
-          .then((responses) => {
-            console.log('All files uploaded successfully!');
-            responses.forEach((response) => {
-              console.log(response.data);
-            });
-            this.getAllProducts();
-          })
-          .catch((error) => {
-            console.log('Error:', error);
-          });
-      },
-
-      updateProduct(idProducts, ProductnameToUpdate,  ProductPricetToUpdate, ProductQteToUpdate,idProductCategory) {
-        axios.put(`http://localhost:8080/product/${idProducts}/category/${idProductCategory}`, {
-            nameProducts: ProductnameToUpdate,
-            productCategory: {
-              idProductCategory: idProductCategory
-            },
-            priceProducts: ProductPricetToUpdate,   
-            qteProducts: ProductQteToUpdate
-          })
-          .then(response => {
-
-            this.DialogueUpdate = false;
-            this.ProductIdToUpdate = null;
-            this.ProductnameToUpdate = '';
-            this.idProductCategory = '';
-            this.ProductPricetToUpdate = null;
-            this.ProductQteToUpdate = null;
-            this.getAllProducts();
-            this.uploadPicturesUpdate(idProducts);
-            this.inputsUpdate=[];
-            this.pictureFilesUpdate=[];
-            
-            console.log("product : "+idProducts+" was modify succefuly");
-          })
-          .catch(error => {
-            console.error(error);
-          });
-      
-
-      },
-      deleteProduct(idProducts){
-        axios.delete(`http://localhost:8080/product/${idProducts}`)
-            .then(response=>{
-              this.DialogueDelete=false;
-              this.getAllProducts();
-            }).catch(error=>{
-              console.error(error);
-            })
-       
-
-      }, 
 // ============= END REQUETE ==============================================
 // ============= TRIER=====================================================
       sortByNameProdcut() {
@@ -1200,6 +1032,183 @@ setup() {
         }
       },
 
+
+
+
+
+      //====================REQUEST======================
+      uploadPicturesInsert(idProducts) {
+        const uploadPromises = this.pictureFilesInsert.map((picture) => {
+          const formData = new FormData();
+          formData.append('file', picture.file); // Use the File object for the formData
+          console.log(idProducts + " Uplod Succefully");
+          return axios.post(`http://localhost:8080/productpicture/product/${idProducts}`, formData);
+        });
+
+        Promise.all(uploadPromises)
+          .then((responses) => {
+            console.log('All files uploaded successfully!');
+            responses.forEach((response) => {
+              console.log(response.data);
+            });
+            this.getAllProducts();
+          })
+          .catch((error) => {
+            console.log('Error:', error);
+          });
+      },
+      uploadPicturesUpdate(idProducts) {
+        const uploadPromises = this.pictureFilesUpdate.map((picture) => {
+          const formData = new FormData();
+          formData.append('file', picture.file); // Use the File object for the formData
+          console.log(idProducts + " Uplod Succefully");
+          return axios.post(`http://localhost:8080/productpicture/product/${idProducts}`, formData);
+        });
+
+        Promise.all(uploadPromises)
+          .then((responses) => {
+            console.log('All files uploaded successfully!');
+            responses.forEach((response) => {
+              console.log(response.data);
+            });
+            this.getAllProducts();
+          })
+          .catch((error) => {
+            console.log('Error:', error);
+          });
+      },
+
+      updateProduct(idProducts, ProductnameToUpdate,  ProductPricetToUpdate, ProductQteToUpdate,idProductCategory) {
+        axios.put(`http://localhost:8080/product/${idProducts}/category/${idProductCategory}`, {
+            nameProducts: ProductnameToUpdate,
+            productCategory: {
+              idProductCategory: idProductCategory
+            },
+            priceProducts: ProductPricetToUpdate,   
+            qteProducts: ProductQteToUpdate
+          })
+          .then(response => {
+
+            this.DialogueUpdate = false;
+            this.ProductIdToUpdate = null;
+            this.ProductnameToUpdate = '';
+            this.idProductCategory = '';
+            this.ProductPricetToUpdate = null;
+            this.ProductQteToUpdate = null;
+            this.getAllProducts();
+            this.uploadPicturesUpdate(idProducts);
+            this.inputsUpdate=[];
+            this.pictureFilesUpdate=[];
+            
+            console.log("product : "+idProducts+" was modify succefuly");
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      
+
+      },
+      deleteProduct(idProducts){
+        axios.delete(`http://localhost:8080/product/${idProducts}`)
+            .then(response=>{
+              this.DialogueDelete=false;
+              this.getAllProducts();
+            }).catch(error=>{
+              console.error(error);
+            })
+      }, 
+      deletePicture(idProductpicture){
+        const confirmaToDelete = window.confirm('Vous voulez vraiment Supprimer cette photo ?');
+        if(confirmaToDelete)
+        {
+          axios.delete(`http://localhost:8080/productpicture/${idProductpicture}`).then(response => {
+            console.log(idProductpicture+" Deleted");
+            this.fetchProductPictures(this.IdProductToSHowPicture);
+          })
+          .catch(error => {
+            console.error(error);
+          });
+        }
+      },
+      fetchProductPictures(idProducts) {
+        axios.get(`http://localhost:8080/productpicture/${idProducts}`)
+          .then(response => {
+            this.productPictures = response.data;
+            this.IdProductToSHowPicture=idProducts;
+            console.log(response.data)
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      },
+      getPictureUrl(idProductpicture) {
+        return `http://localhost:8080/productpicture/byid/${idProductpicture}`;
+      },
+
+      GetAllGategory(){
+        axios.get('http://localhost:8080/productcategory').then(response => 
+        {
+          this.ProductCategory = response.data;
+        }).catch(error => { console.error(error); });
+      },
+      getAllProducts() {
+      axios
+        .get('http://localhost:8080/product')
+        .then(response => {
+          this.Product = response.data;
+          console.log("GetAllProducts");
+          console.log(response.data);
+
+          // Fetch the count of pictures for each product
+          this.Product.forEach(product => {
+            this.countPicturesByProduct_IdProducts(product.idProducts);
+          });
+        })
+        .catch(error => {
+          console.error(error);
+        });
+      },
+
+      submitProduct(idProductCategory) {
+        if(this.pictureFilesInsert.length>0){
+
+          const data = {
+            nameProducts: this.Productname,
+            priceProducts: this.Price,
+            qteProducts: this.quantite
+          };
+              axios.post(`http://localhost:8080/product/category/${idProductCategory}`, data).then(response => {
+                  console.log(response.data);
+                  console.log(response.data.idProducts);
+                  this.uploadPicturesInsert(response.data.idProducts);
+                  this.Canceled();
+                  this.getAllProducts();
+                  console.log("assign product into category sccefully");
+                  this.goToFirstStep();
+                })
+                .catch(error => {
+                  console.error(error);
+                }); 
+            }
+            else{
+                console.log(this.pictureFilesInsert.length)
+                alert("nop")
+              }
+       
+      },
+      countPicturesByProduct_IdProducts(idProducts) {
+      axios
+        .get(`http://localhost:8080/productpicture/CountPictures/${idProducts}`)
+        .then(response => {
+          const product = this.Product.find(p => p.idProducts === idProducts);
+          if (product) {
+            product.countPicturesIdProducts = response.data;
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
+      },
 
 }
 };
