@@ -588,10 +588,20 @@
           <transition name="slide">
             <div v-if="DialogueDelete && productIdToDelete===product.idProducts"  class="absolute top-0 left-0 w-full h-full bg-red-200 modal text-gray-500 py-4">
               <div class="flex justify-center space-x-3">
-                <h3 class="text-red-500">Vous voulez vraiment Supprimer se categories {{ productIdToDelete }} :</h3>
                 <div class="modal-buttons space-x-3">
-                  <button @click="deleteProduct(productIdToDelete)">Oui</button>
-                  <button @click="cancelDelete">Non</button>
+                  <button @click="deleteProduct(productIdToDelete)" class="inline-flex items-center justify-center w-40 h-8 mr-2 text-pink-100 transition-colors duration-150 bg-red-700 rounded-lg focus:shadow-outline hover:bg-red-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                  </button>
+
+                  <button @click="cancelDelete" class="inline-flex items-center justify-center w-40 h-8 mr-2 text-gray-700 transition-colors duration-150 bg-white rounded-full focus:shadow-outline hover:bg-gray-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
+                    </svg>
+                  </button>
+
+
                 </div>
               </div>
             </div>
