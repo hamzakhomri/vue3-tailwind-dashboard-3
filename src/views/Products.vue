@@ -1,5 +1,5 @@
 <template>
-  <div ref="scrollableDiv" class="overflow-y-scroll h-full">
+  <div ref="scrollableDiv" class="overflow-scroll h-full">
     <div  v-show="EditProducts" class="border mb-4 p-4">
           <div class="flex justify-end">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" @click="doProducts(false)">
@@ -197,18 +197,15 @@
               
               <div class="border rounded-2xl h-[40%] p-2 w-[40%] flex flex-col  space-x-3 mb-3 mr-2">
                 <div class="space-y-8">
+                  
                   <div class="border rounded-2xl space-y-2 p-2">
                     <div class="flex space-x-2">
-                      <input disabled v-model="ProductIdToUpdate" required :class="['w-20 ,cursor-not-allowed','appearance-none','block','bg-white','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4']" type="number" placeholder="ID"> 
-                        <input v-model="ProductnameToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                      <input disabled v-model="ProductIdToUpdate" required :class="['w-20 ,cursor-none','appearance-none','block','bg-white','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4']" type="number" placeholder="ID"> 
+                      <input v-model="ProductnameToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                     </div>
-                    
                       <input v-model="ProductPricetToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                       <input v-model="ProductQteToUpdate" placeholder="Category name"  type="text" id="search" class="block w-full p-4 pl-10  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-            
-        
-                      
-                      <select id="countries" v-model="idProductCategory" :class="['border-2','appearance-none','block','w-full','bg-gray-50','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4']">
+                       <select id="countries" v-model="idProductCategory" :class="['appearance-none','block','w-full','bg-gray-50','dark:bg-gray-700','text-gray-800','dark:text-gray-100','rounded-lg','py-3','px-4']">
                         <option selected hidden value="">{{ idProductCategory }}</option>
                         <option v-for="category in ProductCategory" :key="category.idProductCategory" :value="category.idProductCategory">
                           {{ category.nameProductCategory}}
@@ -217,7 +214,7 @@
                   </div>
 
                     <div class=" border rounded-2xl space-y-5 p-2">
-                      <div class=" p-b-2 p-t-2 border rounded-2xl border-gray-500 flex items-center cursor-pointer justify-evenly hover:bg-gray-900" @click="addFileToUpdate">
+                      <div class=" bg-gray-700 hover:bg-gray-800 hover:border-white-20  p-t-2 border rounded-lg border-gray-500 hover:border-gray-200 flex items-center cursor-pointer justify-evenly " @click="addFileToUpdate">
                         <p>Ajouter une photo</p>
                         <svg class="w-10 h-10" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3.75H6.912a2.25 2.25 0 00-2.15 1.588L2.35 13.177a2.25 2.25 0 00-.1.661V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 00-2.15-1.588H15M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859M12 3v8.25m0 0l-3-3m3 3l3-3" />
@@ -234,11 +231,11 @@
                             </svg> 
                           </div>
                           
-                          <div class="w-full bg-neutral-200 dark:bg-neutral-600">
+                          <!-- <div class="w-full bg-neutral-200 dark:bg-neutral-600">
                             <div class="bg-primary p-0.5 text-center text-xs font-medium leading-none text-primary-100" style="width: 25%">
                               25%
                             </div>
-                          </div>
+                          </div> -->
 
                         </div>
                       </div>
@@ -250,9 +247,9 @@
 
               <div class=" flex-initial w-full p-3 border rounded-2xl grid grid-cols-3 gap-4">
                 <div v-for="picture in productPictures" :key="picture.idProductpicture" class="relative transition duration-300 ease-in-out transform hover:scale-110">
-                  <div class="bg border-2 rounded-t-3xl border-sky-700 transition duration-300 ease-in-out transform hover:scale-110">
-                    <img class="w-full rounded-t-3xl" :src="getPictureUrl(picture.idProductPicture)" alt="Product Picture" />
-                    <div class="bg-gray-800 mt-1 p-1 flex justify-between">
+                  <div class=" border-2 rounded-lg bg-gray-800 border-green-500 transition duration-300 ease-in-out transform hover:scale-110">
+                    <img class="w-full rounded-lg" :src="getPictureUrl(picture.idProductPicture)" alt="Product Picture" />
+                    <div class=" mt-1 p-1 border border-gray-800 rounded-t-lg flex justify-between">
                       <p class="text-gray-200">{{ picture.idProductPicture }}</p>
                         <button @click="deletePicture(picture.idProductPicture)"  class="inline-flex items-center justify-center w-8 h-8 mr-2 text-pink-100 transition-colors duration-150 bg-red-500 rounded-full focus:shadow-outline hover:bg-red-600">
                           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -262,21 +259,17 @@
                     </div>
                   </div>
                 </div>
-                <div v-for="(file,index) in pictureFilesUpdate" :key="file.id" class="p-2 border rounded-xl bg-gray-800 transition duration-300 ease-in-out hover:scale-125">
-                        <div class="flex justify-between">
+                <div v-for="(file,index) in pictureFilesUpdate" :key="file.id" class="border-2 border-red-600 rounded-lg bg-gray-800  transition ">
+                        <div class="p-2 flex justify-between">
                           <p>{{ index+1 }}</p>
                           <svg @click="removeFileUpdate(index)" xmlns="http://www.w3.org/2000/svg" class=" w-6 h-6 text-red-900 dark:text-red-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
                           </svg> 
                         </div>
-                        <img :src="file.url" alt="Uploaded File" class="border-2 border-b-red-500 " />
+                        <img :src="file.url" alt="Uploaded File" class="border rounded-lg border-none" />
                       </div>
               </div>
-            </div>
-            
-               
-
-          
+            </div> 
             <!-- <div v-if="productPictures.length" class="border rounded-2xl p-2 bg-gray-800">
 
           
@@ -582,7 +575,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
                 </svg>
-                Modifie
+                Modifier
               </button>
           </td>
           <transition name="slide">
@@ -705,6 +698,7 @@ setup() {
 
           searchDateModification:'',
 
+          tooltipShow: false,
         };
       },
 
@@ -763,10 +757,11 @@ setup() {
    
       },
   methods: { 
+    
       ScrollToUpdate() {
           const scrollableDiv = this.$refs.scrollableDiv;
             scrollableDiv.scrollTo({
-          top: 180,
+          top: 0,
           behavior: 'smooth' // Scrolls to the top smoothly
         });
           this.EditProducts=false;
@@ -780,7 +775,13 @@ setup() {
           
       },
       addFileToUpdate(){
-         this.inputsUpdate.push({});
+        if(this.inputsUpdate.length == this.pictureFilesUpdate.length){
+               this.inputsUpdate.push({});
+         
+        }
+        else{
+          alert("Le champ "+this.inputsUpdate.length+" et vide");
+        }
       },
       removeFileUpdate(index){
         this.inputsUpdate.splice(index,1);
